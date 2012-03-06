@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Moneyger</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/smoothness/jquery-ui.css" %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a href="/budgets" class="brand">Moneyger</a>
+
+          <div class="nav-collapse">
+
+            <ul class="nav">
+              <li><a href="">Add Income</a></li>
+              <li><%= link_to 'Add Expense', "#expenseModal", "data-toggle" => 'modal', "onClick" => '$("#expenseModal").load("/expenses/new")' %></li>
+              <li><a href="">Settings</a></li>
+            </ul>
+
+          </div>
+
+          <ul class="nav pull-right">
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Budgets<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <% Budget.all.each do |budget|  %>
+                <li>
+                  <a href="/budgets/set/<%= budget.id %>"><%= if budget.id == session[:budget_id] then "* #{budget.title}" else budget.title end%></a>
+                </li>
+                <% end  %>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <%= yield %>
+</div>
+</body>
+</html>

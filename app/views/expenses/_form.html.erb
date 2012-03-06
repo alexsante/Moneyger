@@ -1,0 +1,52 @@
+<%= form_for @expense, :html => { :class => 'form-horizontal' } do |f| %>
+  <fieldset>
+    <legend><%= controller.action_name.capitalize %> Expense</legend>
+
+    <div class="control-group">
+      <%= f.label :expense_date, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.datetime_select :expense_date, :class => 'datetime_select' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :budget_id, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.number_field :budget_id, :class => 'number_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :amount, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :amount, :class => 'text_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :isRecurring, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.check_box :isRecurring, :class => 'check_box' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :title, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :title, :class => 'text_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :shortCode, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :shortCode, :class => 'text_field' %>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel', expenses_path, :class => 'btn' %>
+    </div>
+  </fieldset>
+<% end %>

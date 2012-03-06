@@ -1,0 +1,37 @@
+<h1>Expense</h1>
+
+<p>
+  <b>Expense date</b><br>
+  <%= @expense.expense_date %>
+</p>
+
+<p>
+  <b>Budget</b><br>
+  <%= @expense.budget_id %>
+</p>
+
+<p>
+  <b>Amount</b><br>
+  <%= @expense.amount %>
+</p>
+
+<p>
+  <b>Isrecurring</b><br>
+  <%= @expense.isRecurring %>
+</p>
+
+<p>
+  <b>Title</b><br>
+  <%= @expense.title %>
+</p>
+
+<p>
+  <b>Shortcode</b><br>
+  <%= @expense.shortCode %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Back', expenses_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_expense_path(@expense), :class => 'btn' %>
+  <%= link_to 'Delete', expense_path(@expense), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

@@ -1,0 +1,38 @@
+<%= form_for @expense_value, :html => { :class => 'form-horizontal' } do |f| %>
+  <fieldset>
+    <legend><%= controller.action_name.capitalize %> Expense Value</legend>
+
+    <div class="control-group">
+      <%= f.label :expense_id, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.number_field :expense_id, :class => 'number_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :amount, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :amount, :class => 'text_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :comment, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_area :comment, :class => 'text_area' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :expense_date, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.datetime_select :expense_date, :class => 'datetime_select' %>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel', expense_values_path, :class => 'btn' %>
+    </div>
+  </fieldset>
+<% end %>

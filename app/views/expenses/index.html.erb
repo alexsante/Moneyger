@@ -1,0 +1,26 @@
+<h1>Expenses</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Expense date</th>
+      <th>Created at</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @expenses.each do |expense| %>
+      <tr>
+        <td><%= expense.id %></td>
+        <td><%= link_to expense.expense_date, expense_path(expense) %></td>
+        <td><%= expense.created_at %></td>
+        <td>
+          <%= link_to 'Edit', edit_expense_path(expense), :class => 'btn btn-mini' %>
+          <%= link_to 'Destroy', expense_path(expense), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New', new_expense_path, :class => 'btn btn-primary' %>
