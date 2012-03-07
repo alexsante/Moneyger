@@ -3,10 +3,10 @@ class CreateExpenses < ActiveRecord::Migration
     create_table :expenses do |t|
       t.datetime :expense_date
       t.decimal :amount
-      t.boolean :isRecurring
+      t.string :frequency
       t.string :title
       t.string :shortcode
-
+      t.integer :budget_id
       t.timestamps
     end
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120304142553) do
+ActiveRecord::Schema.define(:version => 20120306042319) do
 
   create_table "budgets", :force => true do |t|
     t.string   "title"
@@ -30,11 +30,11 @@ ActiveRecord::Schema.define(:version => 20120304142553) do
 
   create_table "expenses", :force => true do |t|
     t.datetime "expense_date"
-    t.integer  "budget_id"
     t.decimal  "amount"
-    t.boolean  "isRecurring"
+    t.string   "frequency"
     t.string   "title"
-    t.string   "shortCode"
+    t.string   "shortcode"
+    t.integer  "budget_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
