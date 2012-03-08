@@ -1,4 +1,6 @@
 Moneyger::Application.routes.draw do
+  resources :incomes
+
   resources :expenses
 
   resources :expense_values

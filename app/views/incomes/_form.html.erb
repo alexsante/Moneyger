@@ -1,0 +1,38 @@
+<%= form_for @income, :html => { :class => 'form-horizontal' } do |f| %>
+  <fieldset>
+    <legend><%= controller.action_name.capitalize %> Income</legend>
+
+    <div class="control-group">
+      <%= f.label :income_date, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :income_date, :class => 'text_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :amount, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :amount, :class => 'text_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :frequency, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :frequency, :class => 'text_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :title, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :title, :class => 'text_field' %>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel', incomes_path, :class => 'btn' %>
+    </div>
+  </fieldset>
+<% end %>

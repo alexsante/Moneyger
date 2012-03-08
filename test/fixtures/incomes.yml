@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  income_date: 2012-03-07 21:13:26
+  amount: 9.99
+  frequency: MyString
+  title: MyString
+  sort_weight: 1
+
+two:
+  income_date: 2012-03-07 21:13:26
+  amount: 9.99
+  frequency: MyString
+  title: MyString
+  sort_weight: 1

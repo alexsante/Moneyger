@@ -23,9 +23,10 @@
           <div class="nav-collapse">
 
             <ul class="nav">
-              <li><a href="">Add Income</a></li>
+              <li><%= link_to 'Add Income', "#expenseModal", "data-toggle" => 'modal', "onClick" => '$("#expenseModal").load("/incomes/new")' %></li>
               <li><%= link_to 'Add Expense', "#expenseModal", "data-toggle" => 'modal', "onClick" => '$("#expenseModal").load("/expenses/new")' %></li>
               <li><a href="">Settings</a></li>
+              <li><a href="/budgets/<%= session[:budget_id] %>/edit">Edit Budget</a></li>
             </ul>
 
           </div>
@@ -40,6 +41,9 @@
                   <a href="/budgets/set/<%= budget.id %>"><%= if budget.id == session[:budget_id] then "* #{budget.title}" else budget.title end%></a>
                 </li>
                 <% end  %>
+                <li>
+                  <a href="/budgets/new">Create a new budget</a>
+                </li>
               </ul>
             </li>
 

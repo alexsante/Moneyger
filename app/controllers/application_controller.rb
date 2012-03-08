@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     if session.has_key? "budget_id"
       Budget.find(session[:budget_id])
     else
-      session[:budget_id] = Budget.create!
+      session[:budget_id] = Budget.first_or_create
     end
   rescue ActiveRecord::RecordNotFound
     budget = Budget.create

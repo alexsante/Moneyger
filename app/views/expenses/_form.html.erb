@@ -19,21 +19,28 @@
     <div class="control-group">
       <%= f.label :expense_date, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :expense_date, :class => 'text_field' %>
+        <%= f.text_field :expense_date, :class => 'text_field datepicker' %>
       </div>
     </div>
     
     <div class="control-group">
       <%= f.label :frequency, :class => 'control-label' %>
       <div class="controls">
-        <%= f.input :frequency,  :as => :select,  :collection => ["One Time","Weekly","Bi-Weekly", "Bi-Monthly", "Monthly", "Quarterly","Annually"] %>
+        <%= f.input :frequency,  :as => :select,  :collection => ["One Time","Weekly","Bi-Weekly", "Bi-Monthly", "Monthly", "Quarterly","Annually"], :label => false%>
       </div>
     </div>
 
     <div class="control-group">
-      <%= f.label :amount, :class => 'control-label' %>
+    <%= f.label :amount, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :amount, :class => 'text_field' %>
+    </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label "Fixed Expense", :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :amount, :class => 'text_field' %>
+        <%= f.input :isFixed, :as => :radio, :collection => {"Yes" => 1, "No" => 0}, :label => false %>
       </div>
     </div>
 

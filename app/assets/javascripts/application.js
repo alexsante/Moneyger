@@ -16,3 +16,5 @@
 //= require twitter/bootstrap
 //= require twitter/bootstrap/bootstrap-transition
 //= require_tree .
+
+$(".datepicker").datepicker({dateFormat: "yy/mm/dd"})

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120306042319) do
+ActiveRecord::Schema.define(:version => 20120308035017) do
 
   create_table "budgets", :force => true do |t|
     t.string   "title"
@@ -37,6 +37,26 @@ ActiveRecord::Schema.define(:version => 20120306042319) do
     t.integer  "budget_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.boolean  "isFixed"
+  end
+
+  create_table "income_values", :force => true do |t|
+    t.datetime "income_date"
+    t.decimal  "amount"
+    t.integer  "income_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "incomes", :force => true do |t|
+    t.datetime "income_date"
+    t.decimal  "amount"
+    t.string   "frequency"
+    t.string   "title"
+    t.integer  "sort_weight"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "budget_id"
   end
 
 end
