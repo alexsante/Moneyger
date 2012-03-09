@@ -1,7 +1,10 @@
 <%
   dates = []
+  income_totals = {}
   while @startDate <= Time.new(Time.new.year,12,31) do
-     dates.push(@startDate += (14*24*60*60))
+     new_date = @startDate += (14*24*60*60)
+     dates.push(new_date)
+     income_totals[new_date.strftime("%m%d")] = {:total => 0}
   end
 %>
 
@@ -12,7 +15,8 @@
   <thead>
     <tr>
       <th>&nbsp;</th>
-      <% dates.each do |date| %>
+      <% dates.each do |date|  %>
+
       <th><%= date.strftime("%m/%d") %></th>
       <% end %>
     </tr>
@@ -29,7 +33,13 @@
   <tr>
     <th nowrap="true"><%= income.title %></th>
     <% dates.each do |income_date| %>
-        <td> <%= number_to_currency(income.income_value_by_date income_date) %></td>
+        <%
+           # Grab the income value
+           income_value = income.income_value_by_date(income_date)
+           # Set is to the totals hash
+           income_totals[income_date.strftime('%m%d')]["Total"] =+ income_value
+        %>
+        <td class="income_cell_<%=income_date.strftime('%m%d')%>"> <%= number_to_currency(income_value) %></td>
     <% end %>
   </tr>
   <% end %>
@@ -37,7 +47,7 @@
   <tr>
     <th style="color: #333333; background-color: #3399ff;">Total</th>
     <% dates.each do |income_date| %>
-        <td style="color: #333333; background-color: #3399ff; font-weight: bold;"> <%= number_to_currency(0.00) %></td>
+        <td style="color: #333333; background-color: #3399ff; font-weight: bold;" id="income_total_cell_<%=income_date.strftime('%m%d')%>"> <%= number_to_currency(income_totals[income_date.strftime('%m%d')]["Total"]) %></td>
     <% end %>
   </tr>
 
