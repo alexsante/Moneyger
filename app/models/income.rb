@@ -9,12 +9,12 @@ class Income < ActiveRecord::Base
 
     new_date = Time.new
 
-    (0..11).each do |i|
+    while new_date < Time.new.end_of_year
 
       ev = IncomeValue.new(:income_id => self.id, :amount => self.amount, :income_date => new_date)
       ev.save
 
-      new_date = new_date.next_month
+      new_date += (15*24*60*60)
 
     end
 
@@ -25,7 +25,7 @@ class Income < ActiveRecord::Base
 
 
     self.income_values.each do |iv|
-      if iv.income_date.nil? == false && iv.income_date > date && iv.income_date < date + (14*24*60*60)
+      if iv.income_date.nil? == false && iv.income_date > date && iv.income_date < date + (14*24*60*60) and !income_value.nil?
         income_value = iv.amount
       end
     end

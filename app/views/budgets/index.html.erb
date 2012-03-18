@@ -1,10 +1,16 @@
 <%
+
   dates = []
-  income_totals = {}
+  @income_totals = {}
+  @variable_expense_totals = {}
+  @fixed_expense_totals = {}
+
   while @startDate <= Time.new(Time.new.year,12,31) do
      new_date = @startDate += (14*24*60*60)
      dates.push(new_date)
-     income_totals[new_date.strftime("%m%d")] = {:total => 0}
+     @income_totals[new_date.strftime("%m%d")] = {:total => 0}
+     @variable_expense_totals[new_date.strftime("%m%d")] = {:total => 0}
+     @fixed_expense_totals[new_date.strftime("%m%d")] = {:total => 0}
   end
 %>
 
@@ -29,54 +35,18 @@
     <td colspan="<%= dates.length %>" style="background-color: #333333;"> &nbsp;</td>
   </tr>
 
-  <% @budget.incomes.each do |income| %>
   <tr>
-    <th nowrap="true"><%= income.title %></th>
+    <th>Beginning Balance</th>
     <% dates.each do |income_date| %>
-        <%
-           # Grab the income value
-           income_value = income.income_value_by_date(income_date)
-           # Set is to the totals hash
-           income_totals[income_date.strftime('%m%d')]["Total"] =+ income_value
-        %>
-        <td class="income_cell_<%=income_date.strftime('%m%d')%>"> <%= number_to_currency(income_value) %></td>
-    <% end %>
-  </tr>
-  <% end %>
-
-  <tr>
-    <th style="color: #333333; background-color: #3399ff;">Total</th>
-    <% dates.each do |income_date| %>
-        <td style="color: #333333; background-color: #3399ff; font-weight: bold;" id="income_total_cell_<%=income_date.strftime('%m%d')%>"> <%= number_to_currency(income_totals[income_date.strftime('%m%d')]["Total"]) %></td>
+    <td>$0.00</td>
     <% end %>
   </tr>
 
-  <tr>
-    <th style="color: white; background-color: #333333;">Fixed Expenses</th>
-    <td colspan="<%= dates.length %>"  style="background-color: #333333;"> &nbsp;</td>
-  </tr>
-  <% @budget.expenses.where(:isFixed => true).each do |expense| %>
-     <tr>
-       <th nowrap="true"><%= expense.title %></th>
-       <% dates.each do |expense_date| %>
-           <td> <%= number_to_currency(expense.expense_value_by_date expense_date)  %> </td>
-       <% end %>
-     </tr>
-  <% end %>
+ <%= render :partial => "income", :locals => {:dates => dates} %>
 
-  <tr>
-    <th style="color: white; background-color: #333333">Variable Expenses</th>
-    <td colspan="<%= dates.length %>" style="background-color: #333333;">&nbsp;</td>
-  </tr>
+ <%= render :partial => "fixed_expenses", :locals => {:dates => dates} %>
 
-  <% @budget.expenses.where(:isFixed => false).each do |expense| %>
-      <tr>
-        <th nowrap="true"><%= expense.title %></th>
-        <% dates.each do |expense_date| %>
-            <td> <%= number_to_currency(expense.expense_value_by_date expense_date)  %> </td>
-        <% end %>
-      </tr>
-  <% end %>
+<%= render :partial => "variable_expenses", :locals => {:dates => dates} %>
 
   </tbody>
 </table>
