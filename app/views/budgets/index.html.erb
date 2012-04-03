@@ -1,54 +1,35 @@
-<%
-
-  dates = []
-  @income_totals = {}
-  @variable_expense_totals = {}
-  @fixed_expense_totals = {}
-
-  while @startDate <= Time.new(Time.new.year,12,31) do
-     new_date = @startDate += (14*24*60*60)
-     dates.push(new_date)
-     @income_totals[new_date.strftime("%m%d")] = {:total => 0}
-     @variable_expense_totals[new_date.strftime("%m%d")] = {:total => 0}
-     @fixed_expense_totals[new_date.strftime("%m%d")] = {:total => 0}
-  end
-%>
-
 <h1><%= @budget.title %></h1>
 
 <table class="table table-striped">
+    <thead>
 
-  <thead>
-    <tr>
-      <th>&nbsp;</th>
-      <% dates.each do |date|  %>
+        <tr>
+            <th>&nbsp;</th>
+            <% @budget.periods.all.each do |period|  %>
 
-      <th><%= date.strftime("%m/%d") %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
+                <th><%= period.end_date.strftime("%m/%d") %></th>
+            <% end %>
+        </tr>
+        <tr>
+            <th style="color: #ffffff; background-color: #333333;">Income</th>
+            <td colspan="<%= @budget.periods.length %>" style="background-color: #333333;"> &nbsp;</td>
+        </tr>
+        <tr>
+            <th>Beginning Balance</th>
+            <% @budget.periods.all.each do |period|  %>
+                <td><%= number_to_currency(period.beginning_balance) %></td>
+            <% end %>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+    <%= render :partial => "income" %>
 
 
-  <tr>
-    <th style="color: #ffffff; background-color: #333333;">Income</th>
-    <td colspan="<%= dates.length %>" style="background-color: #333333;"> &nbsp;</td>
-  </tr>
+    </tbody>
 
-  <tr>
-    <th>Beginning Balance</th>
-    <% dates.each do |income_date| %>
-    <td>$0.00</td>
-    <% end %>
-  </tr>
-
- <%= render :partial => "income", :locals => {:dates => dates} %>
-
- <%= render :partial => "fixed_expenses", :locals => {:dates => dates} %>
-
-<%= render :partial => "variable_expenses", :locals => {:dates => dates} %>
-
-  </tbody>
 </table>
 
 <div id="expenseModal" class="modal fade" style="display: none;">

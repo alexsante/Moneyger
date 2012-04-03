@@ -1,21 +1,21 @@
 <% @budget.incomes.each do |income| %>
     <tr>
       <th nowrap="true"><%= income.title %></th>
-      <% dates.each do |income_date| %>
+      <% @budget.periods.all.each do |period| %>
           <%
              # Grab the income value
-             income_value = income.income_value_by_date(income_date)
-             # Set is to the totals hash
-             @income_totals[income_date.strftime('%m%d')][:total] += income_value
+             income_value = period.find_income_value(income)
           %>
-          <td class="income_cell_<%=income_date.strftime('%m%d')%>"> <%= income_value > 0 ? number_to_currency(income_value) : "" %></td>
+          <td class="income_cell"> <%= income_value > 0 ? number_to_currency(income_value) : "" %></td>
       <% end %>
     </tr>
 <% end %>
 
 <tr>
   <th style="color: #333333; background-color: #3399ff;">Total</th>
-  <% dates.each do |income_date| %>
-      <td style="color: #333333; background-color: #3399ff; font-weight: bold;" id="income_total_cell_<%=income_date.strftime('%m%d')%>"> <%= number_to_currency(@income_totals[income_date.strftime('%m%d')][:total]) %></td>
+  <% @budget.periods.all.each do |period| %>
+      <td style="color: #333333; background-color: #3399ff; font-weight: bold;" id="income_total_cell_">
+        <%= number_to_currency(period.income_total) %>
+      </td>
   <% end %>
 </tr>

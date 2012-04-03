@@ -11,10 +11,18 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </div>
+    <div class="field">
+        <%= f.label :title %><br />
+        <%= f.text_field :title %>
+    </div>
+    <div class="field">
+        <%= f.label :beginning_balance %><br/>
+        <%= f.text_field :beginning_balance %>
+    </div>
+    <div class="field">
+        <%= f.label :period_start_date %><br/>
+        <%= f.text_field :period_start_date %>
+    </div>
   <div class="actions">
     <%= f.submit %>
   </div>
