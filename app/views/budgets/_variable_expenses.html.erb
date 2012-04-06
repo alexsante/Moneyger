@@ -8,7 +8,10 @@
     	  
     	  <% @budget.periods.all.each do |period| %>
     	  <% expense_value = period.find_expense_values(expense) %>
-          <td> <%= expense_value > 0 ? number_to_currency(expense_value) : ""  %> </td>
+          <td onmouseover="$('span#expense_value_<%= period.id %>').toggleClass('hidden')" 
+          	  onmouseout="$('span#expense_value_<%= period.id %>').toggleClass('hidden')"> <%= expense_value > 0 ? number_to_currency(expense_value) : "0.00"  %>
+          <span class="btn btn-success hidden" id="expense_value_<%= period.id %>">+</span>	
+          </td>
           <% end %>
     </tr>
 <% end %>
