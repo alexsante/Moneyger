@@ -8,9 +8,8 @@
     	  
     	  <% @budget.periods.all.each do |period| %>
     	  <% expense_value = period.find_expense_values(expense) %>
-          <td onmouseover="$('span#expense_value_<%= period.id %>').toggleClass('hidden')" 
-          	  onmouseout="$('span#expense_value_<%= period.id %>').toggleClass('hidden')"> <%= expense_value > 0 ? number_to_currency(expense_value) : "0.00"  %>
-          <span class="btn btn-success hidden" id="expense_value_<%= period.id %>">+</span>	
+          <td id="expense_value_<%= period.id %>"> <%= expense_value > 0 ? number_to_currency(expense_value) : "0.00"  %>
+             <input type="button" class="btn btn-success" id="expense_value_button_<%= period.id %>" value="+"> 
           </td>
           <% end %>
     </tr>
