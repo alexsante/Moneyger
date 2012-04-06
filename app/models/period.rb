@@ -25,9 +25,9 @@ class Period < ActiveRecord::Base
 
   end
 
-  def self.find_expense_values(expense)
+  def find_expense_values(expense)
     # Returns all expense values logged into this period and budget
-    ExpenseValue.where(:conditions => ["expense_id = ? and expense_date >= ? and expense_date <= ?", expense.id, self.start_date, self.end_date])
+    ExpenseValue.sum(:amount, :conditions => ["expense_id = ? and expense_date >= ? and expense_date <= ?", expense.id, self.start_date, self.end_date])
   end
 
 end

@@ -1,7 +1,12 @@
 <%= form_for @income, :html => { :class => 'form-horizontal' } do |f| %>
   <fieldset>
     <legend><%= controller.action_name.capitalize %> Income</legend>
+	
+	<% if params.key? "welcome" %>
+		<div class="alert alert-info">Your budget is ready for setup! Moneyger now needs to know when you get paid, how often, and of course, how much?</div>
+	<% end %>
 
+	
     <div class="control-group">
       <%= f.label :income_date, :class => 'control-label' %>
       <div class="controls">

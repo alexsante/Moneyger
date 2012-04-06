@@ -2,30 +2,38 @@ class Expense < ActiveRecord::Base
   has_many :expense_values, :dependent => :destroy
   belongs_to :budget
 
-  after_create :after_create
+  after_create :generate_expense_values
+  after_update :generate_expense_values
 
-  def after_create
+  def generate_expense_values
 
-    new_date = Time.new
+    # Clear out existing values if the type is fixed
+    if self.isFixed
+      
+      ExpenseValue.delete_all(["expense_id = :expense_id", {:expense_id => self.id}])
 
-    while new_date < Time.new.end_of_year
-
-      ev = ExpenseValue.new(:expense_id => self.id, :amount => self.amount, :expense_date => new_date)
-      ev.save
-
-      case self.frequency
-
-        when "Weekly"
-          new_date += (7*24*60*60)
-        when "Bi-Weekly"
-          new_date += (14*24*60*60)
-        when "Monthly"
-          new_date = new_date.next_month
-        when "Bi-Monthly"
-          new_date = new_date.next_month
-          new_date = new_date.next_month
+      new_date = self.expense_date
+  
+      while new_date <= self.expense_date.end_of_year
+  
+        ev = ExpenseValue.new(:expense_id => self.id, :amount => self.amount, :expense_date => new_date)
+        ev.save
+  
+        case self.frequency
+  
+          when "Weekly"
+            new_date = new_date.next_week
+          when "Bi-Weekly"
+            new_date += (14*24*60*60)
+          when "Monthly"
+            new_date = new_date.next_month
+          when "Bi-Monthly"
+            new_date = new_date.next_month
+            new_date = new_date.next_month
+        end
+  
       end
-
+      
     end
 
   end

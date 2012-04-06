@@ -6,8 +6,7 @@
         <tr>
             <th>&nbsp;</th>
             <% @budget.periods.all.each do |period|  %>
-
-                <th><%= period.end_date.strftime("%m/%d") %></th>
+                <th><%= period.start_date.strftime("%m/%d") %></th>
             <% end %>
         </tr>
         <tr>
@@ -26,8 +25,9 @@
     <tbody>
 
     <%= render :partial => "income" %>
-
-
+	<%= render :partial => "fixed_expenses" %>
+	<%= render :partial => "variable_expenses" %>
+	
     </tbody>
 
 </table>
@@ -58,4 +58,9 @@
 
 <script>
   $("#expenseModal").modal({"show": false});
+  
+  <% if @budget.incomes.length == 0 %>
+  	$("#incomeModal").modal({keyboard: false, backdrop: 'static'});
+  	$("#incomeModal").load('/incomes/new?welcome=1');
+  <% end %>
 </script>

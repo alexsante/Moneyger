@@ -61,7 +61,7 @@ class ExpensesController < ApplicationController
 
     respond_to do |format|
       if @expense.update_attributes(params[:expense])
-        format.html { redirect_to @budget, notice: 'Expense was successfully updated.' }
+        format.html { redirect_to '/budgets', notice: 'Expense was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -1,23 +1,14 @@
 <tr>
   <th style="color: white; background-color: #333333;">Fixed Expenses</th>
-  <td colspan="<%= dates.length %>"  style="background-color: #333333;"> &nbsp;</td>
+  <td colspan="<%= @budget.periods.length %>"  style="background-color: #333333;"> &nbsp;</td>
 </tr>
 <% @budget.expenses.where(:isFixed => true).each do |expense| %>
     <tr>
-      <th nowrap="true"><%= expense.title %></th>
-      <% dates.each do |expense_date| %>
-          <% expense_value =  expense.expense_value_by_date expense_date
-             @fixed_expense_totals[expense_date.strftime('%m%d')]["total"] =+ expense_value
-             @income_totals[expense_date.strftime('%m%d')][:total] -= expense_value
-          %>
+    	  <th nowrap="true"><%= expense.title %></th>
+    	  
+    	  <% @budget.periods.all.each do |period| %>
+    	  <% expense_value = period.find_expense_values(expense) %>
           <td> <%= expense_value > 0 ? number_to_currency(expense_value) : ""  %> </td>
-      <% end %>
+          <% end %>
     </tr>
 <% end %>
-
-<tr>
-  <th>Remaining Balance</th>
-  <% dates.each do |date| %>
-      <td nowrap="true"><%= number_to_currency(@income_totals[date.strftime('%m%d')][:total]) %></td>
-  <% end %>
-</tr>
