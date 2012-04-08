@@ -58,7 +58,7 @@
 <% end %>
 
 <script type="text/javascript">
-  $(".datepicker").datepicker();
+  $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
   function expensetoggle(value){
  	if(value == 1) { $("#fixed-properties").toggleClass('hidden')}
   }
