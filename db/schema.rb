@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120406150701) do
+ActiveRecord::Schema.define(:version => 20120407221026) do
 
   create_table "budgets", :force => true do |t|
     t.string   "title"
@@ -36,9 +36,10 @@ ActiveRecord::Schema.define(:version => 20120406150701) do
     t.string   "title"
     t.string   "shortcode"
     t.integer  "budget_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.boolean  "isFixed"
+    t.integer  "auto_withdrawal", :default => 0
   end
 
   create_table "income_values", :force => true do |t|
@@ -50,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20120406150701) do
   end
 
   create_table "incomes", :force => true do |t|
-    t.datetime "income_date"
+    t.date     "income_date"
     t.decimal  "amount"
     t.string   "frequency"
     t.string   "title"

@@ -24,7 +24,7 @@
 
             <ul class="nav">
               <li><%= link_to 'Add Income', "#incomeModal", "data-toggle" => 'modal', "onClick" => '$("#incomeModal").load("/incomes/new")' %></li>
-              <li><%= link_to 'Add Expense', "#expenseModal", "data-toggle" => 'modal', "onClick" => '$("#expenseModal").load("/expenses/new")' %></li>
+              <li><%= link_to 'Add Expense Category', "#expenseModal", "data-toggle" => 'modal', "onClick" => '$("#expenseModal").load("/expenses/new.js")' %></li>
               <li><a href="">Settings</a></li>
               <li><a href="/budgets/<%= session[:budget_id] %>/edit">Edit Budget</a></li>
             </ul>

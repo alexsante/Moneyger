@@ -12,9 +12,9 @@ class Expense < ActiveRecord::Base
       
       ExpenseValue.delete_all(["expense_id = :expense_id", {:expense_id => self.id}])
 
-      new_date = self.expense_date
+      new_date = Date.parse(self.expense_date.to_s)
   
-      while new_date <= self.expense_date.end_of_year
+      while new_date <= Date.parse(self.expense_date.to_s).end_of_year
   
         ev = ExpenseValue.new(:expense_id => self.id, :amount => self.amount, :expense_date => new_date)
         ev.save

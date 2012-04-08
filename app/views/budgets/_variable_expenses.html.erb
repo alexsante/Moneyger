@@ -1,3 +1,4 @@
+<style>.progress{height: 6px; margin-bottom: 0px;}</style>
 <tr>
   <th style="color: white; background-color: #333333;">Variable Expenses</th>
   <td colspan="<%= @budget.periods.length %>"  style="background-color: #333333;"> &nbsp;</td>
@@ -7,10 +8,47 @@
     	  <th nowrap="true"><%= expense.title %></th>
     	  
     	  <% @budget.periods.all.each do |period| %>
-    	  <% expense_value = period.find_expense_values(expense) %>
-          <td id="expense_value_<%= period.id %>"> <%= expense_value > 0 ? number_to_currency(expense_value) : "0.00"  %>
-             <input type="button" class="btn btn-success" id="expense_value_button_<%= period.id %>" value="+"> 
+    	  <% 
+		  	expense_value = period.find_expense_values(expense)
+		  	if expense.amount.nil?
+		  	 	percent_spent = 0
+		    else
+		    	percent_spent = expense_value / expense.amount * 100
+		    	if percent_spent > 100
+		    		progress_css = "progress-danger progress-striped active"
+		    	elsif percent_spent < 100 && percent_spent > 75
+		    		progress_css = "progress-warning"
+		    	else
+		    		progress_css = "progress-success"
+		    	end	
+		   	end
+    	  %>
+    	  
+          <td id="expense_value_<%= period.id %>" onclick="edit_expense_values(<%= "#{period.id}, #{expense.id}" %>)" style="cursor: pointer"> 
+          	<%= expense_value > 0 ? number_to_currency(expense_value) : "0.00"  %>
+          	<div class="progress <%= progress_css %>">
+          		<div class="bar" 
+          			 style="width: <%= percent_spent %>%"></div>
+          	</div>
           </td>
           <% end %>
     </tr>
 <% end %>
+
+<div class="modal fade" id="expense_edit_container" style="display: none;">
+    <div class="modal-header">
+	    <a class="close" data-dismiss="modal">×</a>
+	    <h3>Variable Expenses</h3>
+    </div>
+    <div class="modal-body">
+    </div>
+</div>
+
+<script type="text/javascript">
+	function edit_expense_values(period_id, expense_id){
+		$.get("/expense_values", {period_id: period_id, expense_id: expense_id}, function(response){
+			$("#expense_edit_container div.modal-body").html(response);
+			$("#expense_edit_container").modal();
+		});
+	}
+</script>

@@ -2,11 +2,10 @@ class ExpenseValuesController < ApplicationController
   # GET /expense_values
   # GET /expense_values.json
   def index
-    @expense_values = ExpenseValue.all
-
+    @expense = Expense.find(params[:expense_id])
+    @period = Period.find(params[:period_id])
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @expense_values }
+      format.html { render :layout => false }
     end
   end
 
@@ -16,7 +15,7 @@ class ExpenseValuesController < ApplicationController
     @expense_value = ExpenseValue.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render :layout => false }
       format.json { render json: @expense_value }
     end
   end
@@ -41,10 +40,10 @@ class ExpenseValuesController < ApplicationController
   # POST /expense_values.json
   def create
     @expense_value = ExpenseValue.new(params[:expense_value])
-
+    
     respond_to do |format|
       if @expense_value.save
-        format.html { redirect_to @expense_value, notice: 'Expense value was successfully created.' }
+        format.html { redirect_to '/budgets', notice: 'Expense value was successfully created.' }
         format.json { render json: @expense_value, status: :created, location: @expense_value }
       else
         format.html { render action: "new" }

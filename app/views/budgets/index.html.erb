@@ -14,7 +14,7 @@
             <td colspan="<%= @budget.periods.length %>" style="background-color: #333333;"> &nbsp;</td>
         </tr>
         <tr>
-            <th>Beginning Balance</th>
+            <th>Balance</th>
             <% @budget.periods.all.each do |period|  %>
                 <td><%= number_to_currency(period.beginning_balance) %></td>
             <% end %>
@@ -26,6 +26,7 @@
 
     <%= render :partial => "income" %>
 	<%= render :partial => "fixed_expenses" %>
+	<%= render :partial => "fixed_expenses_aw" %>
 	<%= render :partial => "variable_expenses" %>
 	
     </tbody>

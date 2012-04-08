@@ -1,11 +1,10 @@
 <tr>
-  <th style="color: white; background-color: #333333;">Fixed Expenses</th>
-  <td colspan="<%= @budget.periods.length %>"  style="background-color: #333333;"> &nbsp;</td>
+  <th style="color: white; background-color: #333333;" colspan="<%= @budget.periods.length+1 %>">Fixed Expenses</th>
 </tr>
-<% @budget.expenses.where(:isFixed => true).each do |expense| %>
+<% @budget.expenses.where(:isFixed => true, :auto_withdrawal => false).each do |expense| %>
     <tr>
-    	  <th nowrap="true"><%= expense.title %></th>
-    	  
+    	  <th nowrap="true">
+    	  <%= expense.title %></th>
     	  <% @budget.periods.all.each do |period| %>
     	  <% expense_value = period.find_expense_values(expense) %>
           <td> <%= expense_value > 0 ? number_to_currency(expense_value) : ""  %> </td>

@@ -1,0 +1,19 @@
+<div class="alert alert-info">
+	<p><strong>Heads up!</strong></p>
+	<p>Below enter the amount spent in the <strong><%= @expense.title %></strong> expense category. You also have 
+		the option of entering a quick comment about the expense.</p>
+</div>
+<form class="well form-vertical" action="/expense_values" method="post">
+	<input type="text" name="expense_value[amount]" id="expense_amount" placeholder="Amount" size="5">
+	<input type="text" name="expense_value[comment]" id="expense_comment" placeholder="Comment">
+	<input type="text" name="expense_value[expense_date]" id="expense_date" 
+	placeholder="Expense Date" class="datepicker" value="<%= @period.start_date %>">
+	<input type="hidden" name="expense_value[expense_id]" value="<%= @expense.id %>">
+	<div class="modal-footer">
+	    <input type="submit" value="Save" class="btn btn-primary">
+    </div>
+</form>
+
+<script type="text/javascript">
+	$(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+</script>

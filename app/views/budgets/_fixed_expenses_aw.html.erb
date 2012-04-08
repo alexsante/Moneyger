@@ -1,0 +1,17 @@
+<tr>
+  <th style="color: white; background-color: #333333;" colspan="<%= @budget.periods.length + 1%>">Fixed Expenses <span class="label label-warning">Auto Withdrawals</span></th>
+</tr>
+<% @budget.expenses.where(:isFixed => true, :auto_withdrawal => true).each do |expense| %>
+    <tr>
+    	  <th nowrap="true">
+    	  	<% if expense.auto_withdrawal %>
+    	  		
+    	  	<% end %>
+    	  	<%= expense.title %></th>
+    	  
+    	  <% @budget.periods.all.each do |period| %>
+    	  <% expense_value = period.find_expense_values(expense) %>
+          <td> <%= expense_value > 0 ? number_to_currency(expense_value) : ""  %> </td>
+          <% end %>
+    </tr>
+<% end %>

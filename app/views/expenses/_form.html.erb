@@ -1,6 +1,6 @@
 <%= semantic_form_for @expense, :html => { :class => 'form-horizontal' } do |f| %>
   <fieldset>
-    <legend><%= controller.action_name.capitalize %> Expense</legend>
+    <legend><%= controller.action_name.capitalize %> Expense Category</legend>
 
     <div class="control-group">
       <%= f.label :title, :class => 'control-label' %>
@@ -8,49 +8,58 @@
         <%= f.text_field :title, :class => 'text_field' %>
       </div>
     </div>
-
+    
     <div class="control-group">
-      <%= f.label "Short Code", :class => 'control-label' %>
+      <%= f.label "Expense Type", :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :shortcode, :class => 'text_field' %>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <%= f.label :expense_date, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :expense_date, :class => 'text_field datepicker' %>
+      	<select name="expense[isFixed]" onchange="expensetoggle(this.value)">
+      		<option value="0">Variable</option>
+      		<option value="1">Fixed</option>
+      	</select>
       </div>
     </div>
     
     <div class="control-group">
-      <%= f.label :frequency, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.input :frequency,  :as => :select,  :collection => ["One Time","Weekly","Bi-Weekly", "Bi-Monthly", "Monthly", "Quarterly","Annually"], :label => false%>
-      </div>
-    </div>
+	    <%= f.label :amount, :class => 'control-label' %>
+		<div class="controls">
+		<%= f.text_field :amount, :class => 'text_field' %>
+		</div>
+	</div>
+	        
+    <div class="hidden" id="fixed-properties">
+	    <div class="control-group">
+	      <%= f.label "Date Due", :class => 'control-label' %>
+	      <div class="controls">
+	        <%= f.text_field :expense_date, :class => 'text_field datepicker' %>
+	      </div>
+	    </div>
+	    
+	    <div class="control-group">
+	      <%= f.label :frequency, :class => 'control-label' %>
+	      <div class="controls">
+	        <%= f.input :frequency,  :as => :select,  :collection => ["One Time","Weekly","Bi-Weekly", "Bi-Monthly", "Monthly", "Quarterly","Annually"], :label => false%>
+	      </div>
+	    </div>
+	
+	   <div class="control-group">
+		   	<div class="controls">
+		      <%= f.input :auto_withdrawal, :as => :boolean, :class => 'checkbox', :label => false %>
+		    </div>
+	    </div>
+	
+		 </div>
+	
+	    <div class="form-actions">
+	      <%= f.submit nil, :class => 'btn btn-primary' %>
+	      <%= link_to 'Cancel', expenses_path, :class => 'btn' %>
+	    </div>
 
-    <div class="control-group">
-    <%= f.label :amount, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :amount, :class => 'text_field' %>
-    </div>
-    </div>
-
-    <div class="control-group">
-      <%= f.label "Fixed Expense", :class => 'control-label' %>
-      <div class="controls">
-        <%= f.input :isFixed, :as => :radio, :collection => {"Yes" => 1, "No" => 0}, :label => false %>
-      </div>
-    </div>
-
-    <div class="form-actions">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel', expenses_path, :class => 'btn' %>
-    </div>
   </fieldset>
 <% end %>
 
 <script type="text/javascript">
   $(".datepicker").datepicker();
+  function expensetoggle(value){
+ 	if(value == 1) { $("#fixed-properties").toggleClass('hidden')}
+  }
 </script>
