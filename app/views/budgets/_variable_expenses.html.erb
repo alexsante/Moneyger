@@ -3,7 +3,7 @@
   <th style="color: white; background-color: #333333;">Variable Expenses</th>
   <td colspan="<%= @budget.periods.length %>"  style="background-color: #333333;"> &nbsp;</td>
 </tr>
-<% @budget.expenses.where(:isFixed => false).each do |expense| %>
+<% @budget.expenses.where(:isfixed => false).each do |expense| %>
     <tr>
     	  <th nowrap="true"><%= expense.title %></th>
     	  
@@ -34,6 +34,15 @@
           <% end %>
     </tr>
 <% end %>
+
+<tr>
+  <th style="color: #333333; background-color: #3399ff;">Total</th>
+  <% @budget.periods.all.each do |period| %>
+      <td style="color: #333333; background-color: #3399ff; font-weight: bold;" id="variable_expense_total_cell_">
+        <%= number_to_currency(period.variable_expense_total) %>
+      </td>
+  <% end %>
+</tr>
 
 <div class="modal fade" id="expense_edit_container" style="display: none;">
     <div class="modal-header">

@@ -9,6 +9,7 @@
 	<input type="text" name="expense_value[expense_date]" id="expense_date" 
 	placeholder="Expense Date" class="datepicker" value="<%= @period.start_date %>">
 	<input type="hidden" name="expense_value[expense_id]" value="<%= @expense.id %>">
+	<input type="hidden" name="period_id" value="<%= @period.id %>">
 	<div class="modal-footer">
 	    <input type="submit" value="Save" class="btn btn-primary">
     </div>

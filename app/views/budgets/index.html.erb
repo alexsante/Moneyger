@@ -16,7 +16,7 @@
         <tr>
             <th>Balance</th>
             <% @budget.periods.all.each do |period|  %>
-                <td><%= number_to_currency(period.beginning_balance) %></td>
+               <td><%= number_to_currency(period.beginning_balance) %></td>
             <% end %>
         </tr>
 
@@ -31,6 +31,12 @@
 	
     </tbody>
 
+	<tfoot>
+	<th style="color: #ffffff; background-color: #333333;">Remaining Balance</th>
+	<% @budget.periods.all.each do |period|  %>
+		<td style="color: #ffffff; background-color: #333333;"><%= number_to_currency(period.ending_balance) %></td>
+	<% end %>
+	</tfoot>
 </table>
 
 <div id="expenseModal" class="modal fade" style="display: none;">

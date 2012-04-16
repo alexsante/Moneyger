@@ -11,7 +11,10 @@ class BudgetsController < ApplicationController
   # GET /budgets.json
   def index
     @budget = current_budget
-
+    
+    # Keeps track of each period's end balance 
+    @period_carryover = @budget.periods.first.beginning_balance
+    
     @startDate = if Time.now.monday? then Time.now else Chronic.parse("Last monday") end
 
     respond_to do |format|

@@ -8,7 +8,7 @@ class Expense < ActiveRecord::Base
   def generate_expense_values
 
     # Clear out existing values if the type is fixed
-    if self.isFixed
+    if self.isfixed
       
       ExpenseValue.delete_all(["expense_id = :expense_id", {:expense_id => self.id}])
 

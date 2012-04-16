@@ -14,8 +14,9 @@
 <tr>
   <th style="color: #333333; background-color: #3399ff;">Total</th>
   <% @budget.periods.all.each do |period| %>
+  	  <% income_total = period.income_total %>
       <td style="color: #333333; background-color: #3399ff; font-weight: bold;" id="income_total_cell_">
-        <%= number_to_currency(period.income_total) %>
+        <%= number_to_currency(income_total) %>
       </td>
   <% end %>
 </tr>

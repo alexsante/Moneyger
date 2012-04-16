@@ -43,6 +43,7 @@ class ExpenseValuesController < ApplicationController
     
     respond_to do |format|
       if @expense_value.save
+        Period.recalculate_beginning_balances params[:period_id], current_budget.id
         format.html { redirect_to '/budgets', notice: 'Expense value was successfully created.' }
         format.json { render json: @expense_value, status: :created, location: @expense_value }
       else

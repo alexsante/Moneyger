@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  income_date: 2012-03-20
+  amount: 10
+  frequency: Monthly
+  title: Income 1
+  sort_weight: 1
+
+two:
+  id: 2
+  income_date: 2012-04-20
+  amount: 10
+  frequency: Monthly
+  title: Income 2
+  sort_weight: 1

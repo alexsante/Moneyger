@@ -1,0 +1,9 @@
+one:
+  income_id: 1
+  income_date: 2012-03-20
+  amount: 10
+  
+two:
+  income_id: 2
+  income_date: 2012-04-20
+  amount: 10

@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  expense_date: 2012-03-05 23:23:19
+  amount: 9.99
+  title: ABC Expense
+  shortcode: ABC
+  budget_id: 1
+  frequency: 'Monthly'
+  isfixed: TRUE
+  auto_withdrawal: 0
+  
+two:
+  id: 2
+  expense_date: 2012-03-05 23:23:19
+  amount: 9.99
+  title: CBA Expense
+  shortcode: ABC
+  budget_id: 1
+  frequency: 'Monthly'
+  isfixed: FALSE
+  auto_withdrawal: 0 
