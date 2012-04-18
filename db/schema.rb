@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20120407221026) do
     t.integer  "budget_id"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
-    t.boolean  "isfixed"
+    t.boolean  "isFixed"
     t.integer  "auto_withdrawal", :default => 0
   end
 

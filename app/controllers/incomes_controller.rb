@@ -27,7 +27,8 @@ class IncomesController < ApplicationController
     @income = Income.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html 
+      format.js { render :layout => false }     
       format.json { render json: @income }
     end
   end
@@ -45,7 +46,7 @@ class IncomesController < ApplicationController
 
     respond_to do |format|
       if @income.save
-        format.html { redirect_to @income, notice: 'Income was successfully created.' }
+        format.html { redirect_to "/budgets", notice: 'Income was successfully created.' }
         format.json { render json: @income, status: :created, location: @income }
       else
         format.html { render action: "new" }

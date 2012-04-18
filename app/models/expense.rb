@@ -49,6 +49,6 @@ class Expense < ActiveRecord::Base
     end
     expense_value
   end
-
+  
 end
 

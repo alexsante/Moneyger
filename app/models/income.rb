@@ -3,9 +3,13 @@ class Income < ActiveRecord::Base
   belongs_to :budget
   has_many :income_values
 
+  attr_accessor :generate_periods
+
   after_create :after_create
 
   def after_create
+
+    if self.generate_periods == true
 
     new_date = Date.parse(self.income_date.to_s)
     prev_beginning_balance = 0
@@ -39,14 +43,16 @@ class Income < ActiveRecord::Base
             new_date = new_date.end_of_month
           end
           
+        end
+        
+        # Set the current periods end date by using the next periods start date - 1 
+        period.end_date = new_date - 1
+        period.save
+        
+        # Reset the previous beginning balance
+        prev_beginning_balance = period.beginning_balance
+
       end
-      
-      # Set the current periods end date by using the next periods start date - 1 
-      period.end_date = new_date - 1
-      period.save
-      
-      # Reset the previous beginning balance
-      prev_beginning_balance = period.beginning_balance
 
     end
 

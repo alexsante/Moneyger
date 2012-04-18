@@ -12,8 +12,11 @@ class BudgetsController < ApplicationController
   def index
     @budget = current_budget
     
+    
     # Keeps track of each period's end balance 
-    @period_carryover = @budget.periods.first.beginning_balance
+    if @budget.periods.length > 0
+      @period_carryover = @budget.periods.first.beginning_balance
+    end
     
     @startDate = if Time.now.monday? then Time.now else Chronic.parse("Last monday") end
 
