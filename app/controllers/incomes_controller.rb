@@ -70,6 +70,19 @@ class IncomesController < ApplicationController
       end
     end
   end
+  
+  def quick_update
+    
+    income_value_id = params[:element_id].split("_")[2]
+    income_value = IncomeValue.find(income_value_id)
+    income_value.amount = params[:update_value]
+    income_value.save
+    
+    respond_to do |format|
+        format.html { render :text => income_value.amount }
+    end
+    
+  end
 
   # DELETE /incomes/1
   # DELETE /incomes/1.json

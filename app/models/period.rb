@@ -8,13 +8,7 @@ class Period < ActiveRecord::Base
   def find_income_value(income)
 
     # Returns all income values logged into this period and budget
-    income_value = IncomeValue.where("income_id = ? and income_date >= ? and income_date <= ?", income.id, self.start_date, self.end_date)
-
-    if income_value.length == 0
-      0
-    else
-      income_value.first.amount
-    end
+    income_value = IncomeValue.where("income_id = ? and income_date >= ? and income_date <= ?", income.id, self.start_date, self.end_date).first
 
   end
 

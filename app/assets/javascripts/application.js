@@ -18,3 +18,8 @@
 //= require_tree .
 
 $(".datepicker").datepicker({dateFormat: "yy/mm/dd"})
+
+function formatCurrency(num) {
+    num = isNaN(num) || num === '' || num === null ? 0.00 : num;
+    return "$"+parseFloat(num).toFixed(2);
+}

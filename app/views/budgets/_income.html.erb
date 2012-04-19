@@ -1,3 +1,6 @@
+<style>
+	input{width: 100%;}
+</style>
 <% @budget.incomes.each do |income| %>
     <tr>
       <th nowrap="true" ><%= income.title %></th>
@@ -6,7 +9,7 @@
              # Grab the income value
              income_value = period.find_income_value(income)
           %>
-          <td class="income_cell"> <%= income_value > 0 ? number_to_currency(income_value) : "" %></td>
+          <td class="income_cell" id="income_cell_<%= income_value.id %>"> <%= income_value != nil ? number_to_currency(income_value.amount) : "" %></td>
       <% end %>
     </tr>
 <% end %>
@@ -20,3 +23,9 @@
       </td>
   <% end %>
 </tr>
+
+<script>
+$(".income_cell").editInPlace({url: '/incomes/quick_update', success: function(response){
+	formatCurrency($(this).val());
+}});	
+</script>
