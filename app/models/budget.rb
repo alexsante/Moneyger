@@ -23,6 +23,17 @@ class Budget < ActiveRecord::Base
     i.budget_id = self.id
     i.save
   
+    # TODO: Refactor this by placing it in an income service (ie. create_other_income)
+    i = Income.new
+    i.amount = 0
+    i.frequency = "Bi-Weekly"
+    i.title = "Other"
+    i.sort_weight = 110
+    i.income_date = Time.now
+    i.generate_periods = false
+    i.budget_id = self.id
+    i.save
+  
     # TODO: Refactor this by placing it in an expense service (ie. create_savings_record)  
     e = Expense.new
     e.amount = 0

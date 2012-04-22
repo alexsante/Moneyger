@@ -1,7 +1,4 @@
-<style>
-	input{width: 100%;}
-</style>
-<% @budget.incomes.each do |income| %>
+<% @budget.incomes.order("sort_weight ASC").each do |income| %>
     <tr>
       <th nowrap="true" ><%= income.title %></th>
       <% @budget.periods.all.each do |period| %>
@@ -9,7 +6,7 @@
              # Grab the income value
              income_value = period.find_income_value(income)
           %>
-          <td class="income_cell" id="income_cell_<%= income_value.id %>"> <%= income_value != nil ? number_to_currency(income_value.amount) : "" %></td>
+          <td class="income_cell" id="income_cell_<%= income_value.nil? ? 0 : income_value.id %>"> <%= income_value != nil ? number_to_currency(income_value.amount) : "" %></td>
       <% end %>
     </tr>
 <% end %>
@@ -18,14 +15,8 @@
   <th style="color: #333333; background-color: #3399ff;">Total</th>
   <% @budget.periods.all.each do |period| %>
   	  <% income_total = period.income_total %>
-      <td style="color: #333333; background-color: #3399ff; font-weight: bold;" id="income_total_cell_">
-        <%= number_to_currency(income_total) %>
+      <td style="color: #333333; background-color: #3399ff; font-weight: bold;" id="income_total_<%= period.id %>">
+        <%= number_to_currency(income_total+period.beginning_balance) %>
       </td>
   <% end %>
 </tr>
-
-<script>
-$(".income_cell").editInPlace({url: '/incomes/quick_update', success: function(response){
-	formatCurrency($(this).val());
-}});	
-</script>

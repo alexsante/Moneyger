@@ -4,6 +4,13 @@
 	
 	<% if params.key? "welcome" %>
 		<div class="alert alert-info">Your budget is ready for setup! Moneyger now needs to know when you get paid, how often, and of course, how much?</div>
+		
+		<div class="control-group">
+	      <%= f.label "Starting Balance", :class => 'control-label' %>
+	      <div class="controls">
+			<input type="text" name="budget[beginning_balance]" placeholder="0.00">
+	      </div>
+	    </div>
 	<% end %>
 
 	

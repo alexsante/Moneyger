@@ -6,7 +6,8 @@ class Income < ActiveRecord::Base
   attr_accessor :generate_periods
 
   after_create :after_create
-
+  before_create :before_create
+  
   def after_create
 
     if self.generate_periods == true
@@ -22,7 +23,7 @@ class Income < ActiveRecord::Base
       # Start creating a new period
       period = Period.new
       period.start_date = new_date
-      period.beginning_balance = prev_beginning_balance + self.amount
+      period.beginning_balance = self.budget.beginning_balance
       period.budget_id = self.budget.id
 
       # Calculate the start of the next period
@@ -56,6 +57,13 @@ class Income < ActiveRecord::Base
 
     end
 
+  end
+
+  def before_create
+    
+    # If no sort weight is provided, default to zero
+    self.sort_weight = 0 if self.sort_weight == "" || self.sort_weight.nil? 
+    
   end
 
   def income_value_by_date(date)

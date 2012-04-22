@@ -5,7 +5,14 @@
 </tr>
 <% @budget.expenses.where(:isfixed => false).each do |expense| %>
     <tr>
-    	  <th nowrap="true"><%= expense.title %></th>
+    	<th nowrap="true">
+			<%= expense.title %> 
+			<% if expense.amount.nil? %>
+				<div>$0.00</div>
+			<% else %>
+				<div><%= number_to_currency expense.amount%>
+			<% end %>
+		</th>
     	  
     	  <% @budget.periods.all.each do |period| %>
     	  <% 
@@ -24,8 +31,8 @@
 		   	end
     	  %>
     	  
-          <td id="expense_value_<%= period.id %>" onclick="edit_expense_values(<%= "#{period.id}, #{expense.id}" %>)" style="cursor: pointer"> 
-          	<%= expense_value > 0 ? number_to_currency(expense_value) : "0.00"  %>
+          <td id="expense_value_<%= period.id %>" class="expense_value" period_id="<%= period.id %>" expense_id="<%= expense.id %>" style="cursor: pointer"> 
+          	<%= number_to_currency(expense_value)  %>
           	<div class="progress <%= progress_css %>">
           		<div class="bar" 
           			 style="width: <%= percent_spent %>%"></div>
@@ -38,8 +45,8 @@
 <tr>
   <th style="color: #333333; background-color: #3399ff;">Total</th>
   <% @budget.periods.all.each do |period| %>
-      <td style="color: #333333; background-color: #3399ff; font-weight: bold;" id="variable_expense_total_cell_">
-        <%= number_to_currency(period.variable_expense_total) %>
+      <td style="color: #333333; background-color: #3399ff; font-weight: bold;" id="variable_expense_total_cell_" nowrap="true">
+        - <%= number_to_currency(period.variable_expense_total) %>
       </td>
   <% end %>
 </tr>
@@ -52,12 +59,3 @@
     <div class="modal-body">
     </div>
 </div>
-
-<script type="text/javascript">
-	function edit_expense_values(period_id, expense_id){
-		$.get("/expense_values", {period_id: period_id, expense_id: expense_id}, function(response){
-			$("#expense_edit_container div.modal-body").html(response);
-			$("#expense_edit_container").modal();
-		});
-	}
-</script>

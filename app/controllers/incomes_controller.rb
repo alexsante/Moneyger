@@ -41,8 +41,12 @@ class IncomesController < ApplicationController
   # POST /incomes
   # POST /incomes.json
   def create
+    @budget = current_budget
+    @budget.update_attributes(params[:budget])
+    
     @income = Income.new(params[:income])
-    @income.budget_id = session[:budget_id]
+    @income.budget_id = @budget.id
+    @income.generate_periods = true
 
     respond_to do |format|
       if @income.save
@@ -79,7 +83,7 @@ class IncomesController < ApplicationController
     income_value.save
     
     respond_to do |format|
-        format.html { render :text => income_value.amount }
+        format.js { render :json => income_value.to_json(:include => :income) }
     end
     
   end

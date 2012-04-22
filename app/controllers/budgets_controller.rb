@@ -96,4 +96,17 @@ class BudgetsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  # GET /fetch_periods/1.json
+  def periods
+      
+      @periods = Period.periods_to_json(params[:id])
+
+      respond_to do |format|
+        format.json { render json:@periods } 
+      end
+      
+  end
+    
+    
 end

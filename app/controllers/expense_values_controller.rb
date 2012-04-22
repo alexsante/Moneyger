@@ -2,8 +2,9 @@ class ExpenseValuesController < ApplicationController
   # GET /expense_values
   # GET /expense_values.json
   def index
-    @expense = Expense.find(params[:expense_id])
     @period = Period.find(params[:period_id])
+    @expense = Expense.find(params[:expense_id])
+    
     respond_to do |format|
       format.html { render :layout => false }
     end
@@ -43,9 +44,8 @@ class ExpenseValuesController < ApplicationController
     
     respond_to do |format|
       if @expense_value.save
-        Period.recalculate_beginning_balances params[:period_id], current_budget.id
         format.html { redirect_to '/budgets', notice: 'Expense value was successfully created.' }
-        format.json { render json: @expense_value, status: :created, location: @expense_value }
+        format.json { render json: @expense_value.to_json(:include => :expense), status: :created, location: @expense_value  }
       else
         format.html { render action: "new" }
         format.json { render json: @expense_value.errors, status: :unprocessable_entity }
