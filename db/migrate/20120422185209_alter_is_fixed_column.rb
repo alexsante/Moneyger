@@ -1,6 +1,6 @@
 class AlterIsFixedColumn < ActiveRecord::Migration
   def up
-	change_column :expenses, :isFixed, :isfixed
+	rename_column :expenses, :isFixed, :isfixed
   end
 
   def down
