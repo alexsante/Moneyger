@@ -27,9 +27,9 @@ class Income < ActiveRecord::Base
       period.budget_id = self.budget.id
 
       # Calculate the start of the next period
-      case self.frequency
+      case self.frequency.downcase
         
-        when "Bi-Weekly"
+        when "bi-weekly"
           
           if new_date == new_date.end_of_month
             new_date += 15
