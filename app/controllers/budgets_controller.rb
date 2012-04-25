@@ -11,7 +11,7 @@ class BudgetsController < ApplicationController
   # GET /budgets.json
   def index
     @budget = current_budget
-    
+    @periods = @budget.periods.order(:id) 
     
     # Keeps track of each period's end balance 
     if @budget.periods.length > 0

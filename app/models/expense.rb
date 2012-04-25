@@ -2,8 +2,12 @@ class Expense < ActiveRecord::Base
   has_many :expense_values, :dependent => :destroy
   belongs_to :budget
 
-  after_create :generate_expense_values
+  after_create :generate_expense_values, :after_create
   after_update :generate_expense_values
+
+  def after_create
+    Period.recalculate_beginning_balances(budget_id = self.budget_id)
+  end
 
   def generate_expense_values
 

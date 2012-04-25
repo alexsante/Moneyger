@@ -1,31 +1,31 @@
 <h1><%= @budget.title %></h1>
 
+
 <table class="table table-striped" id="budget">
     <thead>
 
         <tr>
             <th>&nbsp;</th>
-            <% @budget.periods.all.each do |period|  %>
+            <% @periods.each do |period|  %>
                 <th style="text-align: center;"><%= period.start_date.strftime("%m/%d") %></th>
             <% end %>
         </tr>
 		<tr id="starting_balance">
             <th>Starting Balance</th>
-            <% @budget.periods.all.each do |period|  %>
+            <% @periods.each do |period|  %>
                <td id="balance_<%= period.id %>"><%= number_to_currency(period.beginning_balance) %></td>
             <% end %>
         </tr>        
 		<tr>
             <th style="color: #ffffff; background-color: #333333;">Income</th>
-            <td colspan="<%= @budget.periods.length %>" style="background-color: #333333;"> &nbsp;</td>
+            <td colspan="<%= @periods.length %>" style="background-color: #333333;"> &nbsp;</td>
         </tr>
-        
 
     </thead>
 
     <tbody>
 
-    <%= render :partial => "income" %>
+        <%= render :partial => "income" %>
 	<%= render :partial => "fixed_expenses" %>
 	<%= render :partial => "fixed_expenses_aw" %>
 	<%= render :partial => "variable_expenses" %>
@@ -34,7 +34,7 @@
 
 	<tfoot>
 	<th style="color: #ffffff; background-color: #333333;">Remaining Balance</th>
-	<% @budget.periods.all.each do |period|  %>
+	<% @periods.each do |period|  %>
 		<td id="remaining_balance_<%= period.id %>" style="color: #ffffff; background-color: #333333;"><%= number_to_currency(period.ending_balance) %></td>
 	<% end %>
 	</tfoot>

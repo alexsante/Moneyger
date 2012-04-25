@@ -53,10 +53,16 @@ class Period < ActiveRecord::Base
   
   def self.recalculate_beginning_balances(period_id=0, budget_id)
     # Recalculates the beginning balance of a every period in the budget starting from period passed in
-    periods = Period.where("id >= ? and budget_id = ?", period_id, budget_id)
+    periods = Period.where("id >= ? and budget_id = ?", period_id, budget_id).order(:id)
     
-    (1...periods.length).each do |i|
-      periods.at(i).update_attributes(:beginning_balance => periods.at(i-1).ending_balance)  
+    periods.each_with_index do |p,i|
+      if i > 0
+        p.update_attributes(:beginning_balance => periods[i-1].ending_balance)
+        puts "-----------------------"
+        puts i.to_s + " to " + (i-1).to_s
+        puts "#{p.beginning_balance} BB / #{p.ending_balance} EB"
+        puts "-----------------------"
+      end
     end
     
   end
@@ -65,7 +71,7 @@ class Period < ActiveRecord::Base
     
     @response = []
     
-    Period.where(:budget_id => budget_id).each do |period|
+    Period.where(:budget_id => budget_id).order(:id).each do |period|
       
       @response << {:period_id => period.id, 
                     :beginning_balance => period.beginning_balance, 
