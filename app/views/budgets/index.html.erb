@@ -1,5 +1,6 @@
 <h1><%= @budget.title %></h1>
 
+
 <table class="table table-striped" id="budget">
     <thead>
 
@@ -19,13 +20,12 @@
             <th style="color: #ffffff; background-color: #333333;">Income</th>
             <td colspan="<%= @periods.length %>" style="background-color: #333333;"> &nbsp;</td>
         </tr>
-        
 
     </thead>
 
     <tbody>
 
-    <%= render :partial => "income" %>
+        <%= render :partial => "income" %>
 	<%= render :partial => "fixed_expenses" %>
 	<%= render :partial => "fixed_expenses_aw" %>
 	<%= render :partial => "variable_expenses" %>
