@@ -25,7 +25,7 @@ class Period < ActiveRecord::Base
       ev.expense_value_total.to_i > 0 ? ev.expense_value_total.to_i : 0.00
     end
   end
-  
+
   def fixed_expense_total(auto_withdrawal = 0)
     ExpenseValue.joins(:expense).sum(:amount, :conditions => ["isfixed = TRUE and expense_values.expense_date >= ? and expense_values.expense_date <= ? and budget_id = ? and auto_withdrawal = ?", 
                                                                       self.start_date, self.end_date, self.budget_id, auto_withdrawal])
@@ -43,7 +43,9 @@ class Period < ActiveRecord::Base
   end
 
   def income_total
-    IncomeValue.joins(:income).sum(:amount, :conditions => ["income_values.income_date >= ? and income_values.income_date <= ?", self.start_date, self.end_date])
+    IncomeValue.joins(:income).sum(:amount,
+                                   :conditions => ["income_values.income_date >= ? and income_values.income_date <= ? and incomes.budget_id = ?",
+                                                    self.start_date, self.end_date, self.budget_id])
   end
   
   def ending_balance
@@ -79,5 +81,11 @@ class Period < ActiveRecord::Base
     
     @response
   end
+
+  def self.find_by_date_range(date,budget_id)
+    Period.where("budget_id = :budget_id AND start_date <= :date and end_date >= :date", :budget_id => budget_id, :date => date).first
+  end
+  
+
 
 end

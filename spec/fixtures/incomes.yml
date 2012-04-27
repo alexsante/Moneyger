@@ -7,6 +7,7 @@ one:
   frequency: Monthly
   title: Income 1
   sort_weight: 1
+  budget_id: 1
 
 two:
   id: 2
@@ -15,3 +16,4 @@ two:
   frequency: Monthly
   title: Income 2
   sort_weight: 1
+  budget_id: 1

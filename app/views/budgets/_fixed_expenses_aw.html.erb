@@ -1,5 +1,5 @@
 <tr>
-  <th style="color: white; background-color: #333333;" colspan="<%= @budget.periods.length + 1%>">Fixed Expenses <span class="label label-warning">Auto Withdrawals</span></th>
+  <th style="color: white; background-color: #333333;" colspan="<%= @periods.length + 1%>">Fixed Expenses <span class="label label-warning">Auto Withdrawals</span></th>
 </tr>
 <% @budget.expenses.where(:isfixed => true, :auto_withdrawal => true).each do |expense| %>
     <tr>
@@ -9,7 +9,7 @@
     	  	<% end %>
     	  	<%= expense.title %></th>
     	  
-    	  <% @budget.periods.all.each do |period| %>
+    	  <% @periods.each do |period| %>
     	  <% expense_value = period.find_expense_values(expense) %>
           <td> <%= expense_value > 0 ? number_to_currency(expense_value) : ""  %> </td>
           <% end %>
@@ -19,7 +19,7 @@
 
 <tr>
   <th style="color: #333333; background-color: #3399ff;">Total</th>
-  <% @budget.periods.all.each do |period| %>
+  <% @periods.each do |period| %>
       <td style="color: #333333; background-color: #3399ff; font-weight: bold;" id="fixed__aw_expense_total_cell_">
         <%= number_to_currency(period.fixed_expense_total(1)) %>
       </td>

@@ -14,28 +14,27 @@
 			<% end %>
 		</th>
     	  
-    	  <% @budget.periods.all.each do |period| %>
+    	  <% @periods.each do |period| %>
     	  <% 
-		  	expense_value = period.find_expense_values(expense)
+                    expense_value = period.find_expense_values(expense)
 		  	if expense.amount.nil?
-		  	 	percent_spent = 0
-		    else
-		    	percent_spent = expense_value / expense.amount * 100
-		    	if percent_spent > 100
-		    		progress_css = "progress-danger progress-striped active"
-		    	elsif percent_spent < 100 && percent_spent > 75
-		    		progress_css = "progress-warning"
-		    	else
-		    		progress_css = "progress-success"
-		    	end	
+                          percent_spent = 0
+                        else
+                          percent_spent = expense_value / expense.amount * 100
+                          if percent_spent > 100
+                            progress_css = "progress-danger progress-striped active"
+                          elsif percent_spent < 100 && percent_spent > 75
+                            progress_css = "progress-warning"
+                          else
+                            progress_css = "progress-success"
+                          end	
 		   	end
     	  %>
     	  
-          <td id="expense_value_<%= period.id %>" class="expense_value" period_id="<%= period.id %>" expense_id="<%= expense.id %>" style="cursor: pointer"> 
-          	<%= number_to_currency(expense_value)  %>
+        <td id="<%="expense_value_#{expense.id}_#{period.id}"%>" class="expense_value" period_id="<%= period.id %>" expense_id="<%= expense.id %>" style="cursor: pointer"> 
+                <span><%= number_to_currency(expense_value)  %></span>
           	<div class="progress <%= progress_css %>">
-          		<div class="bar" 
-          			 style="width: <%= percent_spent %>%"></div>
+          		<div class="bar" style="width: <%= percent_spent %>%"></div>
           	</div>
           </td>
           <% end %>
@@ -44,7 +43,7 @@
 
 <tr>
   <th style="color: #333333; background-color: #3399ff;">Total</th>
-  <% @budget.periods.all.each do |period| %>
+  <% @periods.each do |period| %>
       <td style="color: #333333; background-color: #3399ff; font-weight: bold;" id="variable_expense_total_cell_" nowrap="true">
         - <%= number_to_currency(period.variable_expense_total) %>
       </td>

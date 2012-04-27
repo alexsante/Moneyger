@@ -50,5 +50,16 @@ class Expense < ActiveRecord::Base
     expense_value
   end
   
+  def sum_expense_values(period)
+
+      ExpenseValue.joins(:expense).sum(:amount, :conditions => ["expense_values.expense_date >= ? and
+                                                       expense_values.expense_date <= ? and
+                                                       expenses.budget_id = ?",
+                                                       period.start_date,
+                                                       period.end_date,
+                                                       period.budget_id]).to_f
+
+  end
+
 end
 

@@ -22,4 +22,5 @@ describe Period do
     period = Period.first
     period.beginning_balance.should eq 9.99
   end
+
 end

@@ -41,11 +41,18 @@ class ExpenseValuesController < ApplicationController
   # POST /expense_values.json
   def create
     @expense_value = ExpenseValue.new(params[:expense_value])
+    period = Period.find_by_date_range(@expense_value.expense_date,current_budget.id)
     
     respond_to do |format|
       if @expense_value.save
         format.html { redirect_to '/budgets', notice: 'Expense value was successfully created.' }
-        format.json { render json: @expense_value.to_json(:include => :expense), status: :created, location: @expense_value  }
+        format.json { 
+          response = {:budget_id => period.budget_id, 
+                      :period_id => period.id, 
+                      :period_total => @expense_value.expense.sum_expense_values(period),
+                      :expense_id => @expense_value.expense.id}
+          render json: response.to_json, status: :created, location: @expense_value  
+        }
       else
         format.html { render action: "new" }
         format.json { render json: @expense_value.errors, status: :unprocessable_entity }

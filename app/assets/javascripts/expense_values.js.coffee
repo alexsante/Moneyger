@@ -15,18 +15,21 @@ $ ->
 				title: "Variable expense entries"		
 				
 			show: "click"
-			hide: "click"
+			hide: "unfocus"
 			position:  
 				my: 'bottom center'
 				at: 'top center'
 				target: 'event'
+				adjust:
+					y: -25
 			style:
 				classes: 'ui-tooltip-wiki ui-tooltip-light ui-tooltip-shadow'
 				
 @create_expense = (event) ->
+	# Responds to "ENTER" and "TAB"
 	if event.keyCode == 13 || event.keyCode == 9
 
-
+		# Create the new expense value
 		response = $.ajax '/expense_values.json', 
 			type: 'POST'
 			dataType: 'JSON'
@@ -52,4 +55,6 @@ $ ->
 				$("#expense_comment").val("");
 				
 				# Update the budget
-				Budget.refresh data.expense.budget_id
+				Budget.refresh data.budget_id
+
+				$("#expense_value_"+data.expense_id+"_"+data.period_id+" span").html(formatCurrency(data.period_total))
