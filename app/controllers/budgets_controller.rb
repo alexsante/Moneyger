@@ -12,16 +12,6 @@ class BudgetsController < ApplicationController
   def index
     @budget = current_budget
     @periods = @budget.periods.order(:id).all    
-=======
-    @periods = @budget.periods.order(:id) 
-    
-    # Keeps track of each period's end balance 
-    if @budget.periods.length > 0
-      @period_carryover = @budget.periods.first.beginning_balance
-    end
->>>>>>> eda7516168ecc281eac83121c0fe5717f5040a61
-    
-    @startDate = if Time.now.monday? then Time.now else Chronic.parse("Last monday") end
 
     respond_to do |format|
       format.html # index.html.erb

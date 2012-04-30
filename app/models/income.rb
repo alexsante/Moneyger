@@ -12,48 +12,21 @@ class Income < ActiveRecord::Base
 
     if self.generate_periods == true
 
-    new_date = Date.parse(self.income_date.to_s)
-    prev_beginning_balance = 0
+      new_date = BudgetsHelper::DateHelper.new self.income_date,self.frequency
 
-    while new_date <= Date.parse(self.income_date.to_s).end_of_year
+      while new_date.current_date <= self.income_date.next_year
 
-      ev = IncomeValue.new(:income_id => self.id, :amount => self.amount, :income_date => new_date)
-      ev.save
-      
-      # Start creating a new period
-      period = Period.new
-      period.start_date = new_date
-      period.beginning_balance = self.budget.beginning_balance
-      period.budget_id = self.budget.id
-
-      # Calculate the start of the next period
-      case self.frequency.downcase
+        ev = IncomeValue.new(:income_id => self.id, :amount => self.amount, :income_date => new_date.current_date)
+        ev.save
         
-        when "bi-weekly"
-          
-          if new_date == new_date.end_of_month
-            new_date += 15
-            if new_date.wday == 6
-              new_date -= 1
-            elsif new_date.wday == 7
-              new_date -= 2
-            end 
-          elsif new_date.mday == 1
-            new_date += 14
-          else
-            new_date = new_date.end_of_month
-          end
-          
-        end
-        
-        # Set the current periods end date by using the next periods start date - 1 
-        period.end_date = new_date - 1
-        period.save
-        
-        # Reset the previous beginning balance
-        prev_beginning_balance = period.beginning_balance
+        new_date.next
 
       end
+
+      # Generate the periods
+      Period.generate(self)
+      # Recalculate period balances
+      Period.recalculate_beginning_balances(budget_id = self.budget_id)
 
     end
 

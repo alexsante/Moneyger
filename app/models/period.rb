@@ -13,6 +13,7 @@ class Period < ActiveRecord::Base
   end
 
   def find_expense_values(expense)
+    
     # Returns all expense values logged into this period and budget
     ev = ExpenseValue.joins(:expense).select("SUM(expense_values.amount) as expense_value_total").where(
                                               "expenses.id = :expense_id 
@@ -24,14 +25,21 @@ class Period < ActiveRecord::Base
     else
       ev.expense_value_total.to_i > 0 ? ev.expense_value_total.to_i : 0.00
     end
+
   end
 
   def fixed_expense_total(auto_withdrawal = 0)
-    ExpenseValue.joins(:expense).sum(:amount, :conditions => ["isfixed = TRUE and expense_values.expense_date >= ? and expense_values.expense_date <= ? and budget_id = ? and auto_withdrawal = ?", 
-                                                                      self.start_date, self.end_date, self.budget_id, auto_withdrawal])
+    ExpenseValue.joins(:expense).sum(:amount, :conditions => ["isfixed = TRUE 
+                                                               and expense_values.expense_date >= ? 
+                                                               and expense_values.expense_date <= ? 
+                                                               and budget_id = ? 
+                                                               and auto_withdrawal = ?", 
+                                                               self.start_date, self.end_date, self.budget_id, auto_withdrawal])
   end
   
   def variable_expense_total
+
+    # Keeps track of a running total
     total = 0
     
     Expense.where(:budget_id => self.budget_id, :isfixed => false).each do |expense|
@@ -39,31 +47,32 @@ class Period < ActiveRecord::Base
     end
     
     total
-    
   end
 
   def income_total
-    IncomeValue.joins(:income).sum(:amount,
-                                   :conditions => ["income_values.income_date >= ? and income_values.income_date <= ? and incomes.budget_id = ?",
-                                                    self.start_date, self.end_date, self.budget_id])
+
+    IncomeValue.joins(:income).sum(:amount, :conditions => ["income_values.income_date >= ? 
+                                                            and income_values.income_date <= ? 
+                                                            and incomes.budget_id = ?",
+                                                            self.start_date, self.end_date, self.budget_id])
+
   end
   
   def ending_balance
+
     # TODO: Optimize this line of code so it doesn't have to hit the DB 4 times
     self.beginning_balance + income_total - fixed_expense_total - fixed_expense_total(1) - variable_expense_total
+
   end
   
   def self.recalculate_beginning_balances(period_id=0, budget_id)
+
     # Recalculates the beginning balance of a every period in the budget starting from period passed in
     periods = Period.where("id >= ? and budget_id = ?", period_id, budget_id).order(:id)
     
     periods.each_with_index do |p,i|
       if i > 0
         p.update_attributes(:beginning_balance => periods[i-1].ending_balance)
-        puts "-----------------------"
-        puts i.to_s + " to " + (i-1).to_s
-        puts "#{p.beginning_balance} BB / #{p.ending_balance} EB"
-        puts "-----------------------"
       end
     end
     
@@ -89,9 +98,37 @@ class Period < ActiveRecord::Base
   end
 
   def self.find_by_date_range(date,budget_id)
+    # Returns a single budget active record based on the date and budget id
+    # passed in. 
     Period.where("budget_id = :budget_id AND start_date <= :date and end_date >= :date", :budget_id => budget_id, :date => date).first
   end
   
+  # Based on the income value passed in, this class will generate period
+  # records. The income object contains a frequency value that will be used to
+  # determine how many periods actually need to be created.
+  def self.generate(income)
+
+    # Keep track of the running date
+    new_date = BudgetsHelper::DateHelper.new(income.income_date,income.frequency)
+
+    while new_date.current_date < income.income_date.next_year
+      
+      period = Period.new(:start_date => new_date.current_date, 
+                          :budget_id => income.budget_id,
+                          :beginning_balance => income.budget.beginning_balance)
+
+      new_date.next
+
+      # Sets the current periods end date by using the next period's start date
+      # minus one
+      period.end_date = new_date.current_date - 1
+      period.save
 
 
-end
+    end
+
+      
+    Period.count
+  end
+
+end  

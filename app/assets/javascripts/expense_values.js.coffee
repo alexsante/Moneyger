@@ -17,11 +17,9 @@ $ ->
 			show: "click"
 			hide: "unfocus"
 			position:  
-				my: 'bottom center'
-				at: 'top center'
+				my: 'left center'
+				at: 'right center'
 				target: 'event'
-				adjust:
-					y: -25
 			style:
 				classes: 'ui-tooltip-wiki ui-tooltip-light ui-tooltip-shadow'
 				

@@ -23,4 +23,8 @@ describe Period do
     period.beginning_balance.should eq 9.99
   end
 
+  it "should generate bi-weekly periods" do
+    Period.generate(Income.first).should > 0
+  end
+
 end

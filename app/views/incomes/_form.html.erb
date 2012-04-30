@@ -17,7 +17,7 @@
     <div class="control-group">
       <%= f.label "Start Date", :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :income_date, :class => 'text_field' %>
+        <%= f.text_field :income_date, :class => 'text_field, datepicker' %>
       </div>
     </div>
 
@@ -31,7 +31,7 @@
     <div class="control-group">
       <%= f.label :frequency, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :frequency, :class => 'text_field' %>
+        <%= f.select :frequency, ["Weekly","Bi-Weekly","Bi-Monthly","Monthly","Quarterly","Yearly"], :class => 'text_field' %>
       </div>
     </div>
 
@@ -44,7 +44,10 @@
 
     <div class="form-actions">
       <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel', incomes_path, :class => 'btn' %>
     </div>
   </fieldset>
 <% end %>
+
+<script type="text/javascript">
+  $(".datepicker").datepicker({dateFormat: "yy/mm/dd"})
+</script>
