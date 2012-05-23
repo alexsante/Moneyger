@@ -2,12 +2,27 @@
   <th style="color: white; background-color: #333333;" colspan="<%= @periods.length+1 %>">Fixed Expenses</th>
 </tr>
 <% @budget.expenses.where(:isfixed => true, :auto_withdrawal => false).order("id ASC").each do |expense| %>
-    <tr>
+    <tr class="fixed_expense_row">
     	  <th nowrap="true">
     	  <%= expense.title %></th>
     	  <% @periods.each do |period| %>
-    	  <% expense_value = period.find_expense_values(expense) %>
-          <td> <%= expense_value > 0 ? number_to_currency(expense_value) : ""  %> </td>
+	    	  <% expense_value = expense.expense_value_by_period(period) %>
+	    	  
+	    	  <% if expense_value.nil? == false %>
+	          <td class="is_paid_<%= expense_value.is_paid %>" id="expense_value_<%= expense_value.id %>" nowrap="true">
+	          	<div>
+	          		<span>
+	          		<input type="checkbox" 
+	          				onClick="expense.toggle_paid(this)" 
+	          				id="expense_value_toggle_<%= expense_value.id %>" 
+	          				<%= expense_value.is_paid == true ? 'checked' : '' %>/> 
+	          		<%= expense_value.amount > 0 ? number_to_currency(expense_value.amount) : ""  %>
+	          		</span>
+	          	</div>
+	          </td>
+	          <% else %>
+	          <td>&nbsp;</td>
+	          <% end %>
           <% end %>
     </tr>
 <% end %>

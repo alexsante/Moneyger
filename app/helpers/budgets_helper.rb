@@ -17,6 +17,10 @@ module BudgetsHelper
         next_week
       elsif self.frequency.downcase == "bi-weekly"
         next_biweek
+      elsif self.frequency.downcase == "bi-monthly"
+        next_bimonth
+      elsif self.frequency.downcase == "quarterly"
+        next_quarter
       elsif self.frequency.downcase == "monthly"
         next_month
       end
@@ -33,6 +37,14 @@ module BudgetsHelper
     end
 
     def next_biweek
+      self.current_date= self.current_date + 14
+    end
+
+    def next_quarter
+      self.current_date= self.current_date.next_month.next_month.next_month
+    end
+
+    def next_bimonth
 
       date = self.current_date
     

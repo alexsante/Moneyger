@@ -19,7 +19,7 @@ describe Income do
     # Create a new income record with the generate periods flag active
     income = Income.new
     income.title= "Test income title"
-    income.income_date = Time.new
+    income.income_date = Date.today + 1
     income.amount = 100
     income.frequency = "Bi-Weekly"
     income.budget_id = @budget.id
@@ -36,7 +36,7 @@ describe Income do
     # Create a new income record with the generate periods flag active
     income = Income.new
     income.title= "Test income title"
-    income.income_date = Time.new
+    income.income_date = Date.today + 1
     income.amount = 100
     income.frequency = "Bi-Weekly"
     income.budget_id = @budget.id
@@ -56,15 +56,36 @@ describe Income do
     # Create a new income record with the generate periods flag active
     income = Income.new
     income.title= "Test income title"
-    income.income_date = Time.new
+    income.income_date = Date.today + 1
     income.amount = 100
     income.frequency = "Bi-Weekly"
     income.budget_id = @budget.id
     income.generate_periods = false
     income.save.should == true
     
-    # Confirm the number of periods generated is no longer zero
+    # Confirm the number of periods generated is still zero
     Period.where(:budget_id => @budget.id).count.should == 0
+    
+  end
+  
+  it "should fail validation if the income date is not in the future" do
+    
+     # Create a new income record with the generate periods flag active
+    income = Income.new
+    income.title= "Test income title"
+    income.income_date = "2012-01-01"
+    income.amount = 100
+    income.frequency = "Bi-Weekly"
+    income.budget_id = @budget.id
+    income.generate_periods = true
+
+    # Object should have failed validation and not have saved
+    income.save.should == false
+    income.valid?.should == false
+    
+    # Check the error message returned
+    income.errors[:income_date].should == "Income date must be in the future"
+    
     
   end
   
