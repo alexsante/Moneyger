@@ -18,7 +18,7 @@ class Expense < ActiveRecord::Base
 
       new_date = Date.parse(self.expense_date.to_s)
   
-      while new_date <= Date.parse(self.expense_date.to_s).end_of_year
+      while new_date <= Date.parse(self.expense_date.to_s).next_year
   
         ev = ExpenseValue.new(:expense_id => self.id, :amount => self.amount, :expense_date => new_date)
         ev.save
