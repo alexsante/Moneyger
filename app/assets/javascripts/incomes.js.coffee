@@ -26,6 +26,9 @@ $ ->
       jConfirm "Would you like to apply this change to future income entries?","Confirm", (r) ->
         if r == true
           Income.update_future_entries(response.income.id, response.income_date, response.amount, response.income.budget_id);
-          
+
+       # Refresh the budget
+      Budget.refresh(response.income.budget_id)    
+   
 
         

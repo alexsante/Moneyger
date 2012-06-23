@@ -82,4 +82,29 @@ class ExpensesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def quick_update
+    
+    expense_value_id = params[:element_id].split("_")[2]
+    expense_value = ExpenseValue.find(expense_value_id)
+    expense_value.amount = params[:update_value]
+    expense_value.save
+    
+    respond_to do |format|
+        format.js { render :json => expense_value.to_json(:include => :expense) }
+    end
+    
+  end
+  
+  def update_expense_values
+    
+    expense = Expense.find(params[:id])
+    expense.update_future_values_entries(params[:date], params[:amount])
+    
+    respond_to do |format|
+      format.js { render :json => expense.to_json(:include => :expense_values)}
+    end
+    
+  end
+  
 end

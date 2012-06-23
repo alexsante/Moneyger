@@ -16,12 +16,15 @@
 	          				onClick="expense.toggle_paid(this)" 
 	          				id="expense_value_toggle_<%= expense_value.id %>" 
 	          				<%= expense_value.is_paid == true ? 'checked' : '' %>/> 
-	          		<%= expense_value.amount > 0 ? number_to_currency(expense_value.amount) : ""  %>
+	          			<span class="expense_cell"
+	          				  id="expense_cell_<%= expense_value.id %>">
+	          				<%= expense_value.amount > 0 ? number_to_currency(expense_value.amount) : "$0.00"  %>
+	          			</span>
 	          		</span>
 	          	</div>
 	          </td>
 	          <% else %>
-	          <td>&nbsp;</td>
+	          <td class="expense_cell">&nbsp;</td>
 	          <% end %>
           <% end %>
     </tr>

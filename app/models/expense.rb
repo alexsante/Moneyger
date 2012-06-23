@@ -79,6 +79,13 @@ class Expense < ActiveRecord::Base
                                                        period.budget_id]).to_f
 
   end
+  
+  # Will update the value of all expense value entries going forward.
+  def update_future_values_entries(date,amount)
+    ExpenseValue.update_all({:amount => amount},["expense_date >= ? AND expense_id = ?", date, self.id])
+    # Recalculate period balances
+    Period.recalculate_beginning_balances(budget_id = self.budget_id)
+  end
 
 end
 
