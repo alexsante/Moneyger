@@ -84,8 +84,42 @@ describe Income do
     income.valid?.should == false
     
     # Check the error message returned
-    income.errors[:income_date].should == "Income date must be in the future"
+    income.errors[:income_date][0].should == "Income date must be in the future"
     
+    
+  end
+  
+  it "should update all values for income value entries past the given date" do
+    
+    # Confirm the number of periods is starting at zero
+    Period.where(:budget_id => @budget.id).count.should == 0
+    
+    # Create a new income record with the generate periods flag active
+    income = Income.new
+    income.title= "Test income title"
+    income.income_date = Date.today + 1
+    income.amount = 100
+    income.frequency = "Bi-Weekly"
+    income.budget_id = @budget.id
+    income.generate_periods = true
+    income.save.should == true
+    
+    # Confirm the number of periods generated is no longer zero
+    Period.where(:budget_id => @budget.id).count.should > 0
+    
+    # Confirm all income value entries are for $100 dollars
+    income.income_values.each do |iv|
+      iv.amount.should == 100
+    end
+    
+    # Now update all income values going forward to $200 dollars
+    iv = income.income_values.first
+    income.update_future_values_entries(iv.income_date,200)
+    
+    # Confirm all income value entries are for $200 dollars
+    IncomeValue.where(:income_id => income.id).each do |iv|
+      iv.amount.to_i.should == 200
+    end
     
   end
   

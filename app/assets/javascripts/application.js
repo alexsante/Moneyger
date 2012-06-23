@@ -20,6 +20,28 @@
 $(".datepicker").datepicker({dateFormat: "yy/mm/dd"})
 
 function formatCurrency(num) {
-    num = isNaN(num) || num === '' || num === null ? 0.00 : num;
-    return "$"+parseFloat(num).toFixed(2);
+    return accounting.formatMoney(num);
 }
+
+function dialog(title, content, cb)
+{
+	
+	$('<div></div>').appendTo('body')
+	                    .html(content)
+	                    .dialog({
+	                        modal: true, title: title, zIndex: 10000, autoOpen: true,
+	                        width: 'auto', modal: true, resizable: false,
+	                        buttons: {
+	                           
+	                            No: function () {
+	                                $(this).dialog("destroy");
+	                            },
+	                            Yes: function(){
+	                            	setTimeout(cb,0);
+	                            }
+	                        },
+	                        close: function (event, ui) {
+	                            $(this).remove();
+	                        }
+	                    });
+}	                    

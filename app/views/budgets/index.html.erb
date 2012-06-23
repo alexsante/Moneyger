@@ -13,7 +13,7 @@
 		<tr id="starting_balance">
             <th>Starting Balance</th>
             <% @periods.each do |period|  %>
-               <td id="balance_<%= period.id %>"><%= number_to_currency(period.beginning_balance) %></td>
+               <td id="balance_<%= period.id %>" class="<%= period.beginning_balance < 0 ? 'negative-balance': ''%>"><%= number_to_currency(period.beginning_balance) %></td>
             <% end %>
         </tr>        
 		<tr>

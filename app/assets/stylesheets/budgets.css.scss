@@ -5,4 +5,8 @@ table#budget tbody {border: solid 1px #ccc;}
 table#budget thead tr#starting_balance td, table#budget thead tr#starting_balance th {border-top: solid #333; background-color: #CCFF99;}
 table thead tr th{ text-align: center;}
 table#budget tbody td {border-right: solid 1px #ccc; border-left: solid 1px #ccc;}
+
+.negative-balance {color: red; font-weight: bold;}
+
+
 		

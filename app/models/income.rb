@@ -19,7 +19,7 @@ class Income < ActiveRecord::Base
   def after_create
 
     # Periods are generated when the first income record is created.
-    # If this flag is true, it should generate income values
+    # If this flag is true, it will generate income values
     # and periods for the next 12 months
     if self.generate_periods == true
 
@@ -63,6 +63,13 @@ class Income < ActiveRecord::Base
       end
     end
     income_value
+  end
+  
+  # Will update the value of all income value entries going forward.
+  def update_future_values_entries(date,amount)
+    IncomeValue.update_all({:amount => amount},["income_date >= ? AND income_id = ?", date, self.id])
+    # Recalculate period balances
+    Period.recalculate_beginning_balances(budget_id = self.budget_id)
   end
 
 end

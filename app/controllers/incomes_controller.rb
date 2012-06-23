@@ -87,6 +87,17 @@ class IncomesController < ApplicationController
     end
     
   end
+  
+  def update_income_values
+    
+    income = Income.find(params[:id])
+    income.update_future_values_entries(params[:date], params[:amount])
+    
+    respond_to do |format|
+      format.js { render :json => income.to_json(:include => :income_values)}
+    end
+    
+  end
 
   # DELETE /incomes/1
   # DELETE /incomes/1.json
