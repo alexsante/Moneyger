@@ -14,7 +14,21 @@ class @Income
             for iv in update_response.income_values
               $("#income_cell_"+iv.id).html formatCurrency iv.amount 
             # Refresh the budget
-            Budget.refresh(budget_id)    
+            Budget.refresh(budget_id)
+
+  @edit = (id) ->
+    $("#incomeModal").modal
+      keyboard: false, 
+      backdrop: 'static', 
+      title: "Edit Income"
+      
+    $("#incomeModal").load('/incomes/'+id+'/edit')       
+    
+  @new = ->
+    $("#incomeModal").modal 
+      title: 'New Income'
+    $("#incomeModal").load('/incomes/new.js')
+                
 $ ->
 	$(".income_cell").editInPlace
 		url: '/incomes/quick_update.js'
@@ -28,7 +42,9 @@ $ ->
           Income.update_future_entries(response.income.id, response.income_date, response.amount, response.income.budget_id);
 
        # Refresh the budget
-      Budget.refresh(response.income.budget_id)    
+      Budget.refresh(response.income.budget_id)   
+      
+   
    
 
         

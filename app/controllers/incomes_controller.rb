@@ -53,7 +53,7 @@ class IncomesController < ApplicationController
         format.html { redirect_to "/budgets", notice: 'Income was successfully created.' }
         format.json { render json: @income, status: :created, location: @income }
       else
-        format.html { render action: "new" }
+        format.html { render action: "new", notice: 'An error occured while creating the new income record.' }
         format.json { render json: @income.errors, status: :unprocessable_entity }
       end
     end

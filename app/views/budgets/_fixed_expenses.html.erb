@@ -12,8 +12,7 @@
 	          <td class="is_paid_<%= expense_value.is_paid %>" id="expense_value_<%= expense_value.id %>" nowrap="true">
 	          	<div>
 	          		<span>
-	          		<input type="checkbox" 
-	          				onClick="expense.toggle_paid(this)" 
+	          		<input type="checkbox" onClick="Expense.toggle_paid(this)" 
 	          				id="expense_value_toggle_<%= expense_value.id %>" 
 	          				<%= expense_value.is_paid == true ? 'checked' : '' %>/> 
 	          			<span class="expense_cell"

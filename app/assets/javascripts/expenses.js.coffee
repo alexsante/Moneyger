@@ -1,7 +1,7 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-class @expense
+class @Expense
   @toggle_paid = (obj) ->
     id = obj.id.split("_")[3]
     
@@ -33,6 +33,10 @@ class @expense
               $("#expense_cell_"+ev.id).html formatCurrency ev.amount 
             # Refresh the budget
             Budget.refresh(budget_id)    
+
+  @new = ->
+     $("#expenseModal").modal();
+     $("#expenseModal").load('/expenses/new.js');              
 
 $ ->
   $(".expense_cell").editInPlace

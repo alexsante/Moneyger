@@ -3,7 +3,7 @@
       <th nowrap="true">
         <a href="javascript:void(0)" onclick="$(this).siblings('div').slideToggle().toggleClass('hidden')"><%= income.title %></a>
         <div class="hidden">
-          <a href="javascript:void(0)" onclick="modify_income(<%= income.id %>" class="btn btn-mini">Modify</a>
+          <a href="javascript:void(0)" onclick="Income.edit(<%= income.id %>)" class="btn btn-mini">Modify</a>
           <a href="javascript:void(0)" onclick="delete('income', <%= income.id %>" class="btn btn-mini">Delete</a>
         </div>
       </th>
