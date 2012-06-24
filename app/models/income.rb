@@ -12,9 +12,14 @@ class Income < ActiveRecord::Base
   before_create :before_create
   
   # Validations
+  validates :income_date, :amount, :title, :budget_id, :presence => true
   validates :income_date, 
             :date => {:after => Date.today, :message => 'Income date must be in the future'},
             :on => :create
+            
+  validates :income_date, :format => {:with => /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/, 
+                                      :message => "Income date must be in YYYY/MM/YY format. Ex: 2012/06/25"}
+  validates :amount, :format => {:with => /[0-9.]/, :message => "Amount cannot contain currency symbols or commas. Ex: 1500.00"}                                                  
   
   def after_create
 

@@ -28,6 +28,32 @@ class @Income
     $("#incomeModal").modal 
       title: 'New Income'
     $("#incomeModal").load('/incomes/new.js')
+    
+  @save = () ->
+    
+    $("form#new_income").block
+      message: "<div class='hero-unit'><h3>Please hold</h3><p>One second while we process your request.</p></div>"
+      css: 
+        width: 500
+    
+    formData = $("form#new_income").serialize()
+      
+    $.ajax
+      type: 'POST' 
+      url: '/incomes.js' 
+      data: formData
+      success: (r) ->
+        location.href='/'
+      error: (r) ->
+        $("form#new_income").unblock()
+        errors = $.parseJSON(r.responseText)
+        $("div#notice").html("").addClass("alert alert-error")
+        $("div#notice").append("<h4>Please check your form</h4><ul></ul>")
+        for e of errors
+          for ve in errors[e]
+            $("div#notice ul").append("<li>"+e+": "+ve+"</li>")
+        
+    return false 
                 
 $ ->
 	$(".income_cell").editInPlace

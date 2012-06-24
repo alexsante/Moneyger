@@ -1,6 +1,9 @@
-<%= form_for @income, :html => { :class => 'form-horizontal' } do |f| %>
+
+
+<%= form_for @income, :url => '/incomes.js', :html => { :class => 'form-horizontal' } do |f| %>
   <fieldset>
     <legend><%= controller.action_name.capitalize %> Income</legend>
+	<div id="notice"></div>
 	
 	<% if params.key? "welcome" %>
 		<div class="alert alert-info">Your budget is ready for setup! Moneyger now needs to know when you get paid, how often, and of course, how much?</div>
@@ -15,9 +18,10 @@
 
 	
     <div class="control-group">
-      <%= f.label "Start Date", :class => 'control-label' %>
+      <%= f.label "Next Occurence", :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :income_date, :class => 'text_field, datepicker' %>
+        <span class="help-block">Example: 2012/06/25</span>
       </div>
     </div>
 
@@ -25,6 +29,7 @@
       <%= f.label :amount, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :amount, :class => 'text_field' %>
+        <span class="help-block">Example: 1000.00</span>
       </div>
     </div>
 
@@ -43,7 +48,7 @@
     </div>
 
     <div class="form-actions">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= f.submit nil, :class => 'btn btn-primary', :onClick => "return Income.save(this)" %>
     </div>
   </fieldset>
 <% end %>

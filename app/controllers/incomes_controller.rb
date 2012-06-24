@@ -48,14 +48,10 @@ class IncomesController < ApplicationController
     @income.budget_id = @budget.id
     @income.generate_periods = true
 
-    respond_to do |format|
-      if @income.save
-        format.html { redirect_to "/budgets", notice: 'Income was successfully created.' }
-        format.json { render json: @income, status: :created, location: @income }
-      else
-        format.html { render action: "new", notice: 'An error occured while creating the new income record.' }
-        format.json { render json: @income.errors, status: :unprocessable_entity }
-      end
+    if @income.save
+      render json: @income, status: :created, location: @income 
+    else
+      render json: @income.errors, status: :unprocessable_entity 
     end
   end
 
