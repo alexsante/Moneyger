@@ -1,8 +1,11 @@
+<div class="modal-header">
+  <a href="" class="close" data-dismiss="modal">x</a>
+  <h3>Income</h3>
+</div>
 
-
-<%= form_for @income, :url => '/incomes.js', :html => { :class => 'form-horizontal' } do |f| %>
+<div class="modal-body" id="income_form">
+<%= semantic_form_for @income, :html => {:id => 'income', :class => 'form-horizontal' } do |f| %>
   <fieldset>
-    <legend><%= controller.action_name.capitalize %> Income</legend>
 	<div id="notice"></div>
 	
 	<% if params.key? "welcome" %>
@@ -16,7 +19,7 @@
 	    </div>
 	<% end %>
 
-	
+	<% if @income.persisted? == false %>
     <div class="control-group">
       <%= f.label "Next Occurence", :class => 'control-label' %>
       <div class="controls">
@@ -39,19 +42,22 @@
         <%= f.select :frequency, ["Weekly","Bi-Weekly","Bi-Monthly","Monthly","Quarterly","Yearly"], :class => 'text_field' %>
       </div>
     </div>
-
+	<% end %>
     <div class="control-group">
       <%= f.label :title, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :title, :class => 'text_field' %>
+        <%= f.text_field :title, :class => 'text_field', :onkeypress => 'javascript: if(event.keyCode == 13) return false' %>
       </div>
     </div>
 
-    <div class="form-actions">
-      <%= f.submit nil, :class => 'btn btn-primary', :onClick => "return Income.save(this)" %>
-    </div>
   </fieldset>
 <% end %>
+</div>
+
+<div class="modal-footer">
+  <a href="#" class="btn btn-primary" onclick="return Income.save(<%= @income.id %>)">Save</a>
+  <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+</div>
 
 <script type="text/javascript">
   $(".datepicker").datepicker({dateFormat: "yy/mm/dd"})

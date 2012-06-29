@@ -18,9 +18,10 @@ class @Income
 
   @edit = (id) ->
     $("#incomeModal").modal
-      keyboard: false, 
-      backdrop: 'static', 
+      keyboard: false
+      backdrop: 'static'
       title: "Edit Income"
+      keyboard: true
       
     $("#incomeModal").load('/incomes/'+id+'/edit')       
     
@@ -29,21 +30,32 @@ class @Income
       title: 'New Income'
     $("#incomeModal").load('/incomes/new.js')
     
-  @save = () ->
+  @save = (obj) ->
     
-    $("form#new_income").block
-      message: "<div class='hero-unit'><h3>Please hold</h3><p>One second while we process your request.</p></div>"
-      css: 
-        width: 500
-    
-    formData = $("form#new_income").serialize()
+    if obj == 'undefined'
+      method = 'POST'
+      url = '/incomes.js'
+      action = 'create'
+    else
+      method = 'PUT'
+      url = '/incomes/'+obj+'.json'
+      action = 'update'
+      
+    formData = $("form#income").serialize()
       
     $.ajax
-      type: 'POST' 
-      url: '/incomes.js' 
+      type: method
+      url: url 
       data: formData
       success: (r) ->
-        location.href='/'
+        console.log(r)
+        #location.href='/'
+        if action == 'update'
+          $("a#income_"+r.id).html(r.title)
+          $("#incomeModal").toggleClass('in')
+          $("div.modal-backdrop").remove()
+         
+        
       error: (r) ->
         $("form#new_income").unblock()
         errors = $.parseJSON(r.responseText)
@@ -68,9 +80,4 @@ $ ->
           Income.update_future_entries(response.income.id, response.income_date, response.amount, response.income.budget_id);
 
        # Refresh the budget
-      Budget.refresh(response.income.budget_id)   
-      
-   
-   
-
-        
+      Budget.refresh(response.income.budget_id)  

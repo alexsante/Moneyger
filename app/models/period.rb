@@ -103,10 +103,10 @@ class Period < ActiveRecord::Base
     Period.where("budget_id = :budget_id AND start_date <= :date and end_date >= :date", :budget_id => budget_id, :date => date).first
   end
   
+  def self.generate(income)
   # Based on the income value passed in, this class will generate period
   # records. The income object contains a frequency value that will be used to
   # determine how many periods actually need to be created.
-  def self.generate(income)
 
     # Keep track of the running date
     new_date = BudgetsHelper::DateHelper.new(income.income_date,income.frequency)
@@ -124,9 +124,7 @@ class Period < ActiveRecord::Base
       period.end_date = new_date.current_date - 1
       period.save
 
-
     end
-
       
     Period.count
   end

@@ -1,6 +1,6 @@
 <h1><%= @budget.title %></h1>
 
-
+<div id="budget-wrapper">
 <table class="table table-striped" id="budget">
     <thead>
 
@@ -39,7 +39,7 @@
 	<% end %>
 	</tfoot>
 </table>
-
+</div>
 <div id="expenseModal"class="modal" style="display: none;">
     <div class="modal-header">
       <a href="" class="close" data-dismiss="modal">x</a>
@@ -52,7 +52,8 @@
     </div>
 </div>
 
-<div id="incomeModal" class="modal fade" style="display: none;"></div>
+<div id="incomeModal" class="modal fade hide">
+</div>
 
 <script>
   $("#expenseModal").modal({"show": false});

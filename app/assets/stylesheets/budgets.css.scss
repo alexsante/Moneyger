@@ -9,6 +9,8 @@ table#budget tbody td {border-right: solid 1px #ccc; border-left: solid 1px #ccc
 .negative-balance {color: red; font-weight: bold;}
 
 // Container Styles
+div#budget-container{width: 100%}
+div#budget-container table{overflow: hidden;}
 div#notice ul{ margin: 1.5em;}
 div#notice ul li{margin-left: 1.5em;}
 

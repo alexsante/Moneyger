@@ -11,7 +11,11 @@ class BudgetsController < ApplicationController
   # GET /budgets.json
   def index
     @budget = current_budget
-    @periods = @budget.periods.order(:id).all    
+    
+    params[:pid] ||= 0
+    
+    @periods = @budget.periods.limit(10).offset(params[:pid]).order(:id).all
+    @period_count = @budget.periods.count()    
 
     respond_to do |format|
       format.html # index.html.erb

@@ -14,8 +14,6 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery.editinplace
-//= require twitter/bootstrap
-//= require twitter/bootstrap/bootstrap-transition
 //= require_tree .
 $(".datepicker").datepicker({dateFormat: "yy/mm/dd"})
 

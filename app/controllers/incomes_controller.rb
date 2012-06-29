@@ -49,7 +49,7 @@ class IncomesController < ApplicationController
     @income.generate_periods = true
 
     if @income.save
-      render json: @income, status: :created, location: @income 
+      render :json => @income.to_json(:include => :income_values), status: :created, location: @income
     else
       render json: @income.errors, status: :unprocessable_entity 
     end
@@ -63,7 +63,7 @@ class IncomesController < ApplicationController
     respond_to do |format|
       if @income.update_attributes(params[:income])
         format.html { redirect_to @income, notice: 'Income was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: @income, status: :created }
       else
         format.html { render action: "edit" }
         format.json { render json: @income.errors, status: :unprocessable_entity }
