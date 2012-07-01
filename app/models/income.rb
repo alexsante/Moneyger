@@ -10,6 +10,8 @@ class Income < ActiveRecord::Base
   # Callbacks
   after_create :after_create
   before_create :before_create
+  before_destroy :before_destroy
+  after_destroy :after_destroy
   
   # Validations
   validates :income_date, :amount, :title, :budget_id, :presence => true
@@ -55,6 +57,19 @@ class Income < ActiveRecord::Base
     
     # If no sort weight is provided, default to zero
     self.sort_weight = 0 if self.sort_weight == "" || self.sort_weight.nil? 
+    
+  end
+
+  def before_destroy
+    
+    IncomeValue.delete_all(:income_id => self.id)
+    
+  end
+  
+  def after_destroy
+    
+    # Recalculate period balances
+    Period.recalculate_beginning_balances(budget_id = self.budget_id)
     
   end
 

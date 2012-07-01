@@ -8,7 +8,7 @@ class @Income
           dataType: 'JSON'
           data: 
             id: income_id
-            date: date,
+            date: date
             amount: amount
           success: (update_response) ->
             for iv in update_response.income_values
@@ -16,6 +16,17 @@ class @Income
             # Refresh the budget
             Budget.refresh(budget_id)
 
+  @delete = (id) ->
+    $("body").block
+      message: null
+    jConfirm "Are you sure you want to remove this income?","Confirm", (decision) ->
+        if decision == true
+          $.post '/incomes/'+id+'.json'
+            _method: 'delete'
+            (r) ->
+              $("tr#income_row_"+id).fadeOut().remove()
+        $("body").unblock()
+                            
   @edit = (id) ->
     $("#incomeModal").modal
       keyboard: false
@@ -31,8 +42,7 @@ class @Income
     $("#incomeModal").load('/incomes/new.js')
     
   @save = (obj) ->
-    
-    if obj == 'undefined'
+    if obj == undefined
       method = 'POST'
       url = '/incomes.js'
       action = 'create'
@@ -48,14 +58,10 @@ class @Income
       url: url 
       data: formData
       success: (r) ->
-        console.log(r)
-        #location.href='/'
         if action == 'update'
-          $("a#income_"+r.id).html(r.title)
+          $("tr#income_row_"+r.id+" span.income_title").html(r.title)
           $("#incomeModal").toggleClass('in')
           $("div.modal-backdrop").remove()
-         
-        
       error: (r) ->
         $("form#new_income").unblock()
         errors = $.parseJSON(r.responseText)
@@ -66,6 +72,8 @@ class @Income
             $("div#notice ul").append("<li>"+e+": "+ve+"</li>")
         
     return false 
+    
+  
                 
 $ ->
 	$(".income_cell").editInPlace

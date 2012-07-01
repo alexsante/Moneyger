@@ -1,14 +1,21 @@
 <% @budget.incomes.order("sort_weight ASC").each do |income| %>
-    <tr>
-      <th nowrap="true">
-        <a href="javascript:void(0)" 
-        	onclick="$(this).siblings('div').slideToggle().toggleClass('hidden')" 
-        	class="income_title"
-        	id="income_<%= income.id %>"><%= income.title %></a>
-        <div class="hidden">
-          <a href="javascript:void(0)" onclick="Income.edit(<%= income.id %>)" class="btn btn-mini">Modify</a>
-          <a href="javascript:void(0)" onclick="delete('income', <%= income.id %>" class="btn btn-mini">Delete</a>
-        </div>
+    <tr id="income_row_<%= income.id %>">
+      
+      <th nowrap="true"
+      		<% if income.title != 'Transfer from savings' && income.title != 'Other' %> 
+      		style="position: relative; cursor: pointer;"
+      		<% end %>
+      		>
+      		
+        <span class="income_title"><%= income.title %></span>
+        
+        <% if income.title != 'Transfer from savings' && income.title != 'Other' %> 
+        <span class="" style="position: absolute; right: 10px;">
+          <a href="javascript:Income.edit(<%= income.id %>)" class="icon-edit"></a>
+          <a href="javascript:Income.delete(<%= income.id %>)" class="icon-remove-circle"></a>
+        </span>
+        <% end %>
+        
       </th>
       <% @periods.each do |period| %>
           <%
