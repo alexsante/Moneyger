@@ -18,7 +18,7 @@ class Budget < ActiveRecord::Base
     i.frequency = "Monthly"
     i.title = "Transfer from savings"
     i.sort_weight = 100
-    i.income_date = Time.now
+    i.income_date = Date.tomorrow.to_s
     i.generate_periods = false
     i.budget_id = self.id
     i.save
@@ -29,7 +29,7 @@ class Budget < ActiveRecord::Base
     i.frequency = "Bi-Weekly"
     i.title = "Other"
     i.sort_weight = 110
-    i.income_date = Time.now
+    i.income_date = Date.tomorrow.to_s
     i.generate_periods = false
     i.budget_id = self.id
     i.save
@@ -40,7 +40,7 @@ class Budget < ActiveRecord::Base
     e.isfixed = false
     e.title = 'Transfer to savings'
     e.budget_id = self.id
-    e.expense_date = Time.now
+    e.expense_date = Date.tomorrow.to_s
     e.shortcode = 'SAVE'
     e.auto_withdrawal = 0
     e.frequency = 'Bi-Weekly'

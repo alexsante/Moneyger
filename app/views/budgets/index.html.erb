@@ -17,7 +17,10 @@
             <% end %>
         </tr>        
 		<tr>
-            <th style="color: #ffffff; background-color: #333333;">Income</th>
+            <th style="color: #ffffff; background-color: #333333;">
+            	<span class="section-title">Income</span>
+            	<a href="javascript:void(0)" class="icon-white icon-plus-sign" onclick="Income.new()"></a>
+            </th>
             <td colspan="<%= @periods.length %>" style="background-color: #333333;"> &nbsp;</td>
         </tr>
 
@@ -40,16 +43,8 @@
 	</tfoot>
 </table>
 </div>
-<div id="expenseModal"class="modal" style="display: none;">
-    <div class="modal-header">
-      <a href="" class="close" data-dismiss="modal">x</a>
-      <h3>Add Expense</h3>
-    </div>
-    <div class="modal-body">Loading..</div>
-    <div class="modal-footer">
-      <a href="#" class="btn btn-primary">Save</a>
-      <a href="#" class="btn">Cancel</a>
-    </div>
+
+<div id="expenseModal" class="modal fade hide">
 </div>
 
 <div id="incomeModal" class="modal fade hide">

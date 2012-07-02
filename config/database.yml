@@ -18,6 +18,7 @@ development:
 test:
   adapter: postgresql
   database: test_moneyger
+  host: localhost
   username: rails
   password: rails
   pool: 5

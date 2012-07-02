@@ -21,7 +21,8 @@ class @Expense
           $("#expense_value_"+id).removeClass("is_paid_true").addClass("is_paid_false")
 
   @update_future_entries = (expense_id, date, amount, budget_id) ->
-    $.ajax '/expenses/update_expense_values'
+    $.ajax
+          url: '/expenses/update_expense_values'
           type: 'POST'
           dataType: 'JSON'
           data: 
@@ -34,9 +35,12 @@ class @Expense
             # Refresh the budget
             Budget.refresh(budget_id)    
 
-  @new = ->
+  @new = () ->
      $("#expenseModal").modal();
      $("#expenseModal").load('/expenses/new.js');              
+
+  @save = (obj) ->
+
 
 $ ->
   $(".expense_cell").editInPlace

@@ -11,7 +11,9 @@
 <body>
 
 <div class="navbar navbar-fixed-top">
+	
     <div class="navbar-inner">
+    	
         <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
@@ -23,8 +25,8 @@
           <div class="nav-collapse">
 
             <ul class="nav">
-              <li><%= link_to 'Add Income', "#incomeModal", "onClick" => 'Income.new()' %></li>
-              <li><%= link_to 'Add Expense Category', "#expenseModal", "onClick" => 'Expense.new()' %></li>
+              <li><%= link_to 'Add Income', "javascript:void(0)", "onClick" => 'Income.new()' %></li>
+              <li><%= link_to 'Add Expense Category', "javascript:void(0)", "onClick" => 'Expense.new()' %></li>
               <li><a href="">Settings</a></li>
               <li><a href="/budgets/<%= session[:budget_id] %>/edit">Edit Budget</a></li>
             </ul>
