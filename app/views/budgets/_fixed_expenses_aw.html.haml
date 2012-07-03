@@ -1,0 +1,16 @@
+%tr
+  %th{:style => "color: white; background-color: #333333;", :colspan => @periods.length + 1}
+    %span Fixed Expenses
+    %span.label.label-warning Auto Withdrawals
+
+-@budget.expenses.where(:isfixed => true, :auto_withdrawal => true).each do |expense|
+  %tr
+    %th{:nowrap => true}= expense.title
+    -@periods.each do |period|
+      - expense_value = period.find_expense_value(expense)
+      %td=expense_value > 0 ? number_to_currency(expense_value) : ""
+
+%tr
+  %th.total-cell Total
+  -@periods.each do |period|
+    %td.total-cell{:id => "fixed_aw_expense_total_cell_#{period.id}"}= number_to_currency(period.fixed_expense_total(1))

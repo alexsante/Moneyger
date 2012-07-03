@@ -55,6 +55,7 @@ GEM
     guard-spork (0.6.1)
       guard (>= 0.10.0)
       spork (>= 0.8.4)
+    haml (3.1.6)
     hike (1.2.1)
     i18n (0.6.0)
     journey (1.0.3)
@@ -138,6 +139,7 @@ DEPENDENCIES
   formtastic
   guard-rspec
   guard-spork
+  haml
   jquery-rails
   pg
   rails (= 3.2.2)

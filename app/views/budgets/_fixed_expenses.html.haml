@@ -1,0 +1,31 @@
+%tr
+    %th{:style => "color: white; background-color: #333333", :colspan => @periods.length + 1}
+        %span.section-title= "Fixed Expenses"
+        %a{:href => "javascript:void(0)", :onclick => "Expense.new()", :class => "icon-white icon-plus-sign"}/
+
+- @budget.expenses.where(:isfixed => true, :auto_withdrawal => false).order("id ASC").each do |expense|
+
+    %tr.fixed_expense_row
+        %th{:nowrap => true, :style => "position: relative;"}
+            %span.expense_title= expense.title
+            %span{:style => "position: absolute; right: 10px;"}
+                %a.icon-edit{:href => "Expense.edit(#{expense.id}"}
+                %a.icon-remove-circle{:href => "Expense.delete(#{expense.id}"}
+
+        - @periods.each do |period|
+            -# Grab the expense value for this period
+            - expense_value = expense.expense_value_by_period(period)
+            - if expense_value.nil? == false
+                %td{:class => "is_paid_#{expense_value.is_paid}", :id => "expense_value_#{expense_value.id}", :nowrap => true}
+                    %div
+                        %span
+                            %input{:type => "checkbox",
+                                   :id => "expense_value_toggle_#{expense_value.id}", :checked => expense_value.is_paid == true ? 'checked' : ''}/
+                            %span.expense_cell{:id => "expense_cell_#{expense_value.id}"}= expense_value.amount > 0 ? number_to_currency(expense_value.amount) : "$0.00"
+            - else
+                %td.expense_cell &nbsp
+
+    %tr
+        %th.total-cell Total
+        - @periods.each do |period|
+            %td.total-cell{:id => "fixed_expense_total_cell_#{period.id}"}= number_to_currency(period.fixed_expense_total)
