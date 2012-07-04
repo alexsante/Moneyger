@@ -14,6 +14,10 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery.editinplace
+//= require bootstrap
+//= require bootstrap-tooltip
+//= require bootstrap-popover
+//= require bootstrap-transition
 //= require_tree .
 $(".datepicker").datepicker({dateFormat: "yy/mm/dd"})
 

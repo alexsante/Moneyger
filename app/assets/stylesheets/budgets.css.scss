@@ -1,6 +1,8 @@
 // Place all the styles related to the budgets controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// Tables
 table#budget tbody {border: solid 1px #ccc;}
 table#budget thead tr#starting_balance td, table#budget thead tr#starting_balance th {border-top: solid #333; background-color: #CCFF99;}
 table thead tr th{ text-align: center;}
@@ -8,7 +10,9 @@ table#budget tbody td {border-right: solid 1px #ccc; border-left: solid 1px #ccc
 table#budget td.total-cell{color: #333333; background-color: #3399ff;}
 table#budget th.total-cell{color: #333333; background-color: #3399ff;}
 
+// Widget styles
 .negative-balance {color: red; font-weight: bold;}
+.progress{height: 6px; margin-bottom: 0px;}
 
 // Container Styles
 div#budget-container{width: 100%}

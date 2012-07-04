@@ -5,6 +5,9 @@ class Expense < ActiveRecord::Base
   after_create :generate_expense_values, :after_create
   after_update :generate_expense_values
 
+  validates :title, :amount, :budget_id, :presence => true
+  validates_presence_of :expense_date, :if => :isfixed?
+
   def after_create
     Period.recalculate_beginning_balances(budget_id = self.budget_id)
   end

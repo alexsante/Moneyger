@@ -62,6 +62,8 @@ class @Income
           $("tr#income_row_"+r.id+" span.income_title").html(r.title)
           $("#incomeModal").toggleClass('in')
           $("div.modal-backdrop").remove()
+        else if action == 'save'
+          render(r)
       error: (r) ->
         $("form#new_income").unblock()
         errors = $.parseJSON(r.responseText)

@@ -1,0 +1,49 @@
+.modal-header
+  .close{"data-dismiss" => "modal", :href => "javascript:void(0)"} x
+  %h3 Expenses
+
+.modal-body
+  %div{:id => "notice"}
+  =semantic_form_for @expense, :html => {:class => "form-horizontal", :id => "expense"} do |f|
+    %fieldset
+      .control-group
+        = f.label :title, :class => 'control-label'
+        .controls
+          = f.text_field :title, :class => 'text_field'
+
+      .control-group
+        = f.label "Expense Type", :class => 'control-label'
+        .controls
+          %select{:name => "expense[isfixed]", :onchange => "expensetoggle(this.value)"}
+            %option{:value => 0} Variable
+            %option{:value => 1} Fixed
+
+      .control-group
+        = f.label :amount, :class => 'control-label'
+        .controls
+          = f.text_field :amount, :class => 'text_field'
+
+      .hidden{:id => "fixed-properties"}
+        .control-group
+          = f.label "Date Due", :class => "control-label"
+          .controls
+            = f.text_field :expense_date, :class => 'text_field datepicker'
+
+        .control-group
+          = f.label :frequency, :class => 'control-label'
+          .controls
+            = f.input :frequency,  :as => :select,  :collection => ["One Time","Weekly","Bi-Weekly", "Bi-Monthly", "Monthly", "Quarterly","Annually"], :label => false
+
+        .control-group
+          .controls
+            = f.input :auto_withdrawal, :as => :boolean, :class => 'checkbox', :label => false
+
+.modal-footer
+  %a{:href => "#", :class => "btn btn-primary", :onclick => "return Expense.save(#{@expense.id})"} Save
+  %a{:href => "#", :class => "btn", "data-dismiss" => "modal"} Cancel
+
+:javascript
+  $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+  function expensetoggle(value){
+    if(value == 1) { $("#fixed-properties").toggleClass('hidden')}
+  }

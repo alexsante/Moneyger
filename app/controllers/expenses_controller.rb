@@ -29,7 +29,7 @@ class ExpensesController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.js {render :layout => false}
-      format.json { render json: @expense }
+      format.json { render :json => @expense.to_json(:include => :expense_values)}
     end
   end
 
@@ -47,7 +47,7 @@ class ExpensesController < ApplicationController
     respond_to do |format|
       if @expense.save
         format.html { redirect_to "/budgets", notice: 'Expense was successfully created.' }
-        format.json { render json: @expense, status: :created, location: @expense }
+        format.json { render json: @expense.to_json(:include => :expense_values), status: :created }
       else
         format.html { render action: "new" }
         format.json { render json: @expense.errors, status: :unprocessable_entity }

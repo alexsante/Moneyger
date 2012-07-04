@@ -35,12 +35,61 @@ class @Expense
             # Refresh the budget
             Budget.refresh(budget_id)    
 
-  @new = () ->
+  @new = ->
      $("#expenseModal").modal();
-     $("#expenseModal").load('/expenses/new.js');              
+     $("#expenseModal").load('/expenses/new.js');
 
-  @save = (obj) ->
+  @save = (id) ->
+    if id == undefined
+      method = 'POST'
+      url = '/expenses.json'
+      action = 'create'
+    else
+      method = 'PUT'
+      url = '/expenses/'+id+'.json'
+      action = 'update'
 
+    formData = $("form#expense").serialize()
+
+    $.ajax
+      type: method
+      url: url
+      data: formData
+      success: (r) ->
+        if action == 'update'
+          $("tr#expense_row_"+r.id+" span.expense_title").html(r.title)
+          $("#expenseModall").toggleClass('in')
+          $("div.modal-backdrop").remove()
+        else if action == 'create'
+          Expense.render(r)
+          $("#expenseModal").modal("hide")
+      error: (r) ->
+        $("form#expense").unblock()
+        errors = $.parseJSON(r.responseText)
+        $("div#notice").html("").addClass("alert alert-error")
+        $("div#notice").append("<h4>Please check your form</h4><ul></ul>")
+        for e of errors
+          for ve in errors[e]
+            $("div#notice ul").append("<li>"+e+": "+ve+"</li>")
+
+  # Renders a single expense record across the budget table
+  @render = (e) ->
+    expense = "<tr><th nowrap='true'><span class='expense_title'>#{e.title}</span></th>"
+
+    for period in $("th.period")
+      if e.isfixed == false
+        expense += "<td class='expense_value'><span>"+formatCurrency(e.amount)+"</span><div class='progress'><div style='width: 100%'></div></div></td>"
+      else
+        expense += "<td class='expense_value'><span>"+formatCurrency(e.amount)+"</span></td>"
+    expense += "</tr>"
+
+    if e.isfixed == false
+      $("tbody.variable_expenses").append(expense)
+    else
+      if e.auto_withdrawal
+        $("tbody.fixed_expenses_aw").append(expense)
+      else
+        $("tbody.fixed_expenses").append(expense)
 
 $ ->
   $(".expense_cell").editInPlace
