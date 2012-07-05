@@ -10,8 +10,8 @@
         %div{:style => "position: relative;"}
           %span.expense_title= expense.title
           %span{:style => "position: absolute; right: 10px;"}
-            %a.icon-edit{:href => "Expense.edit(#{expense.id}"}
-            %a.icon-remove-circle{:href => "Expense.delete(#{expense.id}"}
+            %a.icon-edit{:href => "javascript:Expense.edit(#{expense.id})"}
+            %a.icon-remove-circle{:href => "javascript:Expense.destroy(#{expense.id})"}
 
       - @periods.each do |period|
         - expense_value = expense.expense_value_by_period(period)

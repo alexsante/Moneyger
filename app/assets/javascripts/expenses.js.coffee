@@ -35,9 +35,20 @@ class @Expense
             # Refresh the budget
             Budget.refresh(budget_id)    
 
-  @new = ->
+  @new_expense = ->
      $("#expenseModal").modal();
      $("#expenseModal").load('/expenses/new.js');
+
+  @destroy = (id) ->
+    $("body").block
+      message: null
+    jConfirm "Are you sure you want to remove this expense?","Confirm", (decision) ->
+      if decision == true
+        $.post '/expenses/'+id+'.json',
+          _method: 'delete'
+        (r) ->
+          $("tr#expense_row_"+id).fadeOut().remove()
+      $("body").unblock()
 
   @save = (id) ->
     if id == undefined
@@ -74,22 +85,17 @@ class @Expense
 
   # Renders a single expense record across the budget table
   @render = (e) ->
-    expense = "<tr><th nowrap='true'><span class='expense_title'>#{e.title}</span></th>"
-
-    for period in $("th.period")
+    $.get '/expenses/'+e.id, {isfixed: e.isfixed, auto_withdrawal: e.auto_withdrawal}, (response) ->
       if e.isfixed == false
-        expense += "<td class='expense_value'><span>"+formatCurrency(e.amount)+"</span><div class='progress'><div style='width: 100%'></div></div></td>"
+        $("tbody.variable_expenses").append(response)
       else
-        expense += "<td class='expense_value'><span>"+formatCurrency(e.amount)+"</span></td>"
-    expense += "</tr>"
+        if e.auto_withdrawal
+          $("tbody.fixed_expenses_aw").append(response)
+        else
+          $("tbody.fixed_expenses").append(response)
 
-    if e.isfixed == false
-      $("tbody.variable_expenses").append(expense)
-    else
-      if e.auto_withdrawal
-        $("tbody.fixed_expenses_aw").append(expense)
-      else
-        $("tbody.fixed_expenses").append(expense)
+      # Reinitialize qtip edit boxes
+      Expense_Value.initialize_qtip()
 
 $ ->
   $(".expense_cell").editInPlace

@@ -23,7 +23,7 @@
 			<td><input type="text" name="expense_value[expense_date]" id="expense_date" 
 				placeholder="Expense Date" class="datepicker" value="<%= Time.now.strftime('%Y-%m-%d') %>" style="width: 90%"></td>
 			<td><input type="text" name="expense_value[amount]" style="width: 90%" placeholder="0.00" id="expense_amount"></td>
-			<td><input type="text" name="expense_value[comment]" id="expense_comment" placeholder="Comment" style="width: 95%" onkeypress="create_expense(event)"></td>
+			<td><input type="text" name="expense_value[comment]" id="expense_comment" placeholder="Comment" style="width: 95%" onkeypress="Expense_Value.create_expense(event)"></td>
 		</tr>
 	</tfoot>
 </table>

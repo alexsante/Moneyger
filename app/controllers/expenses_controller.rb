@@ -13,10 +13,20 @@ class ExpensesController < ApplicationController
   # GET /expenses/1
   # GET /expenses/1.json
   def show
+
+    @budget = current_budget
+
+    # Append budget id to the params (filtering to the current user's budget)
+    params["budget_id"] = @budget.id
     @expense = Expense.find(params[:id])
 
+    params[:pid] ||= 0
+
+    @periods = @budget.periods.limit(10).offset(params[:pid]).order(:id).all
+    @period_count = @budget.periods.count()
+
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render :layout => false}
       format.json { render json: @expense }
     end
   end

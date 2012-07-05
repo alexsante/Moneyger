@@ -33,11 +33,11 @@ module BudgetsHelper
 
     private
     def next_week
-      self.current_date= self.current_date + 7
+      self.current_date = self.current_date.to_time.advance(:days => 7)
     end
 
     def next_biweek
-      self.current_date= self.current_date + 14
+      self.current_date = self.current_date.to_time.advance(:days => 14)
     end
 
     def next_quarter

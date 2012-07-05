@@ -26,7 +26,7 @@
 
             <ul class="nav">
               <li><%= link_to 'Add Income', "javascript:void(0)", "onClick" => 'Income.new()' %></li>
-              <li><%= link_to 'Add Expense Category', "javascript:void(0)", "onClick" => 'Expense.new()' %></li>
+              <li><%= link_to 'Add Expense Category', "javascript:void(0)", "onClick" => 'Expense.new_expense()' %></li>
               <li><a href="">Settings</a></li>
               <li><a href="/budgets/<%= session[:budget_id] %>/edit">Edit Budget</a></li>
             </ul>

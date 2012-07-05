@@ -19,25 +19,18 @@ class Expense < ActiveRecord::Base
       
       ExpenseValue.delete_all(["expense_id = :expense_id", {:expense_id => self.id}])
 
+      # Date iterator helper
+      date_iterator = BudgetsHelper::DateHelper.new self.expense_date,self.frequency
+
       new_date = Date.parse(self.expense_date.to_s)
+
+      while date_iterator.current_date <= self.expense_date.next_year
   
-      while new_date <= Date.parse(self.expense_date.to_s).next_year
-  
-        ev = ExpenseValue.new(:expense_id => self.id, :amount => self.amount, :expense_date => new_date)
+        ev = ExpenseValue.new(:expense_id => self.id, :amount => self.amount, :expense_date => date_iterator.current_date)
         ev.save
-  
-        case self.frequency
-  
-          when "Weekly"
-            new_date = new_date.next_week
-          when "Bi-Weekly"
-            new_date += (14*24*60*60)
-          when "Monthly"
-            new_date = new_date.next_month
-          when "Bi-Monthly"
-            new_date = new_date.next_month
-            new_date = new_date.next_month
-        end
+
+        # Returns the next period date
+        date_iterator.next
   
       end
       

@@ -9,7 +9,7 @@
     %tr
       %th{:nowrap => true}= expense.title
       -@periods.each do |period|
-        - expense_value = period.find_expense_value(expense)
+        - expense_value = period.find_expense_values(expense)
         %td=expense_value > 0 ? number_to_currency(expense_value) : ""
 
 %tbody.fixed_expense_aw_totals

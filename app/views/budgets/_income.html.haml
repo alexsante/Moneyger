@@ -6,7 +6,7 @@
         - if income.title != 'Transfer from savings' && income.title != 'Other'
           %span{:style => "position: absolute; right: 10px"}
             %a{:href => "javascript:Income.edit(#{income.id})", :class =>"icon-edit"}
-            %a{:href => "javascript:Income.delete(#{income.id}", :class => "icon-remove-circle"}
+            %a{:href => "javascript:Income.delete(#{income.id})", :class => "icon-remove-circle"}
       - @periods.each do |period|
         - income_value = period.find_income_value(income)
         - if income_value.nil?
