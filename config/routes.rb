@@ -1,4 +1,6 @@
 Moneyger::Application.routes.draw do
+  devise_for :users
+
   resources :incomes
 
   resources :expenses

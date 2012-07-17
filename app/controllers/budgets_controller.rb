@@ -1,5 +1,7 @@
 class BudgetsController < ApplicationController
 
+  before_filter :authenticate_user!
+
   def set
     set_current_budget params[:budget_id]
     respond_to do |format|
@@ -11,6 +13,7 @@ class BudgetsController < ApplicationController
   # GET /budgets.json
   def index
     @budget = current_budget
+    @user = current_user
 
     params[:pid] ||= 0
 

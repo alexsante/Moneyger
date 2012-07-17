@@ -27,7 +27,7 @@ class IncomesController < ApplicationController
     @income = Income.new
 
     respond_to do |format|
-      format.html 
+      format.html { render :layout => false } 
       format.js { render :layout => false }     
       format.json { render json: @income }
     end

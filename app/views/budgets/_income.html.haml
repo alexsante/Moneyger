@@ -1,5 +1,5 @@
 -@budget.incomes.order("sort_weight ASC").each do |income|
-  %tr{:id => "income_row_#{income.id}"}
+  %tr.income{:id => "income_row_#{income.id}"}
     %th{:nowrap => true}
       %div{:style => income.title != 'Transfer from savings' && income.title != 'Other' ? "position: relative; cursor: pointer;" : ""}
         %span.income_title= income.title

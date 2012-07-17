@@ -4,22 +4,25 @@ class ApplicationController < ActionController::Base
   private
 
   def current_budget
+
     if session.has_key? "budget_id"
       budget = Budget.find(session[:budget_id])
     else
-      budget = Budget.first_or_create(:period_start_date => Time.now, :beginning_balance => 0.00)
+      budget = Budget.first_or_create(:user_id => current_user.id)
       session[:budget_id] = budget.id
     end
 
     budget
-  rescue ActiveRecord::RecordNotFound
-    budget = Budget.new
-    budget.period_start_date= Time.now
-    budget.beginning_balance= 0
-    budget.title="My Budget"
-    budget.save
-    session[:budget_id] = budget.id
-    budget
+
+    rescue ActiveRecord::RecordNotFound
+      budget = Budget.new
+      budget.period_start_date= Time.now
+      budget.beginning_balance= 0
+      budget.title="My Budget"
+      budget.user_id = current_user.id
+      budget.save
+      session[:budget_id] = budget.id
+      budget
   end
 
   def set_current_budget(budget_id)

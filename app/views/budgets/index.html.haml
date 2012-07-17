@@ -34,6 +34,7 @@
 
 :javascript
   $("#expenseModal").modal({"show": false});
-- if @budget.incomes.length <= 2
+  if($("tr.income").length <= 2)
   $("#incomeModal").modal({keyboard: false, backdrop: 'static', title: "Add Income"});
   $("#incomeModal").load('/incomes/new?welcome=1');
+  
