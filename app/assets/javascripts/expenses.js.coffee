@@ -35,7 +35,7 @@ class @Expense
             # Refresh the budget
             Budget.refresh(budget_id)    
 
-  @new_expense = ->
+  @new = ->
      $("#expenseModal").modal();
      $("#expenseModal").load('/expenses/new.js');
 

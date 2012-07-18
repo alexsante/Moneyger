@@ -12,4 +12,5 @@
  *= require_self
  *= require_tree .
 */	
-body{margin-top: 50px;}
+html{height: 100%}
+body{margin-top: 50px; height: inherit; background: url('login-bg.jpg');}

@@ -10,10 +10,12 @@
 </head>
 <body>
 
-  <div class="container-fluid">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      <%= yield %>
+  <div class="container">
+    <div class="row">
+      <div class="span4">&nbsp;</div>
+      <div class="span4"><%= yield %></div>
+      <div class="span4">&nbsp;</div>
+    </div>
   </div>
 
 </body>
