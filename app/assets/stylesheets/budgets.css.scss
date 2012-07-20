@@ -18,10 +18,19 @@ table#budget th.total-cell{color: #333333; background-color: #3399ff;}
 .progress{height: 6px; margin-bottom: 0px;}
 
 // Container Styles
+div#main_container{position: relative;}
 div#budget-container{width: 100%}
 div#budget-container table{overflow: hidden;}
 div#notice ul{ margin: 1.5em;}
 div#notice ul li{margin-left: 1.5em;}
+
+  // Side containers
+  div.right_container {position: absolute; right: 0px; top: 0px; bottom: 0px; 
+    background-color: #333333; 
+    border-left: solid 1px white;
+    border-top: solid 1px white;
+    border-bottom: solid 1px white;
+    width: 10px;}
 
 span.section-title {padding-right: 1.5em}
 

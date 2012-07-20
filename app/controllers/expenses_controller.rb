@@ -1,4 +1,5 @@
 class ExpensesController < ApplicationController
+  
   # GET /expenses
   # GET /expenses.json
   def index
@@ -37,7 +38,7 @@ class ExpensesController < ApplicationController
     @expense = Expense.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html {render :layout => false}
       format.js {render :layout => false}
       format.json { render :json => @expense.to_json(:include => :expense_values)}
     end

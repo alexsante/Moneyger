@@ -5,7 +5,7 @@ class ExpenseValue < ActiveRecord::Base
   after_create :after_create
   
   def after_create
-    Period.recalculate_beginning_balances(budget_id = self.expense.budget_id)
+    #Period.recalculate_beginning_balances(budget_id = self.expense.budget_id)
   end
   
   def self.find_all_by_period(period_id, expense_id)

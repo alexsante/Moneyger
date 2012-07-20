@@ -36,6 +36,7 @@ class IncomesController < ApplicationController
   # GET /incomes/1/edit
   def edit
     @income = Income.find(params[:id])
+    render :layout => false
   end
 
   # POST /incomes

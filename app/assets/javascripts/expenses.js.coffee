@@ -37,7 +37,7 @@ class @Expense
 
   @new = ->
      $("#expenseModal").modal();
-     $("#expenseModal").load('/expenses/new.js');
+     $("#expenseModal").load('/expenses/new');
 
   @destroy = (id) ->
     $("body").block

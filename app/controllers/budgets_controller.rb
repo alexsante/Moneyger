@@ -26,22 +26,11 @@ class BudgetsController < ApplicationController
     end
   end
 
-  # GET /budgets/1
-  # GET /budgets/1.json
-  def show
-    @budget = Budget.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @budget }
-    end
-  end
-
   # GET /budgets/new
   # GET /budgets/new.json
   def new
     @budget = Budget.new
-
+    @user = current_user
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @budget }
@@ -60,7 +49,8 @@ class BudgetsController < ApplicationController
 
     respond_to do |format|
       if @budget.save
-        format.html { redirect_to @budget, notice: 'Budget was successfully created.' }
+        set_current_budget @budget.id
+        format.html { redirect_to '/' }
         format.json { render json: @budget, status: :created, location: @budget }
       else
         format.html { render action: "new" }

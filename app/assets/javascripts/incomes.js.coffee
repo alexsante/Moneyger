@@ -58,12 +58,12 @@ class @Income
       url: url 
       data: formData
       success: (r) ->
-        if action == 'update'
+        if action is 'update'
           $("tr#income_row_"+r.id+" span.income_title").html(r.title)
           $("#incomeModal").toggleClass('in')
           $("div.modal-backdrop").remove()
-        else if action == 'save'
-          render(r)
+        else if action is 'create'
+          window.location='/' 
       error: (r) ->
         $("form#new_income").unblock()
         errors = $.parseJSON(r.responseText)

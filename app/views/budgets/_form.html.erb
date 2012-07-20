@@ -1,4 +1,5 @@
-<%= form_for(@budget) do |f| %>
+<div class="span4">
+<%= form_for(@budget, :html => {:class => 'well'}) do |f| %>
   <% if @budget.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@budget.errors.count, "error") %> prohibited this budget from being saved:</h2>
@@ -27,3 +28,4 @@
     <%= f.submit %>
   </div>
 <% end %>
+</div>
