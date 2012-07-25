@@ -46,8 +46,8 @@ class @Expense
       if decision == true
         $.post '/expenses/'+id+'.json',
           _method: 'delete'
-        (r) ->
-          $("tr#expense_row_"+id).fadeOut().remove()
+          (r) ->
+            $("tr#expense_row_"+id).fadeOut().remove()
       $("body").unblock()
 
   @save = (id) ->
@@ -74,6 +74,7 @@ class @Expense
         else if action == 'create'
           Expense.render(r)
           $("#expenseModal").modal("hide")
+        Moneyger.recalculate_periods()
       error: (r) ->
         $("form#expense").unblock()
         errors = $.parseJSON(r.responseText)
@@ -110,3 +111,4 @@ $ ->
           expense.update_future_entries(response.expense.id, response.expense_date, response.amount, response.expense.budget_id);
       # Refresh the budget
       Budget.refresh(response.expense.budget_id)    
+

@@ -1,23 +1,27 @@
--@budget.incomes.order("sort_weight ASC").each do |income|
-  %tr.income{:id => "income_row_#{income.id}"}
-    %th{:nowrap => true}
-      %div{:style => income.title != 'Transfer from savings' && income.title != 'Other' ? "position: relative; cursor: pointer;" : ""}
-        %span.income_title= income.title
-        - if income.title != 'Transfer from savings' && income.title != 'Other'
-          %span{:style => "position: absolute; right: 10px"}
-            %a{:href => "javascript:Income.edit(#{income.id})", :class =>"icon-edit"}
-            %a{:href => "javascript:Income.delete(#{income.id})", :class => "icon-remove-circle"}
-      - @periods.each do |period|
-        - income_value = period.find_income_value(income)
-        - if income_value.nil?
-          %th.income_cell &nbsp;
-        - else
-          %th.income_cell{:id => "income_cell_#{income_value.id}"}= number_to_currency(income_value.amount)
+%tbody.incomes
+  -@budget.incomes.order("sort_weight ASC").each do |income|
+    %tr.income{:id => "income_row_#{income.id}"}
+      %th{:nowrap => true}
+        %div{:style => income.title != 'Transfer from savings' && income.title != 'Other' ? "position: relative; cursor: pointer;" : ""}
+          %span.income_title= income.title
+          - if income.title != 'Transfer from savings' && income.title != 'Other'
+            %span{:style => "position: absolute; right: 10px"}
+              %a{:href => "javascript:Income.edit(#{income.id})", :class =>"icon-edit"}
+              %a{:href => "javascript:Income.delete(#{income.id})", :class => "icon-remove-circle"}
+        - @periods.each do |period|
+          - income_value = period.find_income_value(income)
+          - if income_value.nil?
+            %th.income_cell{:income_id => income.id, :date => period.start_date} &nbsp;
+          - else
+            %th.income_cell{:income_id => income.id, 
+                            :period_id => period.id,
+                            :id => "income_cell_#{income_value.id}"}= number_to_currency(income_value.amount)
 
-%tr
-  %th{:style => "color: #333333; background-color: #3399ff;"} Total
-  - @periods.each do |period|
-    - income_total = period.income_total
-    %td{:style=>"color: #333333; background-color: #3399ff; font-weight: bold;", :id => "income_total_#{period.id}"}= number_to_currency(income_total+period.beginning_balance)
+%tbody{:id => "income_totals"}
+  %tr
+    %th{:style => "color: #333333; background-color: #3399ff;"} Total
+    - @periods.each do |period|
+      - income_total = period.income_total
+      %td{:style=>"color: #333333; background-color: #3399ff; font-weight: bold;", :id => "income_total_#{period.id}"}= number_to_currency(income_total+period.beginning_balance)
 
 %div{:id => "income_dialog"}

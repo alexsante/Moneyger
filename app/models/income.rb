@@ -43,9 +43,6 @@ class Income < ActiveRecord::Base
 
       end
 
-      # Generate the periods
-      Period.generate(self)
-      
       # Recalculate period balances
       Period.recalculate_beginning_balances(budget_id = self.budget_id)
 

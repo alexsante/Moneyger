@@ -87,15 +87,16 @@ class BudgetsController < ApplicationController
     end
   end
   
-  # GET /fetch_periods/1.json
   def periods
-      
-      @periods = Period.periods_to_json(params[:id])
+
+      params[:pid] ||= 0
+      @budget = current_budget
+      @periods = Period.periods_to_json(current_budget.id, params[:pid])
 
       respond_to do |format|
-        format.json { render json:@periods } 
+        format.json { render json: @periods }
       end
-      
+
   end
     
     

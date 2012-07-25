@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
     if session.has_key? "budget_id"
       budget = Budget.find(session[:budget_id])
     else
-      budget = Budget.first_or_create(:user_id => current_user.id)
+      budget = Budget.find_or_create_by_user_id(current_user.id, :title => "My Budget", :beginning_balance => 0)
       session[:budget_id] = budget.id
     end
 

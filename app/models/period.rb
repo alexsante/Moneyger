@@ -64,27 +64,32 @@ class Period < ActiveRecord::Base
     self.beginning_balance + income_total - fixed_expense_total - fixed_expense_total(1) - variable_expense_total
 
   end
-  
+
   def self.recalculate_beginning_balances(period_id=0, budget_id)
 
-    # Recalculates the beginning balance of a every period in the budget starting from period passed in
-    periods = Period.where("id >= ? and budget_id = ?", period_id, budget_id).order(:id)
-    
-    periods.each_with_index do |p,i|
-      if i > 0
-        p.update_attributes(:beginning_balance => periods[i-1].ending_balance)
+    Thread.new do
+      begin
+        # Recalculates the beginning balance of a every period in the budget starting from period passed in
+        periods = Period.where("id >= ? and budget_id = ?", period_id, budget_id).order(:id)
+        
+        periods.each_with_index do |p,i|
+          if i > 0
+            p.update_attributes(:beginning_balance => periods[i-1].ending_balance)
+          end
+        end
       end
-    end
-    
+    end 
   end
   
-  def self.periods_to_json(budget_id)
+  def self.periods_to_json(budget_id, offset)
     
     @response = []
     
-    Period.where(:budget_id => budget_id).order(:id).each do |period|
+    Period.where(:budget_id => budget_id).limit(10).offset(offset).order(:id).each do |period|
       
-      @response << {:period_id => period.id, 
+      @response << {:id => period.id,
+                    :start_date => period.start_date,
+                    :end_date => period.end_date,
                     :beginning_balance => period.beginning_balance, 
                     :fixed_expense_total => period.fixed_expense_total, 
                     :fixed_aw_expense_total => period.fixed_expense_total(1),
@@ -103,19 +108,19 @@ class Period < ActiveRecord::Base
     Period.where("budget_id = :budget_id AND start_date <= :date and end_date >= :date", :budget_id => budget_id, :date => date).first
   end
   
-  def self.generate(income)
-  # Based on the income value passed in, this class will generate period
-  # records. The income object contains a frequency value that will be used to
-  # determine how many periods actually need to be created.
+  def self.generate(budget)
+  
+    # This method is executed after a nwe budget is created and will create
+    # period records for up to a year after the budget start date.
 
     # Keep track of the running date
-    new_date = BudgetsHelper::DateHelper.new(income.income_date,income.frequency)
+    new_date = BudgetsHelper::DateHelper.new(budget.created_at,"Weekly")
 
-    while new_date.current_date < income.income_date.next_year
+    while new_date.current_date < budget.created_at.next_year
       
       period = Period.new(:start_date => new_date.current_date, 
-                          :budget_id => income.budget_id,
-                          :beginning_balance => income.budget.beginning_balance)
+                          :budget_id => budget.id,
+                          :beginning_balance => budget.beginning_balance)
 
       new_date.next
 

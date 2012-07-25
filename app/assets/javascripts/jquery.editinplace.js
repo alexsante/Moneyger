@@ -469,6 +469,8 @@ $.extend(InlineEditor.prototype, {
 	handleSubmitToServer: function(enteredText) {
 		var data = this.settings.update_value + '=' + encodeURIComponent(enteredText) 
 			+ '&' + this.settings.element_id + '=' + this.dom.attr("id") 
+			+ '&income_id=' + this.dom.attr("income_id")
+		        + '&date=' + this.dom.attr('date')	
 			+ ((this.settings.params) ? '&' + this.settings.params : '')
 			+ '&' + this.settings.original_html + '=' + encodeURIComponent(this.originalValue) /* DEPRECATED in 2.2.0 */
 			+ '&' + this.settings.original_value + '=' + encodeURIComponent(this.originalValue);

@@ -5,7 +5,7 @@
       %a{:href => "javascript:void(0)", :onclick => "Expense.new()", :class => "icon-white icon-plus-sign"}/
 
   - @budget.expenses.where(:isfixed => true, :auto_withdrawal => false).order("id ASC").each do |expense|
-    %tr.fixed_expense_row
+    %tr.fixed_expense_row{:id => "expense_row_#{expense.id}"}
       %th{:nowrap => true}
         %div{:style => "position: relative;"}
           %span.expense_title= expense.title

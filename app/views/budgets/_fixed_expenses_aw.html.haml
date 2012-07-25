@@ -3,11 +3,18 @@
     %th{:style => "color: white; background-color: #333333;", :colspan => @periods.length + 1}
       %span Fixed Expenses
       %span.label.label-warning Auto Withdrawals
+      %a{:href => "javascript:void(0)", :onclick => "Expense.new(type='fixed-aw')", :class => "icon-white icon-plus-sign"}/
 
 
   -@budget.expenses.where(:isfixed => true, :auto_withdrawal => true).each do |expense|
-    %tr
-      %th{:nowrap => true}= expense.title
+    %tr.fixed_expense_row{:id => "expense_row_#{expense.id}"}
+      %th{:nowrap => true}
+        %div{:style => "position: relative;"}
+          %span.expense_title= expense.title
+          %span{:style => "position: absolute; right: 10px;"}
+            %a.icon-edit{:href => "javascript:Expense.edit(#{expense.id})"}
+            %a.icon-remove-circle{:href => "javascript:Expense.destroy(#{expense.id})"}
+
       -@periods.each do |period|
         - expense_value = period.find_expense_values(expense)
         %td=expense_value > 0 ? number_to_currency(expense_value) : ""

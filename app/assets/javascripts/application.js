@@ -18,7 +18,15 @@
 //= require bootstrap-tooltip
 //= require bootstrap-popover
 //= require bootstrap-transition
-//= require_tree .
+//= require underscore
+//= require backbone
+//= require .//moneyger
+//= require_tree .//models
+//= require_tree .//collections
+//= require_tree .//views
+//= require_tree .//routers
+// //= require_tree .
+
 $(".datepicker").datepicker({dateFormat: "yy/mm/dd"})
 
 function formatCurrency(num) {
@@ -46,4 +54,6 @@ function dialog(title, content, cb)
 	                            $(this).remove();
 	                        }
 	                    });
-}	                    
+}
+
+

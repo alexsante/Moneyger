@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120717160703) do
+ActiveRecord::Schema.define(:version => 20120724025251) do
 
   create_table "budgets", :force => true do |t|
     t.string   "title"
@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(:version => 20120717160703) do
     t.date     "expense_date"
     t.boolean  "is_paid"
   end
+
+  add_index "expense_values", ["expense_id"], :name => "expense_id_ix"
 
   create_table "expenses", :force => true do |t|
     t.datetime "expense_date"
@@ -53,6 +55,8 @@ ActiveRecord::Schema.define(:version => 20120717160703) do
     t.datetime "updated_at",  :null => false
   end
 
+  add_index "income_values", ["income_id"], :name => "income_id_ix"
+
   create_table "incomes", :force => true do |t|
     t.date     "income_date"
     t.decimal  "amount"
@@ -72,6 +76,8 @@ ActiveRecord::Schema.define(:version => 20120717160703) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
   end
+
+  add_index "periods", ["budget_id"], :name => "budget_id_ix"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

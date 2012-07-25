@@ -1,0 +1,14 @@
+%tr.income{:id => "income_row_#{@income.id}"}
+  %th{:nowrap => true}
+    %div{:style => @income.title != 'Transfer from savings' && @income.title != 'Other' ? "position: relative; cursor: pointer;" : ""}
+      %span.income_title= @income.title
+      - if @income.title != 'Transfer from savings' && @income.title != 'Other'
+        %span{:style => "position: absolute; right: 10px"}
+          %a{:href => "javascript:Income.edit(#{@income.id})", :class =>"icon-edit"}
+          %a{:href => "javascript:Income.delete(#{@income.id})", :class => "icon-remove-circle"}
+    - @periods.each do |period|
+      - income_value = period.find_income_value(@income)
+      - if income_value.nil?
+        %th.income_cell{:income_id => @income.id, :date => period.start_date} &nbsp;
+      - else
+        %th.income_cell{:income_id => @income.id, :id => "income_cell_#{income_value.id}"}= number_to_currency(income_value.amount)

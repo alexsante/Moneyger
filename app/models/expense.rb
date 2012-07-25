@@ -2,15 +2,11 @@ class Expense < ActiveRecord::Base
   has_many :expense_values, :dependent => :destroy
   belongs_to :budget
 
-  after_create :generate_expense_values, :after_create
+  after_create :generate_expense_values
   after_update :generate_expense_values
 
   validates :title, :amount, :budget_id, :presence => true
   validates_presence_of :expense_date, :if => :isfixed?
-
-  def after_create
-    Period.recalculate_beginning_balances(budget_id = self.budget_id)
-  end
 
   def generate_expense_values
 
@@ -35,6 +31,8 @@ class Expense < ActiveRecord::Base
       end
       
     end
+    
+    Period.recalculate_beginning_balances(budget_id = self.budget_id)
 
   end
 

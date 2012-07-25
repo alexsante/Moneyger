@@ -2,15 +2,16 @@ class Budget < ActiveRecord::Base
   has_many :expenses
   has_many :incomes
   has_many :periods
+  belongs_to :user
 
   attr_accessor :period_start_date
-  after_create :create_savings_account
+  after_create :after_create
 
   def get_beginning_balance(period_start_date)
     beginning_balance = 0
   end
 
-  def create_savings_account
+  def after_create
     
     # TODO: Refactor this by placing it an income service (ie. create_savings_record)
     i = Income.new
@@ -45,6 +46,9 @@ class Budget < ActiveRecord::Base
     e.auto_withdrawal = 0
     e.frequency = 'Bi-Weekly'
     e.save
+
+    # Pass the budget over to the period class to generate period records for the year
+    Period.generate(self)
       
   end
 

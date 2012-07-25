@@ -34,49 +34,8 @@ class @Income
       title: "Edit Income"
       keyboard: true
       
-    $("#incomeModal").load('/incomes/'+id+'/edit')       
-    
-  @new = ->
-    $("#incomeModal").modal 
-      title: 'New Income'
-    $("#incomeModal").load('/incomes/new.js')
-    
-  @save = (obj) ->
-    if obj == undefined
-      method = 'POST'
-      url = '/incomes.js'
-      action = 'create'
-    else
-      method = 'PUT'
-      url = '/incomes/'+obj+'.json'
-      action = 'update'
-      
-    formData = $("form#income").serialize()
-      
-    $.ajax
-      type: method
-      url: url 
-      data: formData
-      success: (r) ->
-        if action is 'update'
-          $("tr#income_row_"+r.id+" span.income_title").html(r.title)
-          $("#incomeModal").toggleClass('in')
-          $("div.modal-backdrop").remove()
-        else if action is 'create'
-          window.location='/' 
-      error: (r) ->
-        $("form#new_income").unblock()
-        errors = $.parseJSON(r.responseText)
-        $("div#notice").html("").addClass("alert alert-error")
-        $("div#notice").append("<h4>Please check your form</h4><ul></ul>")
-        for e of errors
-          for ve in errors[e]
-            $("div#notice ul").append("<li>"+e+": "+ve+"</li>")
-        
-    return false 
-    
-  
-                
+    $("#incomeModal").load('/incomes/'+id+'/edit')
+
 $ ->
 	$(".income_cell").editInPlace
 		url: '/incomes/quick_update.js'
