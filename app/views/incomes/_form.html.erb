@@ -55,7 +55,11 @@
 </div>
 
 <div class="modal-footer">
-  <a href="#" class="btn btn-primary" onclick="return new Moneyger.Routers.Budgets().save_income()">Save</a>
+  <% if @income.persisted? %>
+    <a href="#" class="btn btn-primary" id="btn_update_income" income_id="<%=@income.id%>">Update</a>
+  <% else %>
+    <a href="#" class="btn btn-primary" id="btn_save_income">Create</a>
+  <% end %>
   <a href="#" class="btn" data-dismiss="modal">Cancel</a>
 </div>
 

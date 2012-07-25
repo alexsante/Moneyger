@@ -3,10 +3,10 @@
     %tr.income{:id => "income_row_#{income.id}"}
       %th{:nowrap => true}
         %div{:style => income.title != 'Transfer from savings' && income.title != 'Other' ? "position: relative; cursor: pointer;" : ""}
-          %span.income_title= income.title
+          %span.income_title{:id => "income_title_#{income.id}"}= income.title
           - if income.title != 'Transfer from savings' && income.title != 'Other'
             %span{:style => "position: absolute; right: 10px"}
-              %a{:href => "javascript:Income.edit(#{income.id})", :class =>"icon-edit"}
+              %a{:href => "javascript:void(0)", :class =>"icon-edit", :id => "btn_edit_income", :income_id => income.id}
               %a{:href => "javascript:Income.delete(#{income.id})", :class => "icon-remove-circle"}
         - @periods.each do |period|
           - income_value = period.find_income_value(income)

@@ -22,7 +22,9 @@ class BudgetsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @budgets }
+      format.json { render json: @budget.to_json(
+            :include => [{:incomes => {:include => :income_values}}, {:expenses => {:include => :expense_values}}])
+      }
     end
   end
 

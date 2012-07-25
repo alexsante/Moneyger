@@ -1,18 +1,22 @@
 class Moneyger.Routers.Budgets extends Backbone.Router
 
     initialize: ->
+      @budgetModal = new Moneyger.Models.Budget
+      @budgetModal.fetch()
       @periods_collection = new Moneyger.Collections.Periods()
+      @periods_collection.fetch()
       @view = new Moneyger.Views.BudgetsIndex()
-
+      @incomeView = new Moneyger.Views.IncomesIndex()
+      console.log(@budgetModal)
     routes:
       "new_income": "new_income"
 
     new_income: ->
-      @view.render_newIncome()
+      @incomeView.render_newIncome()
       @recalculate_periods()
 
     save_income: ->
-      @view.create_income()
+      @incomeView.create_income()
 
     recalculate_periods: ->
       @periods_collection.fetch
