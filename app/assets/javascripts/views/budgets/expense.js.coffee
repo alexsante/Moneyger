@@ -4,6 +4,7 @@ class Moneyger.Views.ExpenseIndex extends Backbone.View
     events:
       'click a.btn_new_expense': 'render_newForm'
       'click a.btn_edit_expense': 'render_editForm'
+      'click a.btn_delete_expense': 'delete'
 
     render_newForm: ->
       parent = this
@@ -57,3 +58,9 @@ class Moneyger.Views.ExpenseIndex extends Backbone.View
             # Hide the popup modal
             $("#expenseModal").modal("hide")
       )
+
+    delete: (event) ->
+      expenses = new Moneyger.Collections.Expenses
+      expense.where({id: event.expense_id})
+      #$(@el).block
+      #  message: null

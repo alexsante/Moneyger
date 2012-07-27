@@ -2,8 +2,7 @@ class Moneyger.Routers.Budgets extends Backbone.Router
 
     initialize: ->
       # Budget collection (includes income and expenses plus their associations)
-      @budget = new Moneyger.Models.Budget
-      @budget.fetch()
+      @budget = new Moneyger.Collections.Budgets
 
       # Period Collection
       @periods_collection = new Moneyger.Collections.Periods()
