@@ -1,11 +1,17 @@
 %tr
-  %th{:style => "color: white; background-color: #333333;"} Variable Expenses
+  %th{:style => "color: white; background-color: #333333;"}
+    %span.section-title Variable Expenses
+    %a{:href => "javascript:void(0)", :class => "icon-white icon-plus-sign btn_new_expense", :type => "variable"}/
   %td{:colspan => @budget.periods.length, :style => "background-color: #333333;"} &nbsp;
 %tbody.variable_expenses
   - @budget.expenses.where(:isfixed => false).each do |expense|
     %tr.variable_expense_row{:id => "expense_row_#{expense.id}"}
       %th{:nowrap => true}
-        %span.expense_title= expense.title
+        %div{:style => "position: relative;"}
+          %span.expense_title{:id => "expense_title_#{expense.id}"}= expense.title
+          %span{:style => "position: absolute; right: 10px;"}
+            %a{:href => "javascript:void(0)", :expense_id => expense.id, :class => "icon-edit btn_edit_expense"}
+            %a{:href => "javascript:void(0)", :expense_id => expense.id, :class => "icon-remove-circle btn_delete_expense"}
         %div= expense.amount.nil? ? "$0.00" : number_to_currency(expense.amount)
 
       - @periods.each do |period|

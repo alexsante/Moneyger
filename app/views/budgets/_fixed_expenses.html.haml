@@ -1,9 +1,8 @@
+%tr
+  %th{:style => "color: white; background-color: #333333", :colspan => @periods.length + 1}
+    %span.section-title= "Fixed Expenses"
+    %a{:href => "javascript:void(0)", :class => "icon-white icon-plus-sign btn_new_expense", :type => "fixed"}/
 %tbody.fixed_expenses
-  %tr
-    %th{:style => "color: white; background-color: #333333", :colspan => @periods.length + 1}
-      %span.section-title= "Fixed Expenses"
-      %a{:href => "javascript:void(0)", :class => "icon-white icon-plus-sign btn_new_expense"}/
-
   - @budget.expenses.where(:isfixed => true, :auto_withdrawal => false).order("id ASC").each do |expense|
     %tr.fixed_expense_row{:id => "expense_row_#{expense.id}"}
       %th{:nowrap => true}

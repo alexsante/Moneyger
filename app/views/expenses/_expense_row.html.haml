@@ -1,5 +1,5 @@
-- if params[:isfixed] == 'true'
-  -if params[:auto_withdrawal] == 'true'
+- if @expense.isfixed?
+  -if @expense.auto_withdrawal?
     %tr.fixed_expense_row_aw
       %th{:nowrap => true}= @expense.title
       -@periods.each do |period|

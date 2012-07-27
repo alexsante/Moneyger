@@ -6,10 +6,24 @@ class Moneyger.Views.ExpenseIndex extends Backbone.View
       'click a.btn_edit_expense': 'render_editForm'
       'click a.btn_delete_expense': 'delete'
 
-    render_newForm: ->
+    render_newForm: (event) ->
       parent = this
+      eventType = $(event.currentTarget).attr("type")
       $("#expenseModal").load '/expenses/new', ->
         $(this).modal()
+        # Modify the form depending on the type of event that was clicked
+        if eventType is "fixed"
+          $("#expense_isfixed").val(1)
+          expensetoggle(1)
+          $("#expense_auto_withdrawal").attr("checked", false)
+        else if eventType == "fixed_aw"
+          $("#expense_isfixed").val(1)
+          expensetoggle(1)
+          $("#expense_auto_withdrawal").attr("checked", true)
+        else
+          $("#expense_isfixed").val(0)
+          $("#expense_auto_withdrawal").attr("checked", false)
+          expensetoggle(0)
         parent.delegateEvents(_.extend(parent.events, {"click #btn_save_expense": "create"}))
 
     render_editForm: (event) ->
@@ -45,11 +59,11 @@ class Moneyger.Views.ExpenseIndex extends Backbone.View
           # Render the expense record
           $.get '/expenses/'+model.id, (getResponse) ->
             console.log(model)
-            if model.isfixed is true
-              if model.auto_withdrawal is true
-                $("tbody.fixed_expenses").prepend(getResponse)
-              else
+            if model.get("isfixed") is true
+              if model.get("auto_withdrawal")? and model.get("auto_withdrawal") is true
                 $("tbody.fixed_expenses_aw").prepend(getResponse)
+              else
+                $("tbody.fixed_expenses").prepend(getResponse)
             else
               $("tbody.variable_expenses").prepend(getResponse)
 
