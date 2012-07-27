@@ -2,16 +2,16 @@
   %tr
     %th{:style => "color: white; background-color: #333333", :colspan => @periods.length + 1}
       %span.section-title= "Fixed Expenses"
-      %a{:href => "javascript:void(0)", :onclick => "Expense.new()", :class => "icon-white icon-plus-sign"}/
+      %a{:href => "javascript:void(0)", :class => "icon-white icon-plus-sign btn_new_expense"}/
 
   - @budget.expenses.where(:isfixed => true, :auto_withdrawal => false).order("id ASC").each do |expense|
     %tr.fixed_expense_row{:id => "expense_row_#{expense.id}"}
       %th{:nowrap => true}
         %div{:style => "position: relative;"}
-          %span.expense_title= expense.title
+          %span.expense_title{:id => "expense_title_#{expense.id}"}= expense.title
           %span{:style => "position: absolute; right: 10px;"}
-            %a.icon-edit{:href => "javascript:Expense.edit(#{expense.id})"}
-            %a.icon-remove-circle{:href => "javascript:Expense.destroy(#{expense.id})"}
+            %a{:href => "javascript:void(0)", :expense_id => expense.id, :class => "icon-edit btn_edit_expense"}
+            %a{:href => "javascript:void(0)", :expense_id => expense.id, :class => "icon-remove-circle btn_delete_expense"}
 
       - @periods.each do |period|
         - expense_value = expense.expense_value_by_period(period)

@@ -47,6 +47,7 @@ class ExpensesController < ApplicationController
   # GET /expenses/1/edit
   def edit
     @expense = Expense.find(params[:id])
+    render :layout => false
   end
 
   # POST /expenses
@@ -74,7 +75,7 @@ class ExpensesController < ApplicationController
     respond_to do |format|
       if @expense.update_attributes(params[:expense])
         format.html { redirect_to '/budgets', notice: 'Expense was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: @expense, status: :ok }
       else
         format.html { render action: "edit" }
         format.json { render json: @expense.errors, status: :unprocessable_entity }

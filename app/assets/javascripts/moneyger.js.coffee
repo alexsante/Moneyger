@@ -4,7 +4,7 @@ window.Moneyger =
   Views: {}
   Routers: {}
   init: ->
-    new Moneyger.Routers.Budgets
+    @mainRouter = new Moneyger.Routers.Budgets
     Backbone.history.start()
 
   recalculate_periods: ->

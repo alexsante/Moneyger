@@ -12,38 +12,46 @@
           = f.text_field :title, :class => 'text_field'
 
       .control-group
-        = f.label "Expense Type", :class => 'control-label'
-        .controls
-          %select{:name => "expense[isfixed]", :onchange => "expensetoggle(this.value)"}
-            %option{:value => 0} Variable
-            %option{:value => 1} Fixed
-
-      .control-group
         = f.label :amount, :class => 'control-label'
         .controls
           = f.text_field :amount, :class => 'text_field'
 
-      .hidden{:id => "fixed-properties"}
+      -if @expense.persisted? == false
         .control-group
-          = f.label "Date Due", :class => "control-label"
+          = f.label "Expense Type", :class => 'control-label'
           .controls
-            = f.text_field :expense_date, :class => 'text_field datepicker'
+            %select{:name => "expense[isfixed]", :id => "expense_isfixed", :onchange => "expensetoggle(this.value)"}
+              %option{:value => 0} Variable
+              %option{:value => 1} Fixed
 
-        .control-group
-          = f.label :frequency, :class => 'control-label'
-          .controls
-            = f.input :frequency,  :as => :select,  :collection => ["One Time","Weekly","Bi-Weekly", "Bi-Monthly", "Monthly", "Quarterly","Annually"], :label => false
+        %div{:id => "fixed-properties"}
+          .control-group
+            = f.label "Date Due", :class => "control-label"
+            .controls
+              = f.text_field :expense_date, :class => 'text_field datepicker'
 
-        .control-group
-          .controls
-            = f.input :auto_withdrawal, :as => :boolean, :class => 'checkbox', :label => false
+          .control-group
+            = f.label :frequency, :class => 'control-label'
+            .controls
+              = f.input :frequency,  :as => :select,  :collection => ["One Time","Weekly","Bi-Weekly", "Bi-Monthly", "Monthly", "Quarterly","Annually"], :label => false
+
+          .control-group
+            .controls
+              = f.input :auto_withdrawal, :as => :boolean, :class => 'checkbox', :label => false
 
 .modal-footer
-  %a{:href => "#", :class => "btn btn-primary", :onclick => "return Expense.save(#{@expense.id})"} Save
+  - if @expense.persisted?
+    %a{:href => "#", :class => "btn btn-primary", :id => "btn_update_expense", :expense_id => @expense.id} Update
+  - else
+    %a{:href => "#", :class => "btn btn-primary", :id => "btn_save_expense"} Create
   %a{:href => "#", :class => "btn", "data-dismiss" => "modal"} Cancel
 
 :javascript
   $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
   function expensetoggle(value){
-    if(value == 1) { $("#fixed-properties").toggleClass('hidden')}
+    if(value == 0) {
+      $("#fixed-properties").addClass('hidden')
+    } else {
+      $("#fixed-properties").removeClass('hidden')
+    }
   }
