@@ -16,26 +16,6 @@ class @Income
             # Refresh the budget
             Budget.refresh(budget_id)
 
-  @delete = (id) ->
-    $("body").block
-      message: null
-    jConfirm "Are you sure you want to remove this income?","Confirm", (decision) ->
-        if decision == true
-          $.post '/incomes/'+id+'.json'
-            _method: 'delete'
-            (r) ->
-              $("tr#income_row_"+id).fadeOut().remove()
-        $("body").unblock()
-                            
-  @edit = (id) ->
-    $("#incomeModal").modal
-      keyboard: false
-      backdrop: 'static'
-      title: "Edit Income"
-      keyboard: true
-      
-    $("#incomeModal").load('/incomes/'+id+'/edit')
-
 $ ->
 	$(".income_cell").editInPlace
 		url: '/incomes/quick_update.js'
