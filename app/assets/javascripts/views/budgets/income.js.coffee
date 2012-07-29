@@ -18,7 +18,6 @@ class Moneyger.Views.IncomesIndex extends Backbone.View
       parent = this
       $("#incomeModal").load '/incomes/'+id+'/edit', ->
         $(this).modal
-          keyboard: false
           backdrop: 'static'
           title: "Edit Income"
           keyboard: true
