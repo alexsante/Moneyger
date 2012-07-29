@@ -28,7 +28,6 @@ class Moneyger.Views.ExpenseIndex extends Moneyger.Views.BaseView
       parent = this
       $("#expenseModal").load '/expenses/'+id+'/edit', ->
         $(this).modal
-          keyboard: false
           backdrop: 'static'
           title: "Edit Expense"
           keyboard: true
