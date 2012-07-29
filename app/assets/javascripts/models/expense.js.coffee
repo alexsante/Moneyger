@@ -1,6 +1,10 @@
 class Moneyger.Models.Expense extends Backbone.Model
   url: '/expenses'
 
+  methodUrl: {
+    "delete": "/expenses/:id"
+  }
+
   initialize: ->
     @expenseValues = new Moneyger.Collections.ExpenseValues
 

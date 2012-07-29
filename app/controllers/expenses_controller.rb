@@ -88,6 +88,7 @@ class ExpensesController < ApplicationController
   def destroy
     @expense = Expense.find(params[:id])
     @expense.destroy
+    Period.recalculate_beginning_balances(budget_id= current_budget.id)
 
     respond_to do |format|
       format.html { redirect_to expenses_url }

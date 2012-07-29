@@ -4,3 +4,4 @@ class Moneyger.Collections.Expenses extends Backbone.Collection
 
   initialize: ->
     this.bind("add", Moneyger.recalculate_periods, this)
+    this.bind("remove", Moneyger.recalculate_periods, this)

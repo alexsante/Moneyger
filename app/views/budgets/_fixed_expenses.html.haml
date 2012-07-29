@@ -1,28 +1,10 @@
 %tr
   %th{:style => "color: white; background-color: #333333", :colspan => @periods.length + 1}
     %span.section-title= "Fixed Expenses"
-    %a{:href => "javascript:void(0)", :class => "icon-white icon-plus-sign btn_new_expense", :type => "fixed"}/
+    %a{:href => "javascript:void(0)", :class => "icon-white icon-plus-sign", :onclick => "Moneyger.mainRouter.new_expense('fixed')"}/
 %tbody.fixed_expenses
   - @budget.expenses.where(:isfixed => true, :auto_withdrawal => false).order("id ASC").each do |expense|
-    %tr.fixed_expense_row{:id => "expense_row_#{expense.id}"}
-      %th{:nowrap => true}
-        %div{:style => "position: relative;"}
-          %span.expense_title{:id => "expense_title_#{expense.id}"}= expense.title
-          %span{:style => "position: absolute; right: 10px;"}
-            %a{:href => "javascript:void(0)", :expense_id => expense.id, :class => "icon-edit btn_edit_expense"}
-            %a{:href => "javascript:void(0)", :expense_id => expense.id, :class => "icon-remove-circle btn_delete_expense"}
-
-      - @periods.each do |period|
-        - expense_value = expense.expense_value_by_period(period)
-        - if expense_value.nil? == false
-          %td{:class => "is_paid_#{expense_value.is_paid}", :id => "expense_value_#{expense_value.id}", :nowrap => true}
-            %div
-              %span
-                %input{:type => "checkbox",
-                       :id => "expense_value_toggle_#{expense_value.id}", :checked => expense_value.is_paid == true ? 'checked' : ''}/
-                %span.expense_cell{:id => "expense_cell_#{expense_value.id}"}= expense_value.amount > 0 ? number_to_currency(expense_value.amount) : "$0.00"
-        - else
-          %td.expense_cell &nbsp
+    =render(:partial => "expenses/expense_row", :locals => {:expense => expense})
 
 %tbody.fixed_expense_totals
   %tr

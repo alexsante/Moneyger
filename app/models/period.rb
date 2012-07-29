@@ -8,7 +8,7 @@ class Period < ActiveRecord::Base
   def find_income_value(income)
 
     # Returns all income values logged into this period and budget
-    income_value = IncomeValue.where("income_id = ? and income_date >= ? and income_date <= ?", income.id, self.start_date, self.end_date).first
+    income_value = IncomeValue.where("income_id = ? and income_date >= ? and income_date < ?", income.id, self.start_date, self.end_date).first
 
   end
 
@@ -31,7 +31,7 @@ class Period < ActiveRecord::Base
   def fixed_expense_total(auto_withdrawal = 0)
     ExpenseValue.joins(:expense).sum(:amount, :conditions => ["isfixed = TRUE 
                                                                and expense_values.expense_date >= ? 
-                                                               and expense_values.expense_date <= ? 
+                                                               and expense_values.expense_date < ?
                                                                and budget_id = ? 
                                                                and auto_withdrawal = ?", 
                                                                self.start_date, self.end_date, self.budget_id, auto_withdrawal])
@@ -52,7 +52,7 @@ class Period < ActiveRecord::Base
   def income_total
 
     IncomeValue.joins(:income).sum(:amount, :conditions => ["income_values.income_date >= ? 
-                                                            and income_values.income_date <= ? 
+                                                            and income_values.income_date < ?
                                                             and incomes.budget_id = ?",
                                                             self.start_date, self.end_date, self.budget_id])
 
@@ -67,18 +67,15 @@ class Period < ActiveRecord::Base
 
   def self.recalculate_beginning_balances(period_id=0, budget_id)
 
-    Thread.new do
-      begin
-        # Recalculates the beginning balance of a every period in the budget starting from period passed in
-        periods = Period.where("id >= ? and budget_id = ?", period_id, budget_id).order(:id)
-        
-        periods.each_with_index do |p,i|
-          if i > 0
-            p.update_attributes(:beginning_balance => periods[i-1].ending_balance)
-          end
-        end
+    # Recalculates the beginning balance of a every period in the budget starting from period passed in
+    periods = Period.where("id >= ? and budget_id = ?", period_id, budget_id).order(:id)
+
+    periods.each_with_index do |p,i|
+      if i > 0
+        p.update_attributes(:beginning_balance => periods[i-1].ending_balance)
       end
-    end 
+    end
+
   end
   
   def self.periods_to_json(budget_id, offset)

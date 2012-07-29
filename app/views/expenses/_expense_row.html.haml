@@ -1,22 +1,28 @@
-- if @expense.isfixed?
-  -if @expense.auto_withdrawal?
-    %tr.fixed_expense_row_aw
-      %th{:nowrap => true}= @expense.title
+= expense ||= @expense
+- if expense.isfixed?
+  -if expense.auto_withdrawal?
+    %tr.fixed_expense_row_aw{:id => "expense_row_#{expense.id}"}
+      %th{:nowrap => true, :id => "expense_title_#{expense.id}"}
+        %div{:style => "position: relative;"}
+          %span.expense_title{:id => "expense_title_#{expense.id}"}= expense.title
+          %span{:style => "position: absolute; right: 10px;"}
+            %a{:href => "javascript:void(0)", :class => "icon-edit", :onclick => "Moneyger.mainRouter.edit_expense(#{expense.id})"}
+            %a{:href => "javascript:void(0)", :class => "icon-remove-circle", :onclick => "Moneyger.mainRouter.delete_expense(#{expense.id})"}
       -@periods.each do |period|
-        - expense_value = @expense.expense_value_by_period(period)
-        %td=expense_value > 0 ? number_to_currency(expense_value) : ""
+        - expense_value = expense.expense_value_by_period(period)
+        %td=expense_value.amount > 0 ? number_to_currency(expense_value.amount) : ""
   - else
-    %tr.fixed_expense_row
+    %tr.fixed_expense_row{:id => "expense_row_#{expense.id}"}
       %th{:nowrap => true}
         %div{:style => "position: relative;"}
-          %span.expense_title= @expense.title
+          %span.expense_title{:id => "expense_title_#{expense.id}"}= expense.title
           %span{:style => "position: absolute; right: 10px;"}
-            %a.icon-edit{:href => "Expense.edit(#{@expense.id}"}
-            %a.icon-remove-circle{:href => "Expense.delete(#{@expense.id})"}
+            %a{:href => "javascript:void(0)", :class => "icon-edit", :onclick => "Moneyger.mainRouter.edit_expense(#{expense.id})"}
+            %a{:href => "javascript:void(0)", :class => "icon-remove-circle", :onclick => "Moneyger.mainRouter.delete_expense(#{expense.id})"}
 
       - @periods.each do |period|
-        - expense_value = @expense.expense_value_by_period(period)
-        - if expense_value.nil? == false
+        - expense_value = expense.expense_value_by_period(period)
+        - if expense_value.amount > 0
           %td{:class => "is_paid_#{expense_value.is_paid}", :id => "expense_value_#{expense_value.id}", :nowrap => true}
             %div
               %span
@@ -26,17 +32,22 @@
         - else
           %td.expense_cell &nbsp
 - else
-  %tr
+  %tr{:id => "expense_row_#{expense.id}"}
     %th{:nowrap => true}
-      %span.expense_title= @expense.title
-      %div= @expense.amount.nil? ? "$0.00" : number_to_currency(@expense.amount)
+      %div{:style => "position: relative;"}
+        %span.expense_title{:id => "expense_title_#{expense.id}"}= expense.title
+        - if expense.title != "Transfer to savings"
+          %span{:style => "position: absolute; right: 10px;"}
+            %a{:href => "javascript:void(0)", :class => "icon-edit", :onclick => "Moneyger.mainRouter.edit_expense(#{expense.id})"}
+            %a{:href => "javascript:void(0)", :class => "icon-remove-circle", :onclick => "Moneyger.mainRouter.delete_expense(#{expense.id})"}
+      %div= expense.amount.nil? ? "$0.00" : number_to_currency(expense.amount)
 
     - @periods.each do |period|
-      - expense_value = period.find_expense_values(@expense)
-      - if @expense.amount.nil?
+      - expense_value = period.find_expense_values(expense)
+      - if expense.amount.nil?
         - percent_spent = 0
       - else
-        - percent_spent = expense_value / @expense.amount * 100
+        - percent_spent = expense_value / expense.amount * 100
         - if percent_spent > 100
           -progress_css = "progress-danger progress-striped active"
         -elsif percent_spent < 100 && percent_spent > 75
@@ -44,7 +55,7 @@
         -else
           -progress_css = "progress-success"
 
-      %td.expense_value{:id => "expense_value_#{@expense.id}_#{period.id}",:expense_id => @expense.id,:style => "cursor: pointer",:period_id => period.id}
+      %td.expense_value{:id => "expense_value_#{expense.id}_#{period.id}",:expense_id => expense.id,:style => "cursor: pointer",:period_id => period.id}
         %span= number_to_currency(expense_value)
         %div{:class => "progress #{progress_css}"}
           .bar{:style => "width: #{percent_spent}%"}

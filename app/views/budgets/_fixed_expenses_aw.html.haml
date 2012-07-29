@@ -2,21 +2,11 @@
   %th{:style => "color: white; background-color: #333333;", :colspan => @periods.length + 1}
     %span Fixed Expenses
     %span.label.label-warning Auto Withdrawals
-    %a{:href => "javascript:void(0)", :class => "icon-white icon-plus-sign btn_new_expense", :type => "fixed_aw"}/
+    %a{:href => "javascript:void(0)", :class => "icon-white icon-plus-sign", :onclick => "Moneyger.mainRouter.new_expense('fixed_aw')"}/
 
 %tbody.fixed_expenses_aw
   -@budget.expenses.where(:isfixed => true, :auto_withdrawal => true).each do |expense|
-    %tr.fixed_expense_row{:id => "expense_row_#{expense.id}"}
-      %th{:nowrap => true}
-        %div{:style => "position: relative;"}
-          %span.expense_title{:id => "expense_title_#{expense.id}"}= expense.title
-          %span{:style => "position: absolute; right: 10px;"}
-            %a{:href => "javascript:void(0)", :expense_id => expense.id, :class => "icon-edit btn_edit_expense"}
-            %a{:href => "javascript:void(0)", :expense_id => expense.id, :class => "icon-remove-circle btn_delete_expense"}
-
-      -@periods.each do |period|
-        - expense_value = period.find_expense_values(expense)
-        %td=expense_value > 0 ? number_to_currency(expense_value) : ""
+    =render(:partial => "expenses/expense_row", :locals => {:expense => expense})
 
 %tbody.fixed_expense_aw_totals
   %tr

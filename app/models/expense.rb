@@ -50,7 +50,7 @@ class Expense < ActiveRecord::Base
   
   def expense_value_by_period(period)
     
-    expense_value = nil
+    expense_value = ExpenseValue.new(:amount => 0)
     
     self.expense_values.each do |ev|
       

@@ -1,21 +1,6 @@
 %tbody.incomes
   -@budget.incomes.order("sort_weight ASC").each do |income|
-    %tr.income{:id => "income_row_#{income.id}"}
-      %th{:nowrap => true}
-        %div{:style => income.title != 'Transfer from savings' && income.title != 'Other' ? "position: relative; cursor: pointer;" : ""}
-          %span.income_title{:id => "income_title_#{income.id}"}= income.title
-          - if income.title != 'Transfer from savings' && income.title != 'Other'
-            %span{:style => "position: absolute; right: 10px"}
-              %a{:href => "javascript:void(0)", :class =>"icon-edit", :id => "btn_edit_income", :income_id => income.id}
-              %a{:href => "javascript:void(0)", :class => "icon-remove-circle btn_delete_income"}
-        - @periods.each do |period|
-          - income_value = period.find_income_value(income)
-          - if income_value.nil?
-            %th.income_cell{:income_id => income.id, :date => period.start_date} &nbsp;
-          - else
-            %th.income_cell{:income_id => income.id, 
-                            :period_id => period.id,
-                            :id => "income_cell_#{income_value.id}"}= number_to_currency(income_value.amount)
+    = render(:partial => 'incomes/income_row', :locals => {:income => income})
 
 %tbody{:id => "income_totals"}
   %tr

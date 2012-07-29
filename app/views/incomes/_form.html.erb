@@ -19,6 +19,13 @@
 	    </div>
 	<% end %>
 
+    <div class="control-group">
+      <%= f.label :title, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :title, :class => 'text_field', :onkeypress => 'javascript: if(event.keyCode == 13) return false' %>
+      </div>
+    </div>
+
 	<% if @income.persisted? == false %>
     <div class="control-group">
       <%= f.label "Next Occurence", :class => 'control-label' %>
@@ -43,12 +50,7 @@
       </div>
     </div>
 	<% end %>
-    <div class="control-group">
-      <%= f.label :title, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :title, :class => 'text_field', :onkeypress => 'javascript: if(event.keyCode == 13) return false' %>
-      </div>
-    </div>
+
 
   </fieldset>
 <% end %>
@@ -65,4 +67,5 @@
 
 <script type="text/javascript">
   $(".datepicker").datepicker({dateFormat: "yy/mm/dd"})
+  $("#income_title").focus();
 </script>

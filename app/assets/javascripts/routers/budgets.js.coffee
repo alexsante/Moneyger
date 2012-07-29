@@ -8,20 +8,48 @@ class Moneyger.Routers.Budgets extends Backbone.Router
       @periods_collection = new Moneyger.Collections.Periods()
       @periods_collection.fetch()
 
-      # Views
       @view = new Moneyger.Views.BudgetsIndex()
-      @incomeView = new Moneyger.Views.IncomesIndex()
-      @expenseView = new Moneyger.Views.ExpenseIndex()
 
     routes:
       "new_income": "new_income"
+      "new_expense": "new_expense"
+      "edit_income/:id": "edit_income"
+      "edit_expense/:id": "edit_expense"
+      "delete_income/:id": "delete_income"
+      "delete_expense/:id": "delete_expense"
 
+    ##############################################
+    # INCOME CRUD                                #
+    ##############################################
     new_income: ->
-      @incomeView.render_newIncome()
+      @incomeView = new Moneyger.Views.IncomesIndex
+      @incomeView.render_newForm()
       @recalculate_periods()
 
-    save_income: ->
-      @incomeView.create_income()
+    edit_income: (id) ->
+      @incomeView = new Moneyger.Views.IncomesIndex
+      @incomeView.render_editForm(id)
+
+    delete_income: (id) ->
+      # TODO: DELETE() method in the income view needs to be implemented
+      @incomeView = new Moneyger.Views.IncomesIndex
+      @incomeView.delete(id)
+
+
+    ##############################################
+    # EXPENSE CRUD                               #
+    ##############################################
+    new_expense: (type) ->
+      @expenseView = new Moneyger.Views.ExpenseIndex
+      @expenseView.render_newForm(type)
+
+    edit_expense: (id) ->
+      @expenseView = new Moneyger.Views.ExpenseIndex
+      @expenseView.render_editForm(id)
+
+    delete_expense: (id) ->
+      @expenseView = new Moneyger.Views.ExpenseIndex
+      @expenseView.delete(id)
 
     recalculate_periods: ->
       @periods_collection.fetch

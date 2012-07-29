@@ -15,7 +15,7 @@
       %tr
         %th{:style => "color: #ffffff; background-color: #333333;"}
           %span.section-title Income
-          %a{:href => "javascript:void(0)", :id => "btn_new_income", :class => "icon-white icon-plus-sign"}
+          %a{:href => "javascript:void(0)", :class => "icon-white icon-plus-sign", :onclick => "Moneyger.mainRouter.new_income()"}
 
         %td{:colspan => @periods.length, :style => "background-color: #333333;"} &nbsp;
 

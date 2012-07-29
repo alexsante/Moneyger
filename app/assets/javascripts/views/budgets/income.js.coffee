@@ -1,19 +1,21 @@
 class Moneyger.Views.IncomesIndex extends Backbone.View
     el: '#main_container'
+    events: [] # Empty array place holder for delegated events
 
-    events:
-      'click a#btn_new_income': 'render_newForm'
-      'click a#btn_edit_income': 'render_editForm'
+    initialize: ->
+      this.unbind()
 
     render_newForm: ->
       parent = this
       $("#incomeModal").load '/incomes/new', ->
-        $(this).modal()
+        $(this).modal
+          shown: (e) ->
+            console.log(e)
+            $("#income_income_date").focus()
         parent.delegateEvents(_.extend(parent.events, {"click #btn_save_income": "create"}))
 
-    render_editForm: (event) ->
+    render_editForm: (id) ->
       parent = this
-      id = $(event.currentTarget).attr("income_id")
       $("#incomeModal").load '/incomes/'+id+'/edit', ->
         $(this).modal
           keyboard: false
@@ -48,3 +50,18 @@ class Moneyger.Views.IncomesIndex extends Backbone.View
             # Hide the popup modal
             $("#incomeModal").modal("hide")
       )
+
+      delete: (id) ->
+        income = Moneyger.mainRouter.budget.incomes.where({id: id})[0]
+
+        $(@el).block
+          message: null
+        jConfirm "Are you sure you want to remove this income?","Confirm", (decision) ->
+          if decision == true
+            $("tr#income_row_#{id}").fadeOut().remove()
+            expense.destroy
+              url: '/income/'+income.get("id")
+              success: (response) ->
+                $("body").unblock()
+              error: (response) ->
+                alert("An error occured while attempting to delete this income record.  Please try again.")
