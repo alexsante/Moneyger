@@ -5,8 +5,8 @@
       %span.income_title{:id => "income_title_#{income.id}"}= income.title
       - if income.title != 'Transfer from savings' && income.title != 'Other'
         %span{:style => "position: absolute; right: 10px"}
-          %a{:href => "javascript:Income.edit(#{income.id})", :class =>"icon-edit"}
-          %a{:href => "javascript:Income.delete(#{income.id})", :class => "icon-remove-circle"}
+          %a{:href => "javascript:void(0)", :class =>"icon-edit", :onclick => "Moneyger.mainRouter.edit_income(#{income.id})"}
+          %a{:href => "javascript:void(0)", :class => "icon-remove-circle", :onclick => "Moneyger.mainRouter.delete_income(#{income.id})"}
     - @periods.each do |period|
       - income_value = period.find_income_value(income)
       - if income_value.nil?

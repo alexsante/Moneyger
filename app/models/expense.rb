@@ -10,26 +10,22 @@ class Expense < ActiveRecord::Base
 
   def generate_expense_values
 
-    # Clear out existing values if the type is fixed
-    if self.isfixed
-      
-      ExpenseValue.delete_all(["expense_id = :expense_id", {:expense_id => self.id}])
+    ExpenseValue.delete_all(["expense_id = :expense_id", {:expense_id => self.id}])
 
-      # Date iterator helper
-      date_iterator = BudgetsHelper::DateHelper.new self.expense_date,self.frequency
+    # Date iterator helper
+    date_iterator = BudgetsHelper::DateHelper.new self.expense_date,self.frequency
 
-      new_date = Date.parse(self.expense_date.to_s)
+    new_date = Date.parse(self.expense_date.to_s)
 
-      while date_iterator.current_date <= self.expense_date.next_year
+    while date_iterator.current_date <= self.expense_date.next_year
+
+      ev = ExpenseValue.new(:expense_id => self.id, :amount => self.amount, :expense_date => date_iterator.current_date)
+      ev.save
+
+      # Returns the next period date
+      date_iterator.next
   
-        ev = ExpenseValue.new(:expense_id => self.id, :amount => self.amount, :expense_date => date_iterator.current_date)
-        ev.save
 
-        # Returns the next period date
-        date_iterator.next
-  
-      end
-      
     end
     
     Period.recalculate_beginning_balances(budget_id = self.budget_id)

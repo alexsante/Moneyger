@@ -14,7 +14,10 @@
 		<div class="control-group">
 	      <%= f.label "Starting Balance", :class => 'control-label' %>
 	      <div class="controls">
-			<input type="text" name="budget[beginning_balance]" placeholder="0.00">
+            <div class="input-prepend">
+                <span class="add-on">$</span>
+			    <input type="text" class="span1" name="budget[beginning_balance]" placeholder="0.00" onkeyup="this.value = this.value.replace(/[\$,]/g,'')">
+            </div>
 	      </div>
 	    </div>
 	<% end %>
@@ -38,7 +41,10 @@
     <div class="control-group">
       <%= f.label :amount, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :amount, :class => 'text_field' %>
+        <div class="input-prepend">
+            <span class="add-on">$</span>
+            <%= f.text_field :amount, :class => 'text_field span1', :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')" %>
+        </div>
         <span class="help-block">Example: 1000.00</span>
       </div>
     </div>

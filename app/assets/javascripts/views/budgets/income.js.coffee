@@ -1,5 +1,5 @@
 class Moneyger.Views.IncomesIndex extends Backbone.View
-    el: '#main_container'
+    el: '#incomeModal'
     events: [] # Empty array place holder for delegated events
 
     initialize: ->
@@ -12,6 +12,8 @@ class Moneyger.Views.IncomesIndex extends Backbone.View
           shown: (e) ->
             console.log(e)
             $("#income_income_date").focus()
+          hide: (e) ->
+            $("#btn_save_income").undelegate()
         parent.delegateEvents(_.extend(parent.events, {"click #btn_save_income": "create"}))
 
     render_editForm: (id) ->
@@ -21,6 +23,8 @@ class Moneyger.Views.IncomesIndex extends Backbone.View
           backdrop: 'static'
           title: "Edit Income"
           keyboard: true
+          hide: (e) ->
+            $("#btn_update_income").undelegate()
         parent.delegateEvents(_.extend(parent.events, {"click #btn_update_income": "update"}))
 
     update: (event) ->
@@ -49,18 +53,24 @@ class Moneyger.Views.IncomesIndex extends Backbone.View
             # Hide the popup modal
             $("#incomeModal").modal("hide")
       )
+      this.unbind()
+      this.close()
 
-      delete: (id) ->
-        income = Moneyger.mainRouter.budget.incomes.where({id: id})[0]
 
-        $(@el).block
-          message: null
-        jConfirm "Are you sure you want to remove this income?","Confirm", (decision) ->
-          if decision == true
-            $("tr#income_row_#{id}").fadeOut().remove()
-            expense.destroy
-              url: '/income/'+income.get("id")
-              success: (response) ->
-                $("body").unblock()
-              error: (response) ->
-                alert("An error occured while attempting to delete this income record.  Please try again.")
+    delete: (id) ->
+      income = Moneyger.mainRouter.budget.incomes.where({id: id})[0]
+
+      $(@el).block
+        message: null
+      jConfirm "Are you sure you want to remove this income?","Confirm", (decision) ->
+        if decision == true
+          income.destroy
+            url: '/incomes/'+income.get("id")
+            success: (response) ->
+              $("body").unblock()
+              $("tr#income_row_#{id}").fadeOut().remove()
+            error: (response) ->
+              alert("An error occured while attempting to delete this income record.  Please try again.")
+              $("body").unblock()
+        else
+          $("body").unblock()

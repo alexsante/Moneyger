@@ -4,40 +4,36 @@
 
 .modal-body
   %div{:id => "notice"}
-  =semantic_form_for @expense, :html => {:class => "form-horizontal", :id => "expense"} do |f|
+  =semantic_form_for @expense, :html => {:class => "form-horizontal well", :id => "expense"} do |f|
+    = f.input :isfixed, :as => :hidden
+    = f.input :auto_withdrawal, :as => :hidden
     %fieldset
       .control-group
         = f.label :title, :class => 'control-label'
         .controls
-          = f.text_field :title, :class => 'text_field'
+          = f.text_field :title,
+                         :class => 'text_field required',
+                         :placeholder => "ex: Groceries, Student Loan, Gas"
 
       .control-group
         = f.label :amount, :class => 'control-label'
         .controls
-          = f.text_field :amount, :class => 'text_field'
+          %div{:class => "input-prepend"}
+            %span.add-on $
+            = f.text_field :amount,
+                           :class => 'text_field span1',
+                           :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')"
 
-      -if @expense.persisted? == false
-        .control-group
-          = f.label "Expense Type", :class => 'control-label'
-          .controls
-            %select{:name => "expense[isfixed]", :id => "expense_isfixed", :onchange => "expensetoggle(this.value)"}
-              %option{:value => 0} Variable
-              %option{:value => 1} Fixed
+      .control-group
+        = f.label :expense_date, :class => "control-label"
+        .controls
+          = f.text_field :expense_date, :class => 'text_field datepicker span2'
 
-        %div{:id => "fixed-properties"}
-          .control-group
-            = f.label "Date Due", :class => "control-label"
-            .controls
-              = f.text_field :expense_date, :class => 'text_field datepicker'
-
-          .control-group
-            = f.label :frequency, :class => 'control-label'
-            .controls
-              = f.input :frequency,  :as => :select,  :collection => ["One Time","Weekly","Bi-Weekly", "Bi-Monthly", "Monthly", "Quarterly","Annually"], :label => false
-
-          .control-group
-            .controls
-              = f.input :auto_withdrawal, :as => :boolean, :class => 'checkbox', :label => false
+      .control-group
+        = f.label :frequency, :class => 'control-label'
+        .controls
+          = f.input :frequency,  :as => :select,  :collection => ["One Time","Weekly","Bi-Weekly", "Bi-Monthly", "Monthly","Annually"], :label => false
+          %p.help-block "How often do you have this expense?"
 
 .modal-footer
   - if @expense.persisted?
@@ -48,10 +44,3 @@
 
 :javascript
   $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
-  function expensetoggle(value){
-    if(value == 0) {
-      $("#fixed-properties").addClass('hidden')
-    } else {
-      $("#fixed-properties").removeClass('hidden')
-    }
-  }

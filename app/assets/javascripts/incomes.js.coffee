@@ -12,21 +12,24 @@ class @Income
             amount: amount
           success: (update_response) ->
             for iv in update_response.income_values
-              $("#income_cell_"+iv.id).html formatCurrency iv.amount 
+              income = Moneyger.mainRouter.budget.incomes.where({id: income_id})[0]
+              incomevalue = income.incomeValues.where({id: iv.id})[0]
+              incomevalue.set("amount", iv.amount)
             # Refresh the budget
-            Budget.refresh(budget_id)
+            Moneyger.recalculate_periods()
 
 $ ->
 	$(".income_cell").editInPlace
 		url: '/incomes/quick_update.js'
-		success: (r) -> 
+		success: (r) ->
       response = $.parseJSON(r)
-      $(this).html(formatCurrency(response.amount))
-      
+      income = Moneyger.mainRouter.budget.incomes.where({id: response.income.id})[0]
+      incomevalue = income.incomeValues.where({id: response.id})[0]
+      incomevalue.set("amount", response.amount)
       # Apply change to future entries?
       jConfirm "Would you like to apply this change to future income entries?","Confirm", (r) ->
         if r == true
           Income.update_future_entries(response.income.id, response.income_date, response.amount, response.income.budget_id);
 
        # Refresh the budget
-      Budget.refresh(response.income.budget_id)  
+      Moneyger.recalculate_periods()

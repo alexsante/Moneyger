@@ -10,6 +10,9 @@ class Moneyger.Routers.Budgets extends Backbone.Router
 
       @view = new Moneyger.Views.BudgetsIndex()
 
+    ##############################################
+    # ROUTE DEFINITION                           #
+    ##############################################
     routes:
       "new_income": "new_income"
       "new_expense": "new_expense"
@@ -51,12 +54,20 @@ class Moneyger.Routers.Budgets extends Backbone.Router
       @expenseView = new Moneyger.Views.ExpenseIndex
       @expenseView.delete(id)
 
+    ##############################################
+    # HELPER METHODS                             #
+    ##############################################
     recalculate_periods: ->
       @periods_collection.fetch
         success: (model, response) ->
           for period in response
             $("td#balance_#{period.id}").html(formatCurrency(period.beginning_balance))
-            $("td#remaining_balance_#{period.id}").html(formatCurrency(period.remaining_balance))
+            if period.beginning_balance > 0
+              $("td#balance_#{period.id}").removeClass("negative-balance")
+            else
+              $("td#balance_#{period.id}").addClass("negative-balance")
+
+            $("td#remaining_balance_#{period.id}").html(formatCurrency(period.ending_balance))
             $("td#income_total_#{period.id}").html(formatCurrency(period.income_total))
             $("td#fixed_expense_total_cell_#{period.id}").html(formatCurrency(period.fixed_expense_total))
             $("td#fixed_expense_aw_total_cell_#{period.id}").html(formatCurrency(period.fixed_aw_expense_total))

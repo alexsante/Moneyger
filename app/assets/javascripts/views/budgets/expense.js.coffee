@@ -1,27 +1,24 @@
 class Moneyger.Views.ExpenseIndex extends Moneyger.Views.BaseView
-    el: '#main_container'
+    el: '#expenseModal'
     events: [] # Empty array place holder for delegated events
-
-    initialize: ->
-      this.unbind()
 
     render_newForm: (type) ->
       parent = this
       $("#expenseModal").load '/expenses/new', ->
         $(this).modal()
+        $("#expenseModal").on
+          hidden: ->
+            parent.remove()
         # Modify the form depending on the type of event that was clicked
         if type is "fixed"
           $("#expense_isfixed").val(1)
-          expensetoggle(1)
           $("#expense_auto_withdrawal").attr("checked", false)
         else if type == "fixed_aw"
           $("#expense_isfixed").val(1)
-          expensetoggle(1)
           $("#expense_auto_withdrawal").attr("checked", true)
         else
           $("#expense_isfixed").val(0)
           $("#expense_auto_withdrawal").attr("checked", false)
-          expensetoggle(0)
         parent.delegateEvents(_.extend(parent.events, {"click #btn_save_expense": "create"}))
 
     render_editForm: (id) ->
@@ -31,6 +28,8 @@ class Moneyger.Views.ExpenseIndex extends Moneyger.Views.BaseView
           backdrop: 'static'
           title: "Edit Expense"
           keyboard: true
+          hide: (e) ->
+            $("#btn_update_expense").undelegate()
         parent.delegateEvents(_.extend(parent.events, {"click #btn_update_expense": "update"}))
 
     update: (event) ->
@@ -81,10 +80,13 @@ class Moneyger.Views.ExpenseIndex extends Moneyger.Views.BaseView
         message: null
       jConfirm "Are you sure you want to remove this expense?","Confirm", (decision) ->
         if decision == true
-          $("tr#expense_row_#{expense.get('id')}").fadeOut().remove()
           expense.destroy
             url: '/expenses/'+expense.get("id")
             success: (response) ->
+              $("tr#expense_row_#{expense.get('id')}").fadeOut().remove()
               $("body").unblock()
             error: (response) ->
               alert("An error occured while attempting to delete this expense record.  Please try again.")
+              $("body").unblock()
+        else
+          $("body").unblock()
