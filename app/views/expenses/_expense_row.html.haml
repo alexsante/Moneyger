@@ -54,8 +54,10 @@
           -progress_css = "progress-warning"
         -else
           -progress_css = "progress-success"
-
-      %td.expense_value{:id => "expense_value_#{expense.id}_#{period.id}",:expense_id => expense.id,:style => "cursor: pointer",:period_id => period.id}
-        %span= number_to_currency(expense_value)
-        %div{:class => "progress #{progress_css}"}
-          .bar{:style => "width: #{percent_spent}%"}
+      - if expense.expense_values_by_period(period).length > 0
+        %td.expense_value{:id => "expense_value_#{expense.id}_#{period.id}",:expense_id => expense.id,:style => "cursor: pointer",:period_id => period.id}
+          %span= number_to_currency(expense_value)
+          %div{:class => "progress #{progress_css}"}
+            .bar{:style => "width: #{percent_spent}%"}
+      - else
+        %td &nbsp;

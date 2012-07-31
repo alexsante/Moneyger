@@ -54,6 +54,13 @@ class Moneyger.Routers.Budgets extends Backbone.Router
       @expenseView = new Moneyger.Views.ExpenseIndex
       @expenseView.delete(id)
 
+    save_expense: (event) ->
+      @expenseView = new Moneyger.Views.ExpenseIndex
+      if $(event).attr("id") is "btn_save_expense"
+        @expenseView.create()
+      else
+        @expenseView.update($(event).attr("expense_id"))
+
     ##############################################
     # HELPER METHODS                             #
     ##############################################

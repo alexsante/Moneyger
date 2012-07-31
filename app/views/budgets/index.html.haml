@@ -33,10 +33,3 @@
 
 %div{:id => "expenseModal", :class =>"modal fade hide"}
 %div{:id => "incomeModal", :class => "modal fade hide"}
-
-:javascript
-  $("#expenseModal").modal({"show": false});
-  if($("tr.income").length <= 2)
-  $("#incomeModal").modal({keyboard: false, backdrop: 'static', title: "Add Income"});
-  $("#incomeModal").load('/incomes/new?welcome=1');
-  

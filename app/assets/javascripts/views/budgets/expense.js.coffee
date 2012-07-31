@@ -1,14 +1,11 @@
-class Moneyger.Views.ExpenseIndex extends Moneyger.Views.BaseView
-    el: '#expenseModal'
+class Moneyger.Views.ExpenseIndex extends Backbone.View
+    el: '#main_container'
     events: [] # Empty array place holder for delegated events
 
     render_newForm: (type) ->
       parent = this
       $("#expenseModal").load '/expenses/new', ->
         $(this).modal()
-        $("#expenseModal").on
-          hidden: ->
-            parent.remove()
         # Modify the form depending on the type of event that was clicked
         if type is "fixed"
           $("#expense_isfixed").val(1)
@@ -19,7 +16,6 @@ class Moneyger.Views.ExpenseIndex extends Moneyger.Views.BaseView
         else
           $("#expense_isfixed").val(0)
           $("#expense_auto_withdrawal").attr("checked", false)
-        parent.delegateEvents(_.extend(parent.events, {"click #btn_save_expense": "create"}))
 
     render_editForm: (id) ->
       parent = this
@@ -28,22 +24,15 @@ class Moneyger.Views.ExpenseIndex extends Moneyger.Views.BaseView
           backdrop: 'static'
           title: "Edit Expense"
           keyboard: true
-          hide: (e) ->
-            $("#btn_update_expense").undelegate()
-        parent.delegateEvents(_.extend(parent.events, {"click #btn_update_expense": "update"}))
-
-    update: (event) ->
-      $.ajax '/expenses/'+$(event.currentTarget).attr("expense_id")+'.json',
+    update: (id) ->
+      $.ajax '/expenses/'+id+'.json',
         type: "PUT"
         data: $("form#expense").serialize()
         success: (response) ->
           $("#expense_title_#{response.id}").html(response.title).effect("highlight",6000)
           $("#expenseModal").modal("hide")
-      # Clean up delegated event bindings
-      this.undelegateEvents()
 
-    create: (event) ->
-      event.stopPropagation()
+    create: ->
       @collection = Moneyger.mainRouter.budget.expenses
       @collection.create({
         amount: $("#expense_amount").val()
@@ -69,8 +58,6 @@ class Moneyger.Views.ExpenseIndex extends Moneyger.Views.BaseView
             Expense_Value.initialize_qtip()
             # Hide the popup modal
             $("#expenseModal").modal("hide")
-      # Clean up delegated event bindings
-      this.undelegateEvents()
       )
 
     delete: (id) ->

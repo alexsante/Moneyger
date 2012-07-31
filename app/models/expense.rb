@@ -58,6 +58,21 @@ class Expense < ActiveRecord::Base
     
     expense_value
   end
+
+  def expense_values_by_period(period)
+
+    values = []
+
+    self.expense_values.each do |ev|
+
+      if ev.expense_date.nil? == false && ev.expense_date >= period.start_date && ev.expense_date < period.end_date
+        values << ev
+      end
+
+    end
+
+    values
+  end
   
   def sum_expense_values(period)
 

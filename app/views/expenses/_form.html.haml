@@ -21,26 +21,56 @@
           %div{:class => "input-prepend"}
             %span.add-on $
             = f.text_field :amount,
-                           :class => 'text_field span1',
+                           :class => 'text_field span1 required',
                            :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')"
 
       .control-group
         = f.label :expense_date, :class => "control-label"
         .controls
-          = f.text_field :expense_date, :class => 'text_field datepicker span2'
+          = f.text_field :expense_date, :class => 'text_field datepicker span2 required', :onchange => "$('#expense').validate().element(this)"
 
       .control-group
         = f.label :frequency, :class => 'control-label'
         .controls
-          = f.input :frequency,  :as => :select,  :collection => ["One Time","Weekly","Bi-Weekly", "Bi-Monthly", "Monthly","Annually"], :label => false
-          %p.help-block "How often do you have this expense?"
+          = f.input :frequency,
+                    :as => :select,
+                    :collection => ["One Time","Weekly","Bi-Weekly", "Bi-Monthly", "Monthly","Annually"],
+                    :label => false,
+                    :class => "required",
+                    :onchange => "$('#expense').validate().element(this)"
+          %p.help-block How often do you have this expense?
 
 .modal-footer
   - if @expense.persisted?
     %a{:href => "#", :class => "btn btn-primary", :id => "btn_update_expense", :expense_id => @expense.id} Update
   - else
-    %a{:href => "#", :class => "btn btn-primary", :id => "btn_save_expense"} Create
-  %a{:href => "#", :class => "btn", "data-dismiss" => "modal"} Cancel
+    %a{:href => "#", :class => "btn btn-primary", :id => "btn_save_expense", :onclick => "$('#expense').submit()"} Create
+  %a{:href => "#", :class => "btn", "data-dismiss" => "modal"} Close
 
 :javascript
   $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+  $(document).ready(function(){
+    $("#expense").validate({
+      rules: {
+        "expense[title]": {
+          required: true
+        },
+        "expense[amount]": {
+          required: true,
+          min: 1
+        },
+        "expense[frequency]": {
+          required: true
+        }
+      },
+      highlight: function(label){
+        $(label).closest(".control-group").addClass("error").removeClass("success")},
+      success: function(label){
+        label.text("OK!").addClass("valid").closest(".control-group").addClass("success")},
+      submitHandler: function(form){
+          handler = $("#expenseModal").children(".modal-footer").children(".btn-primary")
+          handler.attr("disabled",true)
+          Moneyger.mainRouter.save_expense(handler)
+        }
+     })
+  })
