@@ -2,13 +2,11 @@ class Moneyger.Views.ExpenseIndex extends Moneyger.Views.BaseView
     el: '#expenseModal'
     events: [] # Empty array place holder for delegated events
 
-    render_newForm: (type) ->
+    render_newForm: (type) =>
       parent = this
+      console.log(this)
       $("#expenseModal").load '/expenses/new', ->
         $(this).modal()
-        $("#expenseModal").on
-          hidden: ->
-            parent.remove()
         # Modify the form depending on the type of event that was clicked
         if type is "fixed"
           $("#expense_isfixed").val(1)
