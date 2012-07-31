@@ -2,8 +2,9 @@ class Moneyger.Views.ExpenseIndex extends Backbone.View
     el: '#main_container'
     events: [] # Empty array place holder for delegated events
 
-    render_newForm: (type) ->
+    render_newForm: (type) =>
       parent = this
+      console.log(this)
       $("#expenseModal").load '/expenses/new', ->
         $(this).modal()
         # Modify the form depending on the type of event that was clicked
