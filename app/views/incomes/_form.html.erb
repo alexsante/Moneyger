@@ -25,7 +25,7 @@
     <div class="control-group">
       <%= f.label :title, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :title, :class => 'text_field', :onkeypress => 'javascript: if(event.keyCode == 13) return false' %>
+        <%= f.text_field :title, :class => 'text_field required', :onkeypress => 'javascript: if(event.keyCode == 13) return false' %>
       </div>
     </div>
 
@@ -33,7 +33,7 @@
     <div class="control-group">
       <%= f.label "Next Occurence", :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :income_date, :class => 'text_field, datepicker' %>
+        <%= f.text_field :income_date, :class => 'text_field, datepicker required', :onchange => "$('#income').validate().element(this)" %>
         <span class="help-block">Example: 2012/06/25</span>
       </div>
     </div>
@@ -43,7 +43,7 @@
       <div class="controls">
         <div class="input-prepend">
             <span class="add-on">$</span>
-            <%= f.text_field :amount, :class => 'text_field span1', :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')" %>
+            <%= f.text_field :amount, :class => 'text_field span1 required', :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')" %>
         </div>
         <span class="help-block">Example: 1000.00</span>
       </div>
@@ -52,7 +52,9 @@
     <div class="control-group">
       <%= f.label :frequency, :class => 'control-label' %>
       <div class="controls">
-        <%= f.select :frequency, ["Weekly","Bi-Weekly","Bi-Monthly","Monthly","Quarterly","Yearly"], :class => 'text_field' %>
+        <%= f.select :frequency, ["Weekly","Bi-Weekly","Bi-Monthly","Monthly","Quarterly","Yearly"],
+                     :class => 'text_field required',
+                     :onchange => "$('#income').validate().element(this)"%>
       </div>
     </div>
 	<% end %>
@@ -64,14 +66,36 @@
 
 <div class="modal-footer">
   <% if @income.persisted? %>
-    <a href="#" class="btn btn-primary" id="btn_update_income" income_id="<%=@income.id%>">Update</a>
+    <a href="#" class="btn btn-primary" id="btn_update_income" income_id="<%=@income.id%>" onclick="$('#income').submit()">Update</a>
   <% else %>
-    <a href="#" class="btn btn-primary" id="btn_save_income">Create</a>
+    <a href="#" class="btn btn-primary" id="btn_save_income" onclick="$('#income').submit()">Create</a>
   <% end %>
-  <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+  <a href="#" class="btn" data-dismiss="modal">Close</a>
 </div>
 
 <script type="text/javascript">
   $(".datepicker").datepicker({dateFormat: "yy/mm/dd"})
   $("#income_title").focus();
+  $(document).ready(function(){
+      $("#income").validate({
+          rules: {
+              "income[amount]": {
+                  required: true,
+                  min: 1
+              },
+              "income[frequency]": {
+                  required: true
+              }
+          },
+          highlight: function(label){
+              $(label).closest(".control-group").addClass("error").removeClass("success")},
+          success: function(label){
+              label.text("OK!").addClass("valid").closest(".control-group").addClass("success")},
+          submitHandler: function(form){
+              handler = $("#incomeModal").children(".modal-footer").children(".btn-primary")
+              handler.attr("disabled",true)
+              Moneyger.mainRouter.save_income(handler)
+          }
+      })
+  })
 </script>

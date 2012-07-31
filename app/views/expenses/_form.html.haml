@@ -42,7 +42,7 @@
 
 .modal-footer
   - if @expense.persisted?
-    %a{:href => "#", :class => "btn btn-primary", :id => "btn_update_expense", :expense_id => @expense.id} Update
+    %a{:href => "#", :class => "btn btn-primary", :id => "btn_update_expense", :expense_id => @expense.id, :onclick => "$('#expense').submit()"} Update
   - else
     %a{:href => "#", :class => "btn btn-primary", :id => "btn_save_expense", :onclick => "$('#expense').submit()"} Create
   %a{:href => "#", :class => "btn", "data-dismiss" => "modal"} Close
