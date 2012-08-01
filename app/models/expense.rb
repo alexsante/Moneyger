@@ -50,7 +50,7 @@ class Expense < ActiveRecord::Base
     
     self.expense_values.each do |ev|
       
-      if ev.expense_date.nil? == false && ev.expense_date >= period.start_date && ev.expense_date <= period.end_date
+      if ev.expense_date.nil? == false && ev.expense_date >= period.start_date && ev.expense_date < period.end_date
         expense_value = ev
       end
       

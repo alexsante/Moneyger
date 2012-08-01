@@ -12,26 +12,29 @@ class Budget < ActiveRecord::Base
   end
 
   def after_create
-    
+
+    # Pass the budget over to the period class to generate period records for the year
+    Period.generate(self)
+
     # TODO: Refactor this by placing it an income service (ie. create_savings_record)
     i = Income.new
     i.amount = 0
-    i.frequency = "Monthly"
+    i.frequency = "Weekly"
     i.title = "Transfer from savings"
     i.sort_weight = 100
     i.income_date = Date.tomorrow.to_s
-    i.generate_periods = false
+    i.generate_periods = true
     i.budget_id = self.id
     i.save
   
     # TODO: Refactor this by placing it in an income service (ie. create_other_income)
     i = Income.new
     i.amount = 0
-    i.frequency = "Bi-Weekly"
+    i.frequency = "Weekly"
     i.title = "Other"
     i.sort_weight = 110
     i.income_date = Date.tomorrow.to_s
-    i.generate_periods = false
+    i.generate_periods = true
     i.budget_id = self.id
     i.save
   
@@ -44,11 +47,9 @@ class Budget < ActiveRecord::Base
     e.expense_date = Date.tomorrow.to_s
     e.shortcode = 'SAVE'
     e.auto_withdrawal = 0
-    e.frequency = 'Bi-Weekly'
+    e.frequency = 'Weekly'
     e.save
-
-    # Pass the budget over to the period class to generate period records for the year
-    Period.generate(self)
+    e.generate_expense_values
       
   end
 

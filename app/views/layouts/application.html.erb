@@ -29,10 +29,10 @@
             <% if user_signed_in? %>
 
             <ul class="nav">
-                <li><%= link_to 'Add Income', "javascript:void(0)", "onClick" => 'Income.new()' %></li>
-                <li><%= link_to 'Add Expense Category', "javascript:void(0)", "onClick" => 'Expense.new_expense()' %></li>
-                <li><a href="">Settings</a></li>
-                <li><a href="/budgets/<%= session[:budget_id] %>/edit">Edit Budget</a></li>
+                <li><a href="javascript:void(0)" onclick="Moneyger.mainRouter.new_income()"><l class="icon-plus-sign icon-white"></l> Income</a> </li>
+                <li><a href="javascript:void(0)" onclick="Moneyger.mainRouter.new_expense('fixed')"><l class="icon-plus-sign icon-white"></l> Fixed Expense</a> </li>
+                <li><a href="javascript:void(0)" onclick="Moneyger.mainRouter.new_expense('fixed_aw')"><l class="icon-plus-sign icon-white"></l> Fixed Expense (AW)</a> </li>
+                <li><a href="javascript:void(0)" onclick="Moneyger.mainRouter.new_expense('variable')"><l class="icon-plus-sign icon-white"></l> Variable Expense</a> </li>
             </ul>
 
             <% end %>

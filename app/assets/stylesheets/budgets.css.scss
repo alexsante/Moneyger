@@ -12,6 +12,7 @@ table#budget tbody td {border-right: solid 1px #ccc; border-left: solid 1px #ccc
 table#budget tbody tr th{background-color: #ffffff;}
 table#budget td.total-cell{color: #333333; background-color: #3399ff;}
 table#budget th.total-cell{color: #333333; background-color: #3399ff;}
+table#budget tbody td.is_paid_true {background-color: #6bff74}
 
 // Widget styles
 .negative-balance {color: red; font-weight: bold;}
