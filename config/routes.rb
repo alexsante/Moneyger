@@ -1,12 +1,12 @@
 Moneyger::Application.routes.draw do
+
+  # Device will create the resources
   devise_for :users
 
   resources :incomes
-
+  resources :income_values
   resources :expenses
-
   resources :expense_values
-
   resources :budgets
 
   # The priority is based upon order of creation:
