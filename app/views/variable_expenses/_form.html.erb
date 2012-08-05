@@ -1,0 +1,11 @@
+<%= semantic_form_for @variable_expense do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :expense_date %>
+    <%= f.input :amount %>
+    <%= f.input :expense_id %>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit, :as => :input %>
+  <% end %>
+<% end %>

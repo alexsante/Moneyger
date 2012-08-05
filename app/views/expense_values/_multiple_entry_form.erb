@@ -8,15 +8,13 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% if @expense.expense_values.where("expense_date >= ? AND expense_date < ?", @period.start_date, @period.end_date).length > 0 %>
-			<% @expense.expense_values.each do |ev| %>
-			<tr>
-				<td><%= ev.expense_date.strftime('%m/%d/%Y')%></td>
-				<td><%= number_to_currency(ev.amount)%></td>
-				<td><%= ev.comment %></td>
-			</tr>
-			<% end %>
-		<% end %>
+                <% @expense_values.each do |ev| %>
+                <tr>
+                        <td><%= ev.expense_date.strftime('%m/%d/%Y')%></td>
+                        <td><%= number_to_currency(ev.amount)%></td>
+                        <td><%= ev.comment %></td>
+                </tr>
+                <% end %>
 	</tbody>
 	<tfoot>
 		<tr>

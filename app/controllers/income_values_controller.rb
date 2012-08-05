@@ -2,7 +2,7 @@ class IncomeValuesController < ApplicationController
   # GET /income_values
   # GET /income_values.json
   def index
-    @income_values = IncomeValue.all
+    @income_values = IncomeValue.first
 
     respond_to do |format|
       format.html # index.html.erb

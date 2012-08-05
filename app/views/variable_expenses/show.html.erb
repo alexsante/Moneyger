@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Expense date:</b>
+  <%= @variable_expense.expense_date %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @variable_expense.amount %>
+</p>
+
+<p>
+  <b>Expense:</b>
+  <%= @variable_expense.expense_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_variable_expense_path(@variable_expense) %> |
+<%= link_to 'Back', variable_expenses_path %>

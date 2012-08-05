@@ -4,6 +4,7 @@ class ExpenseValuesController < ApplicationController
   def index
     @period = Period.find(params[:period_id])
     @expense = Expense.find(params[:expense_id])
+    @expense_values = ExpenseValue.where("expense_date >= ? and expense_date < ? and expense_id = ?", @period.start_date, @period.end_date, params[:expense_id])
     
     respond_to do |format|
       format.html { render :layout => false }

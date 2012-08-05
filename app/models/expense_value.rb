@@ -1,6 +1,9 @@
 class ExpenseValue < ActiveRecord::Base
   # Associations
   belongs_to :expense
+  has_many :comments, :as => :commentable
+  has_many :variable_expenses
+
   # Call backs
   after_create :after_create
   

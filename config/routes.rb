@@ -1,5 +1,7 @@
 Moneyger::Application.routes.draw do
 
+  resources :variable_expenses
+
   # Device will create the resources
   devise_for :users
 

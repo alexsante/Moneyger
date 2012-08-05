@@ -1,0 +1,27 @@
+<h1>Listing variable_expenses</h1>
+
+<table>
+  <tr>
+    <th>Expense date</th>
+    <th>Amount</th>
+    <th>Expense</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @variable_expenses.each do |variable_expense| %>
+  <tr>
+    <td><%= variable_expense.expense_date %></td>
+    <td><%= variable_expense.amount %></td>
+    <td><%= variable_expense.expense_id %></td>
+    <td><%= link_to 'Show', variable_expense %></td>
+    <td><%= link_to 'Edit', edit_variable_expense_path(variable_expense) %></td>
+    <td><%= link_to 'Destroy', variable_expense, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Variable expense', new_variable_expense_path %>

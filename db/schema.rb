@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120724025251) do
+ActiveRecord::Schema.define(:version => 20120805162455) do
 
   create_table "budgets", :force => true do |t|
     t.string   "title"
@@ -21,10 +21,17 @@ ActiveRecord::Schema.define(:version => 20120724025251) do
     t.integer  "user_id"
   end
 
+  create_table "comments", :force => true do |t|
+    t.string   "comment"
+    t.string   "commentable_type"
+    t.integer  "commentable_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
   create_table "expense_values", :force => true do |t|
     t.integer  "expense_id"
     t.decimal  "amount"
-    t.text     "comment"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.date     "expense_date"
@@ -94,5 +101,13 @@ ActiveRecord::Schema.define(:version => 20120724025251) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "variable_expenses", :force => true do |t|
+    t.date     "expense_date"
+    t.decimal  "amount"
+    t.integer  "expense_value_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
 
 end

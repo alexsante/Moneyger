@@ -59,7 +59,7 @@ $.fn.editInPlace.defaults = {
 	textarea_cols:		25, // integer: set cols attribute of textarea, if field_type is set to textarea. Use CSS if possible though
 	select_text:		"Choose new value", // string: default text to show up in select box
 	select_options:		"", // string or array: Used if field_type is set to 'select'. Can be comma delimited list of options 'textandValue,text:value', Array of options ['textAndValue', 'text:value'] or array of arrays ['textAndValue', ['text', 'value']]. The last form is especially usefull if your labels or values contain colons)
-	text_size:			null, // integer: set cols attribute of text input, if field_type is set to text. Use CSS if possible though
+	text_size:			10, // integer: set cols attribute of text input, if field_type is set to text. Use CSS if possible though
 	
 	// Specifying callback_skip_dom_reset will disable all saving_* options
 	saving_text:		undefined, // string: text to be used when server is saving information. Example "Saving..."

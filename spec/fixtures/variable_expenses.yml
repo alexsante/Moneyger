@@ -1,0 +1,7 @@
+one:
+  amount: 10
+  expense_value_id: 1
+
+two:
+  amount: 50
+  expense_value_id: 1
