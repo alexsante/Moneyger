@@ -19,6 +19,20 @@ class ExpenseValue < ActiveRecord::Base
     {:start_date => period.start_date, :end_date => period.end_date, :expense_id => expense_id})
     
   end
+
+  def sum_variable_expenses
+
+    total = 0
+
+    self.variable_expenses.each do |ve|
+      total += ve.amount
+    end
+
+    total
+
+  end
+
+
   
   
 end

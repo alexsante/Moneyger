@@ -9,13 +9,9 @@ class @Expense_Value
         content:
           text: "Loading.."
           ajax:
-            url: '/expense_values'
+            url: '/expense_values/'+$(this).attr("expense_value_id")
             type: 'GET'
-            data:
-              expense_id: $(this).attr("expense_id")
-              period_id: $(this).attr("period_id")
           title: "Variable expense entries"
-
         show: "click"
         hide: "unfocus"
         position:
@@ -24,22 +20,28 @@ class @Expense_Value
           target: 'event'
         style:
           classes: 'ui-tooltip-wiki ui-tooltip-light ui-tooltip-shadow'
-				
+        events:
+          render: (event, api) ->
+            # Event for closing the tip window when the escape key is pressed
+            $(window).bind "keydown", (e) ->
+              if e.keyCode == 27
+                api.hide(e)
+
+
   @create_expense = (event) ->
     # Responds to "ENTER" and "TAB"
     if event.keyCode == 13 || event.keyCode == 9
 
       # Create the new expense value
-      response = $.ajax '/expense_values.json',
+      response = $.ajax '/variable_expenses.json',
         type: 'POST'
         dataType: 'JSON'
         data:
-          'expense_value[amount]': $("#expense_amount").val()
-          'expense_value[expense_id]': $("#expense_id").val()
-          'expense_value[comment]': $("#expense_comment").val()
-          'expense_value[expense_date]': $("#expense_date").val()
+          'variable_expense[amount]': Number($("#expense_amount").val())
+          'variable_expense[expense_value_id]': $("#expense_value_id").val()
+          'comment': $("#expense_comment").val()
+          'variable_expense[expense_date]': $("#expense_date").val()
         success: (data) ->
-          console.log(data)
           # Build a new table body row
           content = "<tr>";
           content += "<td>" + $("#expense_date").val() + "</td>";
@@ -54,7 +56,5 @@ class @Expense_Value
           $("#expense_amount").val("").focus();
           $("#expense_comment").val("");
 
-          # Update the budget
-          Budget.refresh data.budget_id
-
           $("#expense_value_"+data.expense_id+"_"+data.period_id+" span").html(formatCurrency(data.period_total))
+          Moneyger.recalculate_periods()

@@ -4,28 +4,26 @@
 		<tr>
 			<th width="25%">Date</th>
 			<th width="25%">Amount</th>
-			<th>Comment</th>
+            <th>Comment</th>
 		</tr>
+        <tr>
+          <td><input type="text" name="expense_value[expense_date]" id="expense_date"
+                     placeholder="Expense Date" class="datepicker" value="<%= Time.now.strftime('%Y-%m-%d') %>" style="width: 90%"></td>
+          <td><input type="text" name="expense_value[amount]" style="width: 90%" placeholder="0.00" id="expense_amount"></td>
+          <td><input type="text" name="comment" id="expense_comment" placeholder="Comment" style="width: 95%" onkeypress="Expense_Value.create_expense(event)"></td>
+        </tr>
 	</thead>
 	<tbody>
-                <% @expense_values.each do |ev| %>
+                <% @expense_value.variable_expenses.each do |ev| %>
                 <tr>
                         <td><%= ev.expense_date.strftime('%m/%d/%Y')%></td>
                         <td><%= number_to_currency(ev.amount)%></td>
-                        <td><%= ev.comment %></td>
+                        <td><%= ev.comments.first.comment if !ev.comments %></td>
                 </tr>
                 <% end %>
 	</tbody>
-	<tfoot>
-		<tr>
-			<td><input type="text" name="expense_value[expense_date]" id="expense_date" 
-				placeholder="Expense Date" class="datepicker" value="<%= Time.now.strftime('%Y-%m-%d') %>" style="width: 90%"></td>
-			<td><input type="text" name="expense_value[amount]" style="width: 90%" placeholder="0.00" id="expense_amount"></td>
-			<td><input type="text" name="expense_value[comment]" id="expense_comment" placeholder="Comment" style="width: 95%" onkeypress="Expense_Value.create_expense(event)"></td>
-		</tr>
-	</tfoot>
 </table>
-<input type="hidden" id="expense_id" value="<%= @expense.id %>">
+<input type="hidden" id="expense_value_id" value="<%= @expense_value.id %>">
 
 
 <script type="text/javascript">

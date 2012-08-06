@@ -44,21 +44,27 @@
       %div= expense.amount.nil? ? "$0.00" : number_to_currency(expense.amount)
 
     - @periods.each do |period|
-      - expense_value = period.find_expense_values(expense)
-      - if expense.amount.nil?
-        - percent_spent = 0
-      - else
-        - percent_spent = expense_value / expense.amount * 100
-        - if percent_spent > 100
-          -progress_css = "progress-danger progress-striped active"
-        -elsif percent_spent < 100 && percent_spent > 75
-          -progress_css = "progress-warning"
-        -else
-          -progress_css = "progress-success"
-      - if expense.expense_values_by_period(period).length > 0
-        %td.expense_value{:id => "expense_value_#{expense.id}_#{period.id}",:expense_id => expense.id,:style => "cursor: pointer",:period_id => period.id}
-          %span= number_to_currency(expense_value)
+      - expense_value = expense.expense_value_by_period(period)
+      - expense_sum = expense_value.sum_variable_expenses
+
+      - if expense_value.persisted?
+
+        - if expense.amount.nil? || expense_value.nil?
+          - percent_spent = 0
+        - else
+          - percent_spent = (expense_sum / expense_value.amount) * 100
+          - if percent_spent > 100
+            -progress_css = "progress-danger progress-striped active"
+          -elsif percent_spent < 100 && percent_spent > 75
+            -progress_css = "progress-warning"
+          -else
+            -progress_css = "progress-success"
+
+
+        %td.expense_value{:id => "expense_value_#{expense.id}_#{period.id}",:expense_value_id => expense_value.id,:style => "cursor: pointer",:period_id => period.id}
+          %span= number_to_currency(expense_sum)
           %div{:class => "progress #{progress_css}"}
             .bar{:style => "width: #{percent_spent}%"}
+
       - else
         %td &nbsp;

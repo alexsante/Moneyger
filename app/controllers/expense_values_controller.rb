@@ -2,10 +2,8 @@ class ExpenseValuesController < ApplicationController
   # GET /expense_values
   # GET /expense_values.json
   def index
-    @period = Period.find(params[:period_id])
-    @expense = Expense.find(params[:expense_id])
-    @expense_values = ExpenseValue.where("expense_date >= ? and expense_date < ? and expense_id = ?", @period.start_date, @period.end_date, params[:expense_id])
-    
+    @expense_value = ExpenseValue.find(params[:id])
+
     respond_to do |format|
       format.html { render :layout => false }
     end

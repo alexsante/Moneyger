@@ -12,22 +12,6 @@ class Period < ActiveRecord::Base
 
   end
 
-  def find_expense_values(expense)
-    
-    # Returns all expense values logged into this period and budget
-    ev = ExpenseValue.joins(:expense).select("SUM(expense_values.amount) as expense_value_total").where(
-                                              "expenses.id = :expense_id 
-                                              AND expense_values.expense_date >= :start_date 
-                                              AND expense_values.expense_date < :end_date", 
-                                              :expense_id => expense.id,:start_date => self.start_date,:end_date => self.end_date).first
-    if expense.isfixed == false
-      ev.expense_value_total.to_i > 0 ? ev.expense_value_total.to_i : expense.amount.to_i
-    else
-      ev.expense_value_total.to_i > 0 ? ev.expense_value_total.to_i : 0.00
-    end
-
-  end
-
   def fixed_expense_total(auto_withdrawal = 0)
     ExpenseValue.joins(:expense).sum(:amount, :conditions => ["isfixed = TRUE 
                                                                and expense_values.expense_date >= ? 
@@ -43,7 +27,7 @@ class Period < ActiveRecord::Base
     total = 0
     
     Expense.where(:budget_id => self.budget_id, :isfixed => false).each do |expense|
-     total += self.find_expense_values(expense) 
+     0 #TODO: Refactor this, it no longer works with the new model
     end
     
     total
