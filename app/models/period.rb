@@ -22,20 +22,15 @@ class Period < ActiveRecord::Base
   end
   
   def variable_expense_total
-
-    # Keeps track of a running total
-    total = 0
-    
-    Expense.where(:budget_id => self.budget_id, :isfixed => false).each do |expense|
-     0 #TODO: Refactor this, it no longer works with the new model
-    end
-    
-    total
+    VariableExpense.joins(:expense_value => :expense)
+                   .sum(:amount, :conditions => ["expense_values.expense_date >= ? AND expense_values.expense_date < ?
+                                                  and expenses.budget_id = ?",
+                                                  self.start_date, self.end_date, self.budget_id])
   end
 
   def income_total
 
-    IncomeValue.joins(:income).sum(:amount, :conditions => ["income_values.income_date >= ? 
+    IncomeValue.joins(:income).sum(:amount, :conditions => ["income_values.income_date >= ?
                                                             and income_values.income_date < ?
                                                             and incomes.budget_id = ?",
                                                             self.start_date, self.end_date, self.budget_id])
@@ -97,7 +92,7 @@ class Period < ActiveRecord::Base
     # Keep track of the running date
     new_date = BudgetsHelper::DateHelper.new(budget.created_at,"Weekly")
 
-    while new_date.current_date < budget.created_at.next_year
+    while new_date.current_date < budget.created_at + (60*60*24*7*51)
       
       period = Period.new(:start_date => new_date.current_date, 
                           :budget_id => budget.id,

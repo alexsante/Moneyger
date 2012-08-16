@@ -23,7 +23,12 @@ class BudgetsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @budget.to_json(
-            :include => [{:incomes => {:include => :income_values}}, {:expenses => {:include => :expense_values}}])
+            :include => [
+                # Includes income records and their associated income value records
+                { :incomes => {:include => :income_values} },
+                # Includes expense records, their associated income value records, and variable expenses (if any)
+                { :expenses => {:include => {:expense_values => {:include => :variable_expenses}} }}
+            ])
       }
     end
   end
@@ -94,6 +99,7 @@ class BudgetsController < ApplicationController
 
       params[:pid] ||= 0
       @budget = current_budget
+      Period.recalculate_beginning_balances(period_id = 0, budget_id = @budget.id)
       @periods = Period.periods_to_json(current_budget.id, params[:pid])
 
       respond_to do |format|

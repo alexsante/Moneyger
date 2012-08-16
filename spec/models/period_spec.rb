@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Period do
-  fixtures :periods, :expense_values, :expenses, :incomes, :income_values
+  fixtures :periods, :expense_values, :expenses, :incomes, :income_values, :budgets
   
   it "should sum up fixed expenses in the period" do
     period = Period.first
@@ -23,8 +23,8 @@ describe Period do
     period.beginning_balance.should eq 9.99
   end
 
-  it "should generate bi-weekly periods" do
-    Period.generate(Income.first).should > 0
+  it "should generate weekly periods for one year" do
+    Period.generate(Budget.first).should eq 52
   end
 
 end

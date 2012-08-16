@@ -42,6 +42,20 @@ class @Expense_Value
           'comment': $("#expense_comment").val()
           'variable_expense[expense_date]': $("#expense_date").val()
         success: (data) ->
+          # Grab the expense value from the collection
+          ev = Moneyger.mainRouter.budget.expenses.get(data.expense_value.expense_id).expenseValues.get(data.expense_value_id)
+
+          # Build a new variable expense
+          ve = new Moneyger.Models.VariableExpense()
+          ve.set("amount", data.amount)
+          ve.set("expense_date", data.expense_date)
+          ve.set("id", data.id)
+          ve.set("updated_at", data.updated_at)
+          ve.set("expense_value_id", data.expense_value_id)
+
+          # Add to the collection
+          ev.variable_expenses.add(ve, {silent: true})
+
           # Build a new table body row
           content = "<tr>";
           content += "<td>" + $("#expense_date").val() + "</td>";
@@ -52,9 +66,18 @@ class @Expense_Value
           # Append it
           $("table#expense_values tbody").append(content);
 
+          # Animate progress bar.  Find the new consumed percentage (cp)
+          # TODO: This functionality needs to be refactored and made reusable
+          # ***********************************************************#
+          cp = (Number(ev.variable_expense_total()) / Number(ev.get("amount"))) * 100
+          if cp >= 75 && cp < 100
+            $(".expense_value[expense_value_id=#{ev.id}] div.progress").removeClass("progress-success progress-striped").addClass("progress-warning")
+          else if cp >= 100
+            $(".expense_value[expense_value_id=#{ev.id}] div.progress").removeClass("progress-success progress-warning").addClass("progress-danger progress-striped active")
+          $(".expense_value[expense_value_id=#{ev.id}] div.bar").animate({width: "#{cp}%"})
+          # ************************************************************#
+
           # Clear field values in preparation for next entry
           $("#expense_amount").val("").focus();
           $("#expense_comment").val("");
-
-          $("#expense_value_"+data.expense_id+"_"+data.period_id+" span").html(formatCurrency(data.period_total))
-          Moneyger.recalculate_periods()
+          $(".expense_value[expense_value_id=#{ev.id}] span").html(formatCurrency(ev.variable_expense_total()))

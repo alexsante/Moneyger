@@ -48,7 +48,7 @@ class VariableExpensesController < ApplicationController
         @variable_expense.add_comment(params[:comment]) if params[:comment].to_s.length > 0
         # Render
         format.html { redirect_to @variable_expense, notice: 'Variable expense was successfully created.' }
-        format.json { render json: @variable_expense, status: :created, location: @variable_expense }
+        format.json { render json: @variable_expense.to_json(:include => :expense_value), status: :created, location: @variable_expense }
       else
         format.html { render action: "new" }
         format.json { render json: @variable_expense.errors, status: :unprocessable_entity }

@@ -1,7 +1,9 @@
 one:
   amount: 10
-  expense_value_id: 1
+  expense_value_id: 2
+  expense_date: 2012-03-20
 
 two:
   amount: 50
-  expense_value_id: 1
+  expense_value_id: 2
+  expense_date: 2012-03-20
