@@ -2,9 +2,6 @@ class Moneyger.Views.IncomesIndex extends Backbone.View
     el: '#incomeModal'
     events: [] # Empty array place holder for delegated events
 
-    initialize: ->
-      this.unbind()
-
     render_newForm: ->
       parent = this
       $("#incomeModal").load '/incomes/new', ->
@@ -53,9 +50,6 @@ class Moneyger.Views.IncomesIndex extends Backbone.View
             # Hide the popup modal
             $("#incomeModal").modal("hide")
       )
-      this.unbind()
-      this.close()
-
 
     delete: (id) ->
       income = Moneyger.mainRouter.budget.incomes.where({id: id})[0]
@@ -69,6 +63,7 @@ class Moneyger.Views.IncomesIndex extends Backbone.View
             success: (response) ->
               $("body").unblock()
               $("tr#income_row_#{id}").fadeOut().remove()
+              Moneyger.mainRouter.recalculate_periods()
             error: (response) ->
               alert("An error occured while attempting to delete this income record.  Please try again.")
               $("body").unblock()

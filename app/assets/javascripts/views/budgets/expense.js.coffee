@@ -1,6 +1,5 @@
 class Moneyger.Views.ExpenseIndex extends Backbone.View
     el: '#main_container'
-    events: [] # Empty array place holder for delegated events
 
     render_newForm: (type) =>
       parent = this

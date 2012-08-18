@@ -25,18 +25,25 @@ class Moneyger.Routers.Budgets extends Backbone.Router
     # INCOME CRUD                                #
     ##############################################
     new_income: ->
-      @incomeView = new Moneyger.Views.IncomesIndex
-      @incomeView.render_newForm()
+      incomeView = new Moneyger.Views.IncomesIndex
+      incomeView.render_newForm()
       @recalculate_periods()
 
     edit_income: (id) ->
-      @incomeView = new Moneyger.Views.IncomesIndex
-      @incomeView.render_editForm(id)
+      incomeView = new Moneyger.Views.IncomesIndex
+      incomeView.render_editForm(id)
 
     delete_income: (id) ->
       # TODO: DELETE() method in the income view needs to be implemented
-      @incomeView = new Moneyger.Views.IncomesIndex
-      @incomeView.delete(id)
+      incomeView = new Moneyger.Views.IncomesIndex
+      incomeView.delete(id)
+
+    save_income: (event) ->
+      incomeView = new Moneyger.Views.IncomesIndex
+      if $(event).attr("id") is "btn_save_income"
+        incomeView.create()
+      else
+        incomeView.update($(event).attr("income_id"))
 
     ##############################################
     # INCOME VALUE CRUD                          #
