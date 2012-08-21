@@ -32,6 +32,8 @@ group :development, :test do
   gem 'spork', '~> 1.0rc'
   gem 'guard-rspec'
   gem 'guard-spork'
+  gem 'capybara'
+  gem 'launchy'
 end
 
 # To use ActiveModel has_secure_password

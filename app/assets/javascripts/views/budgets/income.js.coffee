@@ -1,17 +1,15 @@
 class Moneyger.Views.IncomesIndex extends Backbone.View
     el: '#incomeModal'
-    events: [] # Empty array place holder for delegated events
+
+    initialize: (options) ->
+      @collection = options.collection
 
     render_newForm: ->
       parent = this
       $("#incomeModal").load '/incomes/new', ->
         $(this).modal
           shown: (e) ->
-            console.log(e)
             $("#income_income_date").focus()
-          hide: (e) ->
-            $("#btn_save_income").undelegate()
-        parent.delegateEvents(_.extend(parent.events, {"click #btn_save_income": "create"}))
 
     render_editForm: (id) ->
       parent = this
@@ -19,10 +17,6 @@ class Moneyger.Views.IncomesIndex extends Backbone.View
         $(this).modal
           backdrop: 'static'
           title: "Edit Income"
-          keyboard: true
-          hide: (e) ->
-            $("#btn_update_income").undelegate()
-        parent.delegateEvents(_.extend(parent.events, {"click #btn_update_income": "update"}))
 
     update: (event) ->
       $.ajax '/incomes/'+$(event.currentTarget).attr("income_id")+'.json',
@@ -33,7 +27,6 @@ class Moneyger.Views.IncomesIndex extends Backbone.View
           $("#incomeModal").modal("hide")
 
     create: ->
-      @collection = new Moneyger.Collections.Incomes()
       @collection.create({
         amount: $("#income_amount").val()
         income_date: $("#income_income_date").val()
@@ -52,10 +45,16 @@ class Moneyger.Views.IncomesIndex extends Backbone.View
       )
 
     delete: (id) ->
-      income = Moneyger.mainRouter.budget.incomes.where({id: id})[0]
+      # Load income model
+      income = @collection.where({id: id})[0]
+      # Localize the collection variable for use later
+      collection = @collection
 
+      # Block the UI
       $(@el).block
         message: null
+
+      # Render confirmation message
       jConfirm "Are you sure you want to remove this income?","Confirm", (decision) ->
         if decision == true
           income.destroy
@@ -63,7 +62,7 @@ class Moneyger.Views.IncomesIndex extends Backbone.View
             success: (response) ->
               $("body").unblock()
               $("tr#income_row_#{id}").fadeOut().remove()
-              Moneyger.mainRouter.recalculate_periods()
+              collection.remove(income)
             error: (response) ->
               alert("An error occured while attempting to delete this income record.  Please try again.")
               $("body").unblock()

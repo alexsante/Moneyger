@@ -1,9 +1,11 @@
 class Moneyger.Views.ExpenseIndex extends Backbone.View
     el: '#main_container'
 
+    initialize: (options) ->
+      @collection = options.collection
+
     render_newForm: (type) =>
       parent = this
-      console.log(this)
       $("#expenseModal").load '/expenses/new', ->
         $(this).modal()
         # Modify the form depending on the type of event that was clicked
@@ -33,7 +35,6 @@ class Moneyger.Views.ExpenseIndex extends Backbone.View
           $("#expenseModal").modal("hide")
 
     create: ->
-      @collection = Moneyger.mainRouter.budget.expenses
       @collection.create({
         amount: $("#expense_amount").val()
         expense_date: $("#expense_expense_date").val()
@@ -45,7 +46,6 @@ class Moneyger.Views.ExpenseIndex extends Backbone.View
         success: (model, response) ->
           # Render the expense record
           $.get '/expenses/'+model.id, (getResponse) ->
-            console.log(model)
             if model.get("isfixed") is true
               if model.get("auto_withdrawal")? and model.get("auto_withdrawal") is true
                 $("tbody.fixed_expenses_aw").prepend(getResponse)
@@ -61,8 +61,12 @@ class Moneyger.Views.ExpenseIndex extends Backbone.View
       )
 
     delete: (id) ->
-      expense = Moneyger.mainRouter.budget.expenses.where({id: id})[0]
+      # Load expense record to delete
+      expense = @collection.where({id: id})[0]
+      # Localize the collection for use later
+      collection = @collection
 
+      # Blocks the UI and displays a confirmation message
       $(@el).block
         message: null
       jConfirm "Are you sure you want to remove this expense?","Confirm", (decision) ->
@@ -72,6 +76,8 @@ class Moneyger.Views.ExpenseIndex extends Backbone.View
             success: (response) ->
               $("tr#expense_row_#{expense.get('id')}").fadeOut().remove()
               $("body").unblock()
+              # Remove the model from the collection (This will trigger a recalculation of the budget)
+              collection.remove(expense)
             error: (response) ->
               alert("An error occured while attempting to delete this expense record.  Please try again.")
               $("body").unblock()

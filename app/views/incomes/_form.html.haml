@@ -1,0 +1,79 @@
+.modal-header
+  %a{:class => "close", "data-dismiss" => "modal"}x
+  %h3 Income
+
+.modal-body{:id => "income_form"}
+  =semantic_form_for @income, :html => {:id => "income", :class => "form-horizontal"} do |f|
+    %fieldset
+      %div{:id => "notice"}
+      - if params.key? "welcome"
+        %div{:class => "alert alert-info"} Your budget is ready for setup! Moneyger now needs to know when you get paid, how often, and of course, how much?
+      .control-group
+        =f.label "Starting Balance", :class => 'control-label'
+        .controls
+          .input-prepend
+            %span{:class => "add-on"} $
+              %input{:type => "text",
+                     :class => "span1",
+                     :name => "budget[beginning_balance]",
+                     :placeholder => "0.00",
+                     :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')"}
+      .control-group
+        =f.label :title, :class => 'control-label'
+        .controls
+          =f.text_field :title, :class => 'text_field required', :onkeypress => 'javascript: if(event.keyCode == 13) return false'
+
+      - if @income.persisted? == false
+        .control-group
+          = f.label "Next Occurence", :class => 'control-label'
+          .controls
+            = f.text_field :income_date, :class => 'text_field, datepicker required', :onchange => "$('#income').validate().element(this)"
+            %span{:class => "help-block"} Example: 2012/06/25
+
+      .control-group
+        = f.label :amount, :class => 'control-label'
+        .controls
+          .input-prepend
+            %span{:class => "add-on"}$
+            = f.text_field :amount, :class => 'text_field span1 required', :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')"
+            %span{:class => "help-block"} Example: 1000.00
+
+      .control-group
+        = f.label :frequency, :class => 'control-label'
+        .controls
+          = f.select :frequency, ["Weekly","Bi-Weekly","Bi-Monthly","Monthly","Quarterly","Yearly"],
+                     :class => 'text_field required',
+                     :onchange => "$('#income').validate().element(this)"
+
+.modal-footer
+  - if @income.persisted?
+    %a{:href => "#", :class => "btn btn-primary", :id => "btn_update_income", :income_id => @income.id, :onclick => "$('#income').submit()"}Update
+  - else
+    %a{:class => "btn btn-primary", :id => "btn_save_income", :onclick => "$('#income').submit()"} Create
+    %a{:href => "#", :class => "btn", "data-dismiss" => "modal"} Close
+
+:javascript
+  $(".datepicker").datepicker({dateFormat: "yy/mm/dd"})
+  $("#income_title").focus();
+  $(document).ready(function(){
+      $("#income").validate({
+          rules: {
+              "income[amount]": {
+                  required: true,
+                  min: 1
+              },
+              "income[frequency]": {
+                  required: true
+              }
+          },
+          highlight: function(label){
+              $(label).closest(".control-group").addClass("error").removeClass("success")},
+          success: function(label){
+              label.text("OK!").addClass("valid").closest(".control-group").addClass("success")},
+          submitHandler: function(form){
+              handler = $("#incomeModal").children(".modal-footer").children(".btn-primary")
+              handler.attr("disabled",true)
+              Moneyger.mainRouter.save_income(handler)
+          }
+      })
+  })

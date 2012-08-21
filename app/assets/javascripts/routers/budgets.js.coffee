@@ -3,12 +3,12 @@ class Moneyger.Routers.Budgets extends Backbone.Router
     initialize: ->
       # Budget collection (includes income and expenses plus their associations)
       @budget = new Moneyger.Collections.Budgets
+      @income_collection = @budget.incomes
+      @expense_collection = @budget.expenses
 
       # Period Collection
       @periods_collection = new Moneyger.Collections.Periods()
       @periods_collection.fetch()
-
-      @view = new Moneyger.Views.BudgetsIndex()
 
     ##############################################
     # ROUTE DEFINITION                           #
@@ -24,22 +24,23 @@ class Moneyger.Routers.Budgets extends Backbone.Router
     ##############################################
     # INCOME CRUD                                #
     ##############################################
+    #TODO: Refactor code and make it DRY
     new_income: ->
-      incomeView = new Moneyger.Views.IncomesIndex
+      incomeView = new Moneyger.Views.IncomesIndex collection: @income_collection
       incomeView.render_newForm()
       @recalculate_periods()
 
     edit_income: (id) ->
-      incomeView = new Moneyger.Views.IncomesIndex
+      incomeView = new Moneyger.Views.IncomesIndex collection: @income_collection
       incomeView.render_editForm(id)
 
     delete_income: (id) ->
       # TODO: DELETE() method in the income view needs to be implemented
-      incomeView = new Moneyger.Views.IncomesIndex
+      incomeView = new Moneyger.Views.IncomesIndex collection: @income_collection
       incomeView.delete(id)
 
     save_income: (event) ->
-      incomeView = new Moneyger.Views.IncomesIndex
+      incomeView = new Moneyger.Views.IncomesIndex collection: @income_collection
       if $(event).attr("id") is "btn_save_income"
         incomeView.create()
       else
@@ -49,35 +50,36 @@ class Moneyger.Routers.Budgets extends Backbone.Router
     # INCOME VALUE CRUD                          #
     ##############################################
     edit_incomevalue: (id) ->
-      @incomeValueView = new Moneyger.Views.IncomeValuesIndex
-      @incomeValueView.render_editForm(id)
+      incomeValueView = new Moneyger.Views.IncomeValuesIndex collection: @expense_collection
+      incomeValueView.render_editForm(id)
 
     ##############################################
     # EXPENSE CRUD                               #
     ##############################################
+    #TODO: Refactor code and make it DRY
     new_expense: (type) ->
-      @expenseView = new Moneyger.Views.ExpenseIndex
-      @expenseView.render_newForm(type)
+      expenseView = new Moneyger.Views.ExpenseIndex collection: @expense_collection
+      expenseView.render_newForm(type)
 
     edit_expense: (id) ->
-      @expenseView = new Moneyger.Views.ExpenseIndex
-      @expenseView.render_editForm(id)
+      expenseView = new Moneyger.Views.ExpenseIndex collection: @expense_collection
+      expenseView.render_editForm(id)
 
     delete_expense: (id) ->
-      @expenseView = new Moneyger.Views.ExpenseIndex
-      @expenseView.delete(id)
+      expenseView = new Moneyger.Views.ExpenseIndex collection: @expense_collection
+      expenseView.delete(id)
 
     save_expense: (event) ->
-      @expenseView = new Moneyger.Views.ExpenseIndex
+      expenseView = new Moneyger.Views.ExpenseIndex collection: @expense_collection
       if $(event).attr("id") is "btn_save_expense"
-        @expenseView.create()
+        expenseView.create()
       else
-        @expenseView.update($(event).attr("expense_id"))
+        expenseView.update($(event).attr("expense_id"))
 
     ##############################################
     # HELPER METHODS                             #
     ##############################################
-    recalculate_periods: ->
+    recalculate_periods: =>
       @periods_collection.fetch
         success: (model, response) ->
           for period in response
