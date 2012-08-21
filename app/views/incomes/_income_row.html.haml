@@ -10,6 +10,8 @@
     - @periods.each do |period|
       - income_value = period.find_income_value(income)
       - if income_value.nil?
-        %th.income_cell{:income_id => income.id, :date => period.start_date} &nbsp;
+        %th.income_cell{:income_id => income.id, :date => period.start_date, :onclick => "console.log(this)"} &nbsp;
       - else
-        %th.income_cell{:income_id => income.id, :id => "income_cell_#{income_value.id}"}= number_to_currency(income_value.amount)
+        %th.income_cell{:income_id => income.id,
+                        :id => "income_cell_#{income_value.id}",
+                        :onclick => "Moneyger.mainRouter.edit_incomevalue(#{income_value.id})"}= number_to_currency(income_value.amount)

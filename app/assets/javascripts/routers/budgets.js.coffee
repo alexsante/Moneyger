@@ -50,7 +50,7 @@ class Moneyger.Routers.Budgets extends Backbone.Router
     # INCOME VALUE CRUD                          #
     ##############################################
     edit_incomevalue: (id) ->
-      incomeValueView = new Moneyger.Views.IncomeValuesIndex collection: @expense_collection
+      incomeValueView = new Moneyger.Views.IncomeValuesIndex
       incomeValueView.render_editForm(id)
 
     ##############################################

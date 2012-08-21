@@ -5,7 +5,7 @@ class IncomeValuesController < ApplicationController
     @income_values = IncomeValue.first
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { render layout: false}# index.html.erb
       format.json { render json: @income_values }
     end
   end
@@ -27,7 +27,7 @@ class IncomeValuesController < ApplicationController
     @income_value = IncomeValue.new
 
     respond_to do |format|
-      format.html { render :layout => false}
+      format.html
       format.json { render json: @income_value }
     end
   end
@@ -35,6 +35,9 @@ class IncomeValuesController < ApplicationController
   # GET /income_values/1/edit
   def edit
     @income_value = IncomeValue.find(params[:id])
+    respond_to do |format|
+      format.html { render :layout => false}
+    end
   end
 
   # POST /income_values
