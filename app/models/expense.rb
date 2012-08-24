@@ -24,10 +24,8 @@ class Expense < ActiveRecord::Base
 
       # Returns the next period date
       date_iterator.next
-  
 
     end
-    
     Period.recalculate_beginning_balances(budget_id = self.budget_id)
 
   end
@@ -43,19 +41,19 @@ class Expense < ActiveRecord::Base
     end
     expense_value
   end
-  
+
   def expense_value_by_period(period)
-    
+
     expense_value = ExpenseValue.new(:amount => 0)
-    
+
     self.expense_values.each do |ev|
-      
+
       if ev.expense_date.nil? == false && ev.expense_date >= period.start_date && ev.expense_date < period.end_date
         expense_value = ev
       end
-      
+
     end
-    
+
     expense_value
   end
 
@@ -73,7 +71,7 @@ class Expense < ActiveRecord::Base
 
     values
   end
-  
+
   def sum_expense_values(period)
 
       ExpenseValue.joins(:expense).sum(:amount, :conditions => ["expense_values.expense_date >= ? and
@@ -84,7 +82,7 @@ class Expense < ActiveRecord::Base
                                                        period.budget_id]).to_f
 
   end
-  
+
   # Will update the value of all expense value entries going forward.
   def update_future_values_entries(date,amount)
     ExpenseValue.update_all({:amount => amount},["expense_date >= ? AND expense_id = ?", date, self.id])
@@ -93,4 +91,3 @@ class Expense < ActiveRecord::Base
   end
 
 end
-

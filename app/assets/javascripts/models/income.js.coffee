@@ -6,4 +6,5 @@ class Moneyger.Models.Income extends Backbone.Model
 
   parse_incomeValues: ->
     for iv in this.get("income_values")
+      # Add to the collection
       @incomeValues.add(iv,{silent: true})

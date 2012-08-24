@@ -1,20 +1,14 @@
-.modal-header
-  .close{"data-dismiss" => "modal", :href => "javascript:void(0)"} x
-  %h3 Income Entry
-
 .modal-body
   %div{:id => "notice"}
-= semantic_form_for @income_value do |f|
-  %fieldset
-    .control-group
-      = f.label :amount, :class => "control-label"
-      .controls
-        = f.text_field :amount, :class => "text required", :placeholder => "125.95"
+  = semantic_form_for @income_value do |f|
+    %fieldset
+      .control-group
+        = f.label :amount, :class => "control-label"
+        .controls
+          = f.text_field :amount, :class => "text required", :placeholder => "125.95"
 
-    .control-group
-      .controls
-        <input type="checkbox" name="apply_future"> Apply to future entries
+      .control-group
+        .controls
+          <input type="checkbox" name="apply_future"> Apply to future entries
 
-.modal-footer
-  %a{:class => "btn btn-primary", :id => "btn_update_income_value", :onclick => "Moneyger.mainRouter.save_incomevalue()"}
-  %a.close{"data-dismiss" => "modal"} Close
+  %h3 Comments
