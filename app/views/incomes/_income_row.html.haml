@@ -15,5 +15,5 @@
         %th.income_cell{:income_id => income.id,
                         :id => "income_cell_#{income_value.id}",
                         :rel => "popover",
-                        "data-load" => "/income_values/#{income_value.id}/edit",
+                        :style => "cursor: pointer;",
                         :onclick => "Moneyger.mainRouter.edit_incomevalue(#{income_value.id})"}= number_to_currency(income_value.amount)

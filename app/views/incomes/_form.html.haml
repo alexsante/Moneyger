@@ -13,11 +13,11 @@
         .controls
           .input-prepend
             %span{:class => "add-on"} $
-              %input{:type => "text",
-                     :class => "span1",
-                     :name => "budget[beginning_balance]",
-                     :placeholder => "0.00",
-                     :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')"}
+            %input{:type => "text",
+                   :class => "span1",
+                   :name => "budget[beginning_balance]",
+                   :placeholder => "0.00",
+                   :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')"}
       .control-group
         =f.label :title, :class => 'control-label'
         .controls

@@ -5,10 +5,42 @@
       .control-group
         = f.label :amount, :class => "control-label"
         .controls
-          = f.text_field :amount, :class => "text required", :placeholder => "125.95"
+          .input-prepend
+            %span{:class => "add-on"} $
+            %input{:type => "text",
+                   :class => "span1",
+                   :name => "income_value[amount]",
+                   :placeholder => "0.00",
+                   :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')",
+                   :value => @income_value.amount}
+            %a{:class => "btn btn-primary", :href => "javascript:void(0)"} Save
 
       .control-group
         .controls
-          <input type="checkbox" name="apply_future"> Apply to future entries
+          <input type="checkbox" name="apply_future"> Apply change to future entries
 
   %h3 Comments
+  %div
+    .well-small
+      %input{:type => "text",
+             :name => "comment",
+             :id => "comment",
+             :placeholder => "Add a new comment",
+             :onkeydown => "commentHandler(event)"}
+    .div{:id => "iv_comments"}
+    - @income_value.comments.each do |c|
+      %quote c.comment
+
+:javascript
+  function commentHandler(event){
+    if(event.keyCode == 13){
+      // Create the comment
+      c = document.createElement("quote");
+      content = document.createTextNode(event.target.value);
+      c.appendChild(content);
+      c.appendChild(document.createElement("br"));
+      // Add it to the UI
+      $("#iv_comments").append(c);
+      $("#comment").value("");
+    }
+  }
