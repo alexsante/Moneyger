@@ -17,12 +17,19 @@ Moneyger::Application.routes.draw do
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
+  
+  ###########################
+  # CUSTOM ROUTES           #
+  ###########################
   match 'budgets/:set/:budget_id' => 'budgets#set'
   match 'incomes/quick_update' => 'incomes#quick_update'
   match 'incomes/update_income_values' => 'incomes#update_income_values'
   match 'expenses/quick_update' => 'expenses#quick_update'
   match 'expenses/update_expense_values' => 'expenses#update_expense_values'
   match 'fetch_periods' => 'budgets#periods'
+  match 'income_values/:id/comment' => 'income_values#comment', :via => "POST"
+  match 'expense_values/:id/comment' => 'expense_values#comment', :via => "POST"
+
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)

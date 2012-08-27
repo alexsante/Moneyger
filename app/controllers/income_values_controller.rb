@@ -83,4 +83,15 @@ class IncomeValuesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def comment
+
+    income_value = IncomeValue.find(params[:id])
+    income_value.add_comment(params[:comment])
+
+    respond_to do |format|
+      format.json {head :no_content}
+    end
+
+  end
 end

@@ -22,3 +22,23 @@ class Moneyger.Views.IncomeValuesIndex extends Backbone.View
 
         # Toggle the display
         $("#income_cell_#{id}").popover("toggle")
+
+    create_comment: (event) ->
+      comment = $(event.target).val()
+      id = $(event.target).attr("commentable_id")
+      $.post "/income_values/#{id}/comment",
+        comment: comment,
+        success: (r) ->
+          #TODO: Create a template for this
+          div = document.createElement("div")
+          $(div).addClass("comment")
+
+          c = document.createElement("quote")
+          c.appendChild(document.createTextNode(comment))
+          div.appendChild(c)
+
+          # Add it to the UI
+          $("#iv_comments").append(div)
+          $(event.target).val("")
+
+

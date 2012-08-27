@@ -75,11 +75,24 @@ class Moneyger.Routers.Budgets extends Backbone.Router
         expenseView.create()
       else
         expenseView.update($(event).attr("expense_id"))
+        
+    ##############################################
+    # COMMENTS                                   #
+    ##############################################
+    create_comment: (event) ->
+      commentable_type = $(event.target).attr("commentable_type")
+      if commentable_type is "income_value"
+        view = new Moneyger.Views.IncomeValuesIndex
+        view.create_comment(event)
+      else if commentable_type is "expense_value"
+        view = new Moneyger.Views.ExpenseValuesIndex
+        view.create_comment(event)
 
     ##############################################
     # HELPER METHODS                             #
     ##############################################
-    recalculate_periods: =>
+ 
+   recalculate_periods: =>
       @periods_collection.fetch
         success: (model, response) ->
           for period in response

@@ -100,8 +100,6 @@ class Period < ActiveRecord::Base
 
       new_date.next
 
-      # Sets the current periods end date by using the next period's start date
-      # minus one
       period.end_date = new_date.current_date - 1
       period.save
 
