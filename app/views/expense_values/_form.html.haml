@@ -1,6 +1,6 @@
 .modal-body
   %div{:id => "notice"}
-  = semantic_form_for @income_value do |f|
+  = semantic_form_for @expense_value do |f|
     %fieldset
       .control-group
         = f.label :amount, :class => "control-label"
@@ -9,10 +9,10 @@
             %span{:class => "add-on"} $
             %input{:type => "text",
                    :class => "span1",
-                   :name => "income_value[amount]",
+                   :name => "expense_value[amount]",
                    :placeholder => "0.00",
                    :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')",
-                   :value => @income_value.amount}
+                   :value => @expense_value.amount}
             %a{:class => "btn btn-primary", :href => "javascript:void(0)"} Save
 
       .control-group
@@ -27,10 +27,10 @@
              :id => "comment",
              :placeholder => "Add a new comment",
              :onkeydown => "commentHandler(event)",
-             :commentable_type => "income_value",
-             :commentable_id => @income_value.id}
-    %div{:id => "iv_comments"}
-    - @income_value.comments.each do |c|
+             :commentable_type => "expense_value",
+             :commentable_id => @expense_value.id}
+    %div{:id => "ev_comments"}
+    - @expense_value.comments.each do |c|
       .comment
         %quote= "#{c.created_at.strftime('%m/%d')} - #{c.comment}"
 

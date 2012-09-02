@@ -31,7 +31,7 @@
                        :onclick => "Expense.toggle_paid(this)"}/
                 %span.expense_cell{:id => "expense_cell_#{expense_value.id}"}= expense_value.amount > 0 ? number_to_currency(expense_value.amount) : "$0.00"
         - else
-          %td.expense_cell &nbsp
+          %td &nbsp
 - else
   %tr{:id => "expense_row_#{expense.id}"}
     %th{:nowrap => true}

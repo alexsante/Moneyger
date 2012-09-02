@@ -86,4 +86,16 @@ class ExpenseValuesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def comment
+
+    expense_value = ExpenseValue.find(params[:id])
+    expense_value.add_comment(params[:comment])
+
+    respond_to do |format| 
+      format.json{head :no_conent}
+    end
+
+  end
+
 end
