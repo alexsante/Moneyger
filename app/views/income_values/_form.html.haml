@@ -10,14 +10,20 @@
             %input{:type => "text",
                    :class => "span1",
                    :name => "income_value[amount]",
+                   :id => "income_value_amount",
                    :placeholder => "0.00",
                    :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')",
                    :value => @income_value.amount}
-            %a{:class => "btn btn-primary", :href => "javascript:void(0)"} Save
+            %a{:class => "btn btn-primary", 
+               :href => "javascript:void(0)",
+               :incomevalue_id => @income_value.id,
+               :income_id => @income_value.income_id,
+               :income_date => @income_value.income_date,
+               :onClick => "Moneyger.mainRouter.save_incomevalue(event)"} Save
 
       .control-group
         .controls
-          <input type="checkbox" name="apply_future"> Apply change to future entries
+          <input type="checkbox" id="apply_future" name="apply_future"> Apply change to future entries
 
   %h3 Comments
   %div.income_value_comments

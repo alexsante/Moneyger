@@ -1,5 +1,8 @@
 class Moneyger.Views.IncomeValuesIndex extends Backbone.View
 
+    initialize: (options) ->
+      @collection = options.collection
+
     render_editForm: (id) ->
       # Remove existing popovers
       $(".popover").each( -> $(this).remove() )
@@ -41,4 +44,16 @@ class Moneyger.Views.IncomeValuesIndex extends Backbone.View
           $("#iv_comments").append(div)
           $(event.target).val("")
 
+    update: (event) ->
+      id = Number($(event.currentTarget).attr("incomevalue_id"))
+      income_id = Number($(event.currentTarget).attr("income_id"))
+      amount = $("#income_value_amount").val()
+      income_date = $(event.currentTarget).attr("income_date")
 
+      income = @collection.where({id: income_id})[0]
+      income_value = income.incomeValues.where({id: id})[0]
+      income_value.set("amount", amount)
+      income_value.save(null, {url: "income_values/#{id}"})
+
+      if $("#apply_future").attr("checked") is "checked"
+        Income.update_future_entries(income_id, income_date, amount)

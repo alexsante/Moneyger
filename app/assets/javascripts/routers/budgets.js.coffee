@@ -50,8 +50,12 @@ class Moneyger.Routers.Budgets extends Backbone.Router
     # INCOME VALUE CRUD                          #
     ##############################################
     edit_incomevalue: (id) ->
-      incomeValueView = new Moneyger.Views.IncomeValuesIndex
+      incomeValueView = new Moneyger.Views.IncomeValuesIndex collection: @income_collection
       incomeValueView.render_editForm(id)
+
+    save_incomevalue: (event) ->
+      incomeValueView = new Moneyger.Views.IncomeValuesIndex collection: @income_collection
+      incomeValueView.update(event)
 
     ##############################################
     # EXPENSE CRUD                               #
@@ -82,17 +86,17 @@ class Moneyger.Routers.Budgets extends Backbone.Router
     create_comment: (event) ->
       commentable_type = $(event.target).attr("commentable_type")
       if commentable_type is "income_value"
-        view = new Moneyger.Views.IncomeValuesIndex
+        view = new Moneyger.Views.IncomeValuesIndex collection: @income_collection
         view.create_comment(event)
       else if commentable_type is "expense_value"
-        view = new Moneyger.Views.ExpenseValuesIndex
+        view = new Moneyger.Views.ExpenseValuesIndex collection: @expense_collection
         view.create_comment(event)
 
     ##############################################
     # HELPER METHODS                             #
     ##############################################
  
-   recalculate_periods: =>
+    recalculate_periods: =>
       @periods_collection.fetch
         success: (model, response) ->
           for period in response

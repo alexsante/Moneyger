@@ -64,7 +64,7 @@ class IncomeValuesController < ApplicationController
     respond_to do |format|
       if @income_value.update_attributes(params[:income_value])
         format.html { redirect_to @income_value, notice: 'Income value was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: @income_value }
       else
         format.html { render action: "edit" }
         format.json { render json: @income_value.errors, status: :unprocessable_entity }
