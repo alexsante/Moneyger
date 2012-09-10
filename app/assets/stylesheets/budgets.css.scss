@@ -53,3 +53,8 @@ label.error {
 div.income_value_comments{
   div.comment{border-bottom: solid 1px #ccc;}
 }
+
+// Overrides
+.popover-inner {position: relative;}
+button.popover-close {position: absolute; right: 1em; top: 0.85em;}
+.popover .modal-body .notice {position: absolute; top: 4.5em; right: 1em;}

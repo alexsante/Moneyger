@@ -1,5 +1,5 @@
 .modal-body
-  %div{:id => "notice"}
+  %div.notice{:align => "middle"}
   = semantic_form_for @expense_value do |f|
     %fieldset
       .control-group
@@ -10,14 +10,25 @@
             %input{:type => "text",
                    :class => "span1",
                    :name => "expense_value[amount]",
+                   :id => "expense_value_amount",
                    :placeholder => "0.00",
                    :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')",
                    :value => @expense_value.amount}
-            %a{:class => "btn btn-primary", :href => "javascript:void(0)"} Save
+            %a{:class => "btn btn-primary", 
+               :href => "javascript:void(0)",
+               :expensevalue_id => @expense_value.id,
+               :expense_id => @expense_value.expense_id,
+               :expense_date => @expense_value.expense_date,
+               :onClick => "Moneyger.mainRouter.save_expensevalue(event)"} Save
 
       .control-group
         .controls
-          <input type="checkbox" name="apply_future"> Apply change to future entries
+          <input type="checkbox" id="apply_future" name="apply_future"> Apply change to future entries<br/>
+          - if @expense_value.is_paid
+            <input type="checkbox" name="expense_value[is_paid]" id="expense_value_ispaid" checked> Is paid
+          - else
+            <input type="checkbox" name="expense_value[is_paid]" id="expense_value_ispaid"> Is paid
+
 
   %h3 Comments
   %div.income_value_comments
@@ -33,6 +44,8 @@
     - @expense_value.comments.each do |c|
       .comment
         %quote= "#{c.created_at.strftime('%m/%d')} - #{c.comment}"
+
+  %button{:class => "btn btn-mini popover-close", :onclick => "Moneyger.clear_popovers()"} Close
 
 :javascript
   function commentHandler(event){

@@ -10,5 +10,14 @@ window.Moneyger =
   recalculate_periods: =>
     Moneyger.mainRouter.recalculate_periods()
 
+  clear_popovers: ->
+    $(".popover").each( -> $(this).remove() )
+    
+  keyDown_handler: (event) ->
+
+    # Escape key pressed
+    if event.keyCode == 27
+      Moneyger.clear_popovers()
+
 $(document).ready ->
   Moneyger.init()

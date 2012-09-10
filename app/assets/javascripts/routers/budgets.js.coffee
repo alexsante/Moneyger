@@ -79,7 +79,19 @@ class Moneyger.Routers.Budgets extends Backbone.Router
         expenseView.create()
       else
         expenseView.update($(event).attr("expense_id"))
-        
+
+    ##############################################
+    # EXPENSE VALUE CRUD                         #
+    ##############################################
+    edit_expensevalue: (id) ->
+      expenseValueView = new Moneyger.Views.ExpenseValuesIndex collection: @expense_collection
+      expenseValueView.render_editForm(id)
+
+    save_expensevalue: (event) ->
+      expenseValueView = new Moneyger.Views.ExpenseValuesIndex collection: @expense_collection
+      expenseValueView.update(event)
+
+       
     ##############################################
     # COMMENTS                                   #
     ##############################################

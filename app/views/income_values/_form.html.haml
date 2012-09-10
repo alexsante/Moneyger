@@ -1,5 +1,5 @@
 .modal-body
-  %div{:id => "notice"}
+  %div.notice{:align => "middle"}
   = semantic_form_for @income_value do |f|
     %fieldset
       .control-group
@@ -39,6 +39,8 @@
     - @income_value.comments.each do |c|
       .comment
         %quote= "#{c.created_at.strftime('%m/%d')} - #{c.comment}"
+
+  %button{:class => "btn btn-mini popover-close", :onclick => "Moneyger.clear_popovers()"} Close
 
 :javascript
   function commentHandler(event){

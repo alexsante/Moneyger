@@ -34,6 +34,7 @@ class ExpenseValuesController < ApplicationController
   # GET /expense_values/1/edit
   def edit
     @expense_value = ExpenseValue.find(params[:id])
+    render :layout => false
   end
 
   # POST /expense_values
@@ -67,7 +68,7 @@ class ExpenseValuesController < ApplicationController
     respond_to do |format|
       if @expense_value.update_attributes(params[:expense_value])
         format.html { redirect_to @expense_value, notice: 'Expense value was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: @expense_value }
       else
         format.html { render action: "edit" }
         format.json { render json: @expense_value.errors, status: :unprocessable_entity }
@@ -93,7 +94,7 @@ class ExpenseValuesController < ApplicationController
     expense_value.add_comment(params[:comment])
 
     respond_to do |format| 
-      format.json{head :no_conent}
+      format.json{render json: @expense_value}
     end
 
   end

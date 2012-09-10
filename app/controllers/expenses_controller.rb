@@ -23,7 +23,7 @@ class ExpensesController < ApplicationController
 
     params[:pid] ||= 0
 
-    @periods = @budget.periods.limit(10).offset(params[:pid]).order(:id).all
+    @periods = @budget.periods.limit(17).offset(params[:pid]).order(:id).all
     @period_count = @budget.periods.count()
 
     respond_to do |format|

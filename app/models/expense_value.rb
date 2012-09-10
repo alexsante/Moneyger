@@ -32,6 +32,12 @@ class ExpenseValue < ActiveRecord::Base
 
   end
 
+  def add_comment(comment)
+
+    Comment.create!({:comment => comment, :commentable_type => "ExpenseValue", :commentable_id => self.id})
+
+  end
+
 
   
   

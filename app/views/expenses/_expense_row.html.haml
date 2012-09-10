@@ -23,12 +23,14 @@
       - @periods.each do |period|
         - expense_value = expense.expense_value_by_period(period)
         - if expense_value.amount > 0
-          %td{:class => "is_paid_#{expense_value.is_paid}", :id => "expense_value_#{expense_value.id}", :nowrap => true}
+          %td{:class => "is_paid_#{expense_value.is_paid}", 
+              :id => "expense_value_#{expense_value.id}", 
+              :nowrap => true,
+              :style => "cursor: pointer;",
+              :rel => "popover",
+              :onclick => "Moneyger.mainRouter.edit_expensevalue(#{expense_value.id})"}
             %div
               %span
-                %input{:type => "checkbox",
-                       :id => "expense_value_toggle_#{expense_value.id}", :checked => expense_value.is_paid?,
-                       :onclick => "Expense.toggle_paid(this)"}/
                 %span.expense_cell{:id => "expense_cell_#{expense_value.id}"}= expense_value.amount > 0 ? number_to_currency(expense_value.amount) : "$0.00"
         - else
           %td &nbsp

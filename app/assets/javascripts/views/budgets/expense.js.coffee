@@ -26,6 +26,8 @@ class Moneyger.Views.ExpenseIndex extends Backbone.View
           backdrop: 'static'
           title: "Edit Expense"
           keyboard: true
+        $("#expense_title").focus();
+
     update: (id) ->
       $.ajax '/expenses/'+id+'.json',
         type: "PUT"
