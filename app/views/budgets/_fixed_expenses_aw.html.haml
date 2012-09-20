@@ -10,6 +10,6 @@
 
 %tbody.fixed_expense_aw_totals
   %tr
-    %th.total-cell Total
+    %th.total-cell Auto withdrawal total
     -@periods.each do |period|
       %td.total-cell{:id => "fixed_aw_expense_total_cell_#{period.id}"}= number_to_currency(period.fixed_expense_total(1))

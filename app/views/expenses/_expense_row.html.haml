@@ -4,7 +4,7 @@
     %tr.fixed_expense_row_aw{:id => "expense_row_#{expense.id}"}
       %th{:nowrap => true, :id => "expense_title_#{expense.id}"}
         %div{:style => "position: relative;"}
-          %span.expense_title{:id => "expense_title_#{expense.id}"}= expense.title
+          %span.title{:id => "expense_title_#{expense.id}"}= expense.title
           %span{:style => "position: absolute; right: 10px;"}
             %a{:href => "javascript:void(0)", :class => "icon-edit", :onclick => "Moneyger.mainRouter.edit_expense(#{expense.id})"}
             %a{:href => "javascript:void(0)", :class => "icon-remove-circle", :onclick => "Moneyger.mainRouter.delete_expense(#{expense.id})"}
@@ -15,7 +15,7 @@
     %tr.fixed_expense_row{:id => "expense_row_#{expense.id}"}
       %th{:nowrap => true}
         %div{:style => "position: relative;"}
-          %span.expense_title{:id => "expense_title_#{expense.id}"}= expense.title
+          %span.title{:id => "expense_title_#{expense.id}"}= expense.title
           %span{:style => "position: absolute; right: 10px;"}
             %a{:href => "javascript:void(0)", :class => "icon-edit", :onclick => "Moneyger.mainRouter.edit_expense(#{expense.id})"}
             %a{:href => "javascript:void(0)", :class => "icon-remove-circle", :onclick => "Moneyger.mainRouter.delete_expense(#{expense.id})"}
@@ -38,7 +38,7 @@
   %tr{:id => "expense_row_#{expense.id}"}
     %th{:nowrap => true}
       %div{:style => "position: relative;"}
-        %span.expense_title{:id => "expense_title_#{expense.id}"}= expense.title
+        %span.title{:id => "expense_title_#{expense.id}"}= expense.title
         - if expense.title != "Transfer to savings"
           %span{:style => "position: absolute; right: 10px;"}
             %a{:href => "javascript:void(0)", :class => "icon-edit", :onclick => "Moneyger.mainRouter.edit_expense(#{expense.id})"}

@@ -22,10 +22,23 @@ class Period < ActiveRecord::Base
   end
   
   def variable_expense_total
-    VariableExpense.joins(:expense_value => :expense)
+    total = VariableExpense.joins(:expense_value => :expense)
                    .sum(:amount, :conditions => ["expense_values.expense_date >= ? AND expense_values.expense_date < ?
                                                   and expenses.budget_id = ?",
                                                   self.start_date, self.end_date, self.budget_id])
+
+    allotted = ExpenseValue.joins(:expense).sum(:amount, :conditions => ["isfixed = false 
+                                                               and expense_values.expense_date >= ? 
+                                                               and expense_values.expense_date < ?
+                                                               and budget_id = ?", 
+                                                               self.start_date, self.end_date, self.budget_id])
+    
+    if total > allotted
+      total
+    else
+      allotted - total
+    end
+
   end
 
   def income_total

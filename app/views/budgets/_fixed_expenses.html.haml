@@ -8,6 +8,6 @@
 
 %tbody.fixed_expense_totals
   %tr
-    %th.total-cell Total
+    %th.total-cell Fixed Expenses Total
     - @periods.each do |period|
       %td.total-cell{:id => "fixed_expense_total_cell_#{period.id}"}= number_to_currency(period.fixed_expense_total)
