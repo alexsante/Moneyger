@@ -1,0 +1,14 @@
+.tile{ 
+	min-height: 125px;
+	min-width: 125px;
+	border: solid 1px #ccc;
+	background-color: #FFD;
+	float: left;
+	margin-right: 5px;
+	padding: 10px;
+	border-radius: 10px;
+
+	.title { font-size: 1.2em; background: none; }
+	.amount { font-size: 0.9em; }
+	.due { font-size: 0.75em; }
+}

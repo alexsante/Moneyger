@@ -1,5 +1,5 @@
 /* ===================================================
- * bootstrap-transition.js v2.0.1
+ * bootstrap-transition.js v2.1.0
  * http://twitter.github.com/bootstrap/javascript.html#transitions
  * ===================================================
  * Copyright 2012 Twitter, Inc.
@@ -17,35 +17,44 @@
  * limitations under the License.
  * ========================================================== */
 
-!function( $ ) {
 
-    $(function () {
+!function ($) {
 
-        "use strict"
+  $(function () {
 
-        /* CSS TRANSITION SUPPORT (https://gist.github.com/373874)
-         * ======================================================= */
+    "use strict"; // jshint ;_;
 
-        $.support.transition = (function () {
-            var thisBody = document.body || document.documentElement
-                , thisStyle = thisBody.style
-                , support = thisStyle.transition !== undefined || thisStyle.WebkitTransition !== undefined || thisStyle.MozTransition !== undefined || thisStyle.MsTransition !== undefined || thisStyle.OTransition !== undefined
 
-            return support && {
-                end: (function () {
-                    var transitionEnd = "TransitionEnd"
-                    if ( $.browser.webkit ) {
-                        transitionEnd = "webkitTransitionEnd"
-                    } else if ( $.browser.mozilla ) {
-                        transitionEnd = "transitionend"
-                    } else if ( $.browser.opera ) {
-                        transitionEnd = "oTransitionEnd"
-                    }
-                    return transitionEnd
-                }())
+    /* CSS TRANSITION SUPPORT (http://www.modernizr.com/)
+     * ======================================================= */
+
+    $.support.transition = (function () {
+
+      var transitionEnd = (function () {
+
+        var el = document.createElement('bootstrap')
+          , transEndEventNames = {
+               'WebkitTransition' : 'webkitTransitionEnd'
+            ,  'MozTransition'    : 'transitionend'
+            ,  'OTransition'      : 'oTransitionEnd otransitionend'
+            ,  'transition'       : 'transitionend'
             }
-        })()
+          , name
 
-    })
+        for (name in transEndEventNames){
+          if (el.style[name] !== undefined) {
+            return transEndEventNames[name]
+          }
+        }
 
-}( window.jQuery );
+      }())
+
+      return transitionEnd && {
+        end: transitionEnd
+      }
+
+    })()
+
+  })
+
+}(window.jQuery);

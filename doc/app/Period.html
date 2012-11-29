@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>class Period - Rails Application Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/period.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-find_by_date_range">::find_by_date_range</a>
+    
+    <li><a href="#method-c-generate">::generate</a>
+    
+    <li><a href="#method-c-periods_to_json">::periods_to_json</a>
+    
+    <li><a href="#method-c-recalculate_beginning_balances">::recalculate_beginning_balances</a>
+    
+    <li><a href="#method-i-ending_balance">#ending_balance</a>
+    
+    <li><a href="#method-i-find_income_value">#find_income_value</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./BudgetsHelper.html">BudgetsHelper</a>
+  
+    <li><a href="./BudgetsHelper/DateHelper.html">BudgetsHelper::DateHelper</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Budget.html">Budget</a>
+  
+    <li><a href="./BudgetService.html">BudgetService</a>
+  
+    <li><a href="./BudgetsController.html">BudgetsController</a>
+  
+    <li><a href="./Comment.html">Comment</a>
+  
+    <li><a href="./Expense.html">Expense</a>
+  
+    <li><a href="./ExpenseValue.html">ExpenseValue</a>
+  
+    <li><a href="./ExpenseValuesController.html">ExpenseValuesController</a>
+  
+    <li><a href="./ExpenseValuesHelper.html">ExpenseValuesHelper</a>
+  
+    <li><a href="./ExpensesController.html">ExpensesController</a>
+  
+    <li><a href="./ExpensesHelper.html">ExpensesHelper</a>
+  
+    <li><a href="./Income.html">Income</a>
+  
+    <li><a href="./IncomeValue.html">IncomeValue</a>
+  
+    <li><a href="./IncomeValuesController.html">IncomeValuesController</a>
+  
+    <li><a href="./IncomeValuesHelper.html">IncomeValuesHelper</a>
+  
+    <li><a href="./IncomesController.html">IncomesController</a>
+  
+    <li><a href="./IncomesHelper.html">IncomesHelper</a>
+  
+    <li><a href="./Period.html">Period</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./VariableExpense.html">VariableExpense</a>
+  
+    <li><a href="./VariableExpensesController.html">VariableExpensesController</a>
+  
+    <li><a href="./VariableExpensesHelper.html">VariableExpensesHelper</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Period</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-fixed_expense_total" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">fixed_expense_total</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-income_total" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">income_total</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-variable_expense_total" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">variable_expense_total</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-find_by_date_range" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_by_date_range</span><span
+            class="method-args">(date,budget_id)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_by_date_range-source">
+            <pre><span class="ruby-comment"># File app/models/period.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_by_date_range</span>(<span class="ruby-identifier">date</span>,<span class="ruby-identifier">budget_id</span>)
+  <span class="ruby-comment"># Returns a single budget active record based on the date and budget id</span>
+  <span class="ruby-comment"># passed in. </span>
+  <span class="ruby-constant">Period</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;budget_id = :budget_id AND start_date &lt;= :date and end_date &gt;= :date&quot;</span>, <span class="ruby-value">:budget_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">budget_id</span>, <span class="ruby-value">:date</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">date</span>).<span class="ruby-identifier">first</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_by_date_range-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_by_date_range-method -->
+
+    
+      <div id="method-c-generate" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">generate</span><span
+            class="method-args">(budget)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="generate-source">
+            <pre><span class="ruby-comment"># File app/models/period.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">generate</span>(<span class="ruby-identifier">budget</span>)
+
+  <span class="ruby-comment"># This method is executed after a nwe budget is created and will create</span>
+  <span class="ruby-comment"># period records for up to a year after the budget start date.</span>
+
+  <span class="ruby-comment"># Keep track of the running date</span>
+  <span class="ruby-identifier">new_date</span> = <span class="ruby-constant">BudgetsHelper</span><span class="ruby-operator">::</span><span class="ruby-constant">DateHelper</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">budget</span>.<span class="ruby-identifier">created_at</span>,<span class="ruby-string">&quot;Weekly&quot;</span>)
+
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">new_date</span>.<span class="ruby-identifier">current_date</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">budget</span>.<span class="ruby-identifier">created_at</span> <span class="ruby-operator">+</span> (<span class="ruby-value">60</span>*<span class="ruby-value">60</span>*<span class="ruby-value">24</span>*<span class="ruby-value">7</span>*<span class="ruby-value">51</span>)
+    
+    <span class="ruby-identifier">period</span> = <span class="ruby-constant">Period</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:start_date</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">new_date</span>.<span class="ruby-identifier">current_date</span>, 
+                        <span class="ruby-value">:budget_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">budget</span>.<span class="ruby-identifier">id</span>,
+                        <span class="ruby-value">:beginning_balance</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">budget</span>.<span class="ruby-identifier">beginning_balance</span>)
+
+    <span class="ruby-identifier">new_date</span>.<span class="ruby-identifier">next</span>
+
+    <span class="ruby-identifier">period</span>.<span class="ruby-identifier">end_date</span> = <span class="ruby-identifier">new_date</span>.<span class="ruby-identifier">current_date</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">period</span>.<span class="ruby-identifier">save</span>
+
+  <span class="ruby-keyword">end</span>
+    
+  <span class="ruby-constant">Period</span>.<span class="ruby-identifier">count</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- generate-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- generate-method -->
+
+    
+      <div id="method-c-periods_to_json" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">periods_to_json</span><span
+            class="method-args">(budget_id, offset)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="periods_to_json-source">
+            <pre><span class="ruby-comment"># File app/models/period.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">periods_to_json</span>(<span class="ruby-identifier">budget_id</span>, <span class="ruby-identifier">offset</span>)
+  
+  <span class="ruby-ivar">@response</span> = []
+  
+  <span class="ruby-constant">Period</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:budget_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">budget_id</span>).<span class="ruby-identifier">limit</span>(<span class="ruby-value">10</span>).<span class="ruby-identifier">offset</span>(<span class="ruby-identifier">offset</span>).<span class="ruby-identifier">order</span>(<span class="ruby-value">:id</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">period</span><span class="ruby-operator">|</span>
+    
+    <span class="ruby-ivar">@response</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">period</span>.<span class="ruby-identifier">id</span>,
+                  <span class="ruby-value">:start_date</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">period</span>.<span class="ruby-identifier">start_date</span>,
+                  <span class="ruby-value">:end_date</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">period</span>.<span class="ruby-identifier">end_date</span>,
+                  <span class="ruby-value">:beginning_balance</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">period</span>.<span class="ruby-identifier">beginning_balance</span>, 
+                  <span class="ruby-value">:fixed_expense_total</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">period</span>.<span class="ruby-identifier">fixed_expense_total</span>, 
+                  <span class="ruby-value">:fixed_aw_expense_total</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">period</span>.<span class="ruby-identifier">fixed_expense_total</span>(<span class="ruby-value">1</span>),
+                  <span class="ruby-value">:variable_expense_total</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">period</span>.<span class="ruby-identifier">variable_expense_total</span>,
+                  <span class="ruby-value">:income_total</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">period</span>.<span class="ruby-identifier">income_total</span>,
+                  <span class="ruby-value">:ending_balance</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">period</span>.<span class="ruby-identifier">ending_balance</span>}
+    
+  <span class="ruby-keyword">end</span>
+  
+  <span class="ruby-ivar">@response</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- periods_to_json-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- periods_to_json-method -->
+
+    
+      <div id="method-c-recalculate_beginning_balances" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">recalculate_beginning_balances</span><span
+            class="method-args">(period_id=0, budget_id)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="recalculate_beginning_balances-source">
+            <pre><span class="ruby-comment"># File app/models/period.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">recalculate_beginning_balances</span>(<span class="ruby-identifier">period_id</span>=<span class="ruby-value">0</span>, <span class="ruby-identifier">budget_id</span>)
+
+  <span class="ruby-comment"># Recalculates the beginning balance of a every period in the budget starting from period passed in</span>
+  <span class="ruby-identifier">periods</span> = <span class="ruby-constant">Period</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;id &gt;= ? and budget_id = ?&quot;</span>, <span class="ruby-identifier">period_id</span>, <span class="ruby-identifier">budget_id</span>).<span class="ruby-identifier">order</span>(<span class="ruby-value">:id</span>)
+
+  <span class="ruby-identifier">periods</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span>,<span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+      <span class="ruby-identifier">p</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-value">:beginning_balance</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">periods</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>].<span class="ruby-identifier">ending_balance</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- recalculate_beginning_balances-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- recalculate_beginning_balances-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-ending_balance" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ending_balance</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ending_balance-source">
+            <pre><span class="ruby-comment"># File app/models/period.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ending_balance</span>
+
+  <span class="ruby-comment"># TODO: Optimize this line of code so it doesn't have to hit the DB 4 times</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">beginning_balance</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">income_total</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">fixed_expense_total</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">fixed_expense_total</span>(<span class="ruby-value">1</span>) <span class="ruby-operator">-</span> <span class="ruby-identifier">variable_expense_total</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ending_balance-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ending_balance-method -->
+
+    
+      <div id="method-i-find_income_value" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_income_value</span><span
+            class="method-args">(income)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_income_value-source">
+            <pre><span class="ruby-comment"># File app/models/period.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">find_income_value</span>(<span class="ruby-identifier">income</span>)
+
+  <span class="ruby-comment"># Returns all income values logged into this period and budget</span>
+  <span class="ruby-identifier">income_value</span> = <span class="ruby-constant">IncomeValue</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;income_id = ? and income_date &gt;= ? and income_date &lt; ?&quot;</span>, <span class="ruby-identifier">income</span>.<span class="ruby-identifier">id</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">start_date</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">end_date</span>).<span class="ruby-identifier">first</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_income_value-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_income_value-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

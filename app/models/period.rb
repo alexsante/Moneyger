@@ -32,7 +32,6 @@ class Period < ActiveRecord::Base
                                                                and expense_values.expense_date < ?
                                                                and budget_id = ?", 
                                                                self.start_date, self.end_date, self.budget_id])
-    
     if total > allotted
       total
     else

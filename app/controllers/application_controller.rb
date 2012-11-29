@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     if devise_controller?
       "login"
     else
-      "application"
+      "tiles"
     end
 
   end

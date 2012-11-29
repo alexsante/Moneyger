@@ -8,9 +8,12 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require bootstrap.min
  *= require_self
- *= require_tree .
+ *= require /twitter/boostrap
+ *= require base
+ *= require /twitter/responsive
+ *= require jquery-ui-1.8.23.custom
+ *= require tiles
 */	
-html{height: 100%}
-body{margin-top: 50px; height: inherit; background: url('login-bg.jpg');}
+
+/* TILE FORMATTING */

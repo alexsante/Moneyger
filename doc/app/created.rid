@@ -1,0 +1,26 @@
+Wed, 31 Oct 2012 13:53:09 -0400
+doc/README_FOR_APP	Tue, 28 Aug 2012 15:55:11 -0400
+app/controllers/application_controller.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/controllers/budgets_controller.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/controllers/expense_values_controller.rb	Mon, 10 Sep 2012 15:41:49 -0400
+app/controllers/expenses_controller.rb	Mon, 10 Sep 2012 10:03:12 -0400
+app/controllers/income_values_controller.rb	Thu, 06 Sep 2012 15:31:12 -0400
+app/controllers/incomes_controller.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/controllers/variable_expenses_controller.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/helpers/application_helper.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/helpers/budgets_helper.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/helpers/expense_values_helper.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/helpers/expenses_helper.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/helpers/income_values_helper.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/helpers/incomes_helper.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/helpers/variable_expenses_helper.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/models/budget.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/models/budget_service.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/models/comment.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/models/expense.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/models/expense_value.rb	Mon, 10 Sep 2012 15:36:53 -0400
+app/models/income.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/models/income_value.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/models/period.rb	Thu, 20 Sep 2012 11:20:14 -0400
+app/models/user.rb	Tue, 28 Aug 2012 15:55:11 -0400
+app/models/variable_expense.rb	Tue, 28 Aug 2012 15:55:11 -0400

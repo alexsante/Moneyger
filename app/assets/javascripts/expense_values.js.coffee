@@ -81,3 +81,4 @@ class @Expense_Value
           $("#expense_amount").val("").focus();
           $("#expense_comment").val("");
           $(".expense_value[expense_value_id=#{ev.id}] span").html(formatCurrency(ev.variable_expense_total()))
+          Moneyger.recalculate_periods();

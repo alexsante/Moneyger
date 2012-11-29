@@ -11,7 +11,9 @@ gem 'formtastic'
 gem 'date_validator'
 gem 'haml'
 gem 'devise'
-gem 'backbone-on-rails'
+gem 'eco'
+gem 'ejs'
+gem "backbonejs-rails", "~> 0.0.6"
 
 # Gems used only for assets and not required
 # in production environments by default.
