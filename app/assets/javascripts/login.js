@@ -1,0 +1,13 @@
+//= require jquery
+//= require jquery_ujs
+//= require jquery-ui
+//= require modernizr.custom.32549
+//= require jquery.validate.min
+//= require jquery.editinplace
+//= require jquerypp.custom
+//= require jquery.bookblock
+//= require jquery.uniform.min
+//= require bootstrap
+//= require bootstrap-tooltip
+//= require bootstrap-popover
+//= require bootstrap-transition

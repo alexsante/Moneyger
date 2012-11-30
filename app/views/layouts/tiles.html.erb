@@ -31,7 +31,7 @@
   </div> 
 
   <div id="sidebar" class="collapse">
-
+<%= link_to "Logout", destroy_user_session_path, method: :delete %>
     <div class="logo">
       <a href="index.html"></a>
     </div>
@@ -126,27 +126,25 @@
 
   </div>
 
-  <div id="income_tile_template">
+  <div id="income_tile_template" style="display: none;">
     
     <div class="tile">
       <h2 class="title">{{title}}</h2>
       <h3 class="amount">${{amount}}</h3>
-      <div class="actions">
-        <a href="#">Edit</a> | <a href="#">Remove</a>
-      </div>
+      <span class="icon-edit"></span>
+      <span class="icon-trash"></span>
     </div>
 
   </div>
 
-  <div id="expense_tile_template">
+  <div id="expense_tile_template" style="display: none;">
     
     <div class="tile">
       <h2 class="title">{{title}}</h2>
       <h3 class="amount">${{amount}}</h3>
       <p>Due in XX days</p>
-      <div class="actions">
-        <a href="#">Edit</a> | <a href="#">Remove</a>
-      </div>
+      <span class="icon-edit"></span>
+      <span class="icon-trash"></span>
     </div>
 
   </div>
