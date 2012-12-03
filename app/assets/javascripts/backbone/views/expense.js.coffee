@@ -1,28 +1,51 @@
 class Moneyger.Views.ExpenseView extends Backbone.View
 
     initialize: ->
-        @model.bind "reset", @render, this
 
-    render: (eventName) ->
-        period_total = 0
-        _.each @model.models, ((Expense) ->
-          $(@el).append new Moneyger.Views.ExpenseTileView(model: Expense).render().el
-          
-          # Adds up the total Expense amounts for the period
-          period_total += Number(Expense.toJSON().amount)  if Expense.toJSON().amount > 0
+        @model.bind "reset", @renderAll, this
+
+    renderAll: (eventName) ->
+
+        _.each @model.models, ((expense) ->
+          $(@el).prepend new Moneyger.Views.ExpenseTileView(model: expense).render().el
         ), this
         
-        # Add a div to clear out the floats
-        $(@el).append "<div style='clear: both'></div>"
-        $("#expense_tiles_container").html @el
+        $("#expense_tiles_container").prepend @el
         
-        # Renders the Expense total for the period
+        # Render the period total
+        @renderTotal()
+
+    renderOne: (model) ->
+
+        new Moneyger.Views.ExpenseTileView(model: expense).render().el
+        # Render the period total
+        @renderTotal()
+
+    renderTotal: ->
+
+        # Reset the period total to zero.  It will be recalculated below
+        period_total = 0
+
+        # Loops over the collection while adding to the period total
+        _.each @model.models, ((expense) ->
+          period_total += Number(expense.toJSON().amount)  if expense.toJSON().amount > 0
+        ), this
+
+        # Renders the income total for the period
         $("#expense_period_total").html formatCurrency(period_total)
+
+        
 
 class Moneyger.Views.ExpenseTileView extends Backbone.View
     
     template: _.template($("#expense_tile_template").html())
+    
+    events:
+        "click": "flip"
 
     render: (eventName) ->
         $(@el).html @template(@model.toJSON())
-        this
+        this  
+
+    flip: (event) ->
+        $(@el).children(".tile").toggleClass("flip")          

@@ -80,7 +80,10 @@
           </div>
 
           <div class="content" id="income_tiles_container">
-            replace with content
+            <div class="tile clickable" id="new_income_tile" onClick="App.income_view.renderNewIncome()">
+              <i class="icon-plus icon-large"></i>
+            </div> 
+            <div style='clear: both'></div>
           </div>
 
         </div>
@@ -113,7 +116,12 @@
 
           </div>
           
-          <div class="content" id="expense_tiles_container"></div>
+          <div class="content" id="expense_tiles_container">
+            <div class="tile clickable" id="new_income_tile" onClick="    App.income_view.renderNewIncome()">
+              <i class="icon-plus icon-large"></i>
+            </div> 
+            <div style='clear: both'></div>
+          </div>
           
         </div>
         <!-- End .box -->
@@ -129,10 +137,20 @@
   <div id="income_tile_template" style="display: none;">
     
     <div class="tile">
-      <h2 class="title">{{title}}</h2>
-      <h3 class="amount">${{amount}}</h3>
-      <span class="icon-edit"></span>
-      <span class="icon-trash"></span>
+      <div class="front">
+        <div class="content">
+          <h2 class="tile_title">{{title}}</h2>
+          <h3 class="amount">${{amount}}</h3>
+          <div class="actions">
+            <span class="icon-edit icon-large"></span>
+            <span class="icon-trash icon-large"></span>
+          </div>
+        </div>
+      </div>
+      <div class="back">
+        <div class="content"><p>back of the tile</p></div>
+      </div>
+
     </div>
 
   </div>
@@ -140,13 +158,32 @@
   <div id="expense_tile_template" style="display: none;">
     
     <div class="tile">
-      <h2 class="title">{{title}}</h2>
-      <h3 class="amount">${{amount}}</h3>
-      <p>Due in XX days</p>
-      <span class="icon-edit"></span>
-      <span class="icon-trash"></span>
+      <div class="front">
+        
+        <div class="content">  
+        
+          <h2 class="tile_title">{{title}}</h2>
+          <h3 class="amount">${{amount}}</h3>
+          <p>Due in XX days</p>
+          <div class="actions">
+            <span class="icon-edit icon-large"></span>
+            <span class="icon-trash icon-large"></span>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="back">
+        <div class="content">
+          <p>back of the tile</p>
+        </div>
+      </div>
     </div>
 
+  </div>
+
+  <div id="incomeModal" class="modal fade hide">
+    income modal
   </div>
   
 

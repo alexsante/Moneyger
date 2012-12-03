@@ -19,6 +19,7 @@
 //= require bootstrap-tooltip
 //= require bootstrap-popover
 //= require bootstrap-transition
+//= require bootstrap-modal
 //= require modernizr.custom.32549
 //= require underscore
 //= require backbone

@@ -1,0 +1,115 @@
+/************************
+Base Tile Styles 
+************************/
+.tile{ 
+	float: left;
+	margin-right: 15px;
+	position: relative;
+	min-height: 145px;
+	min-width: 145px;
+	border-radius: 10px;
+	
+}
+
+.tile .front {
+	min-height: 145px;
+	min-width: 145px;
+	background-color: #FFD;
+	border-radius: 10px;
+	float: left;
+	position: relative;
+	z-index: 900;
+
+	-webkit-transform: rotateX(0deg) rotateY(0deg);
+	-webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility: hidden;
+
+	-moz-transform: rotateX(0deg) rotateY(0deg);
+	-moz-transform-style: preserve-3d;
+	-moz-backface-visibility: hidden;
+
+	-moz-box-shadow: 3px 3px 3px rgba(122, 122, 122, 0.9);
+	-webkit-box-shadow: 3px 3px 3px rgba(122, 122, 122, 0.9);
+	box-shadow: 3px 3px 3px rgba(122, 122, 122, 0.9);
+	/* -- transition is the magic sauce for animation -- */
+	-o-transition: all .4s ease-in-out;
+	-ms-transition: all .4s ease-in-out;
+	-moz-transition: all .4s ease-in-out;
+	-webkit-transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;
+}
+.tile.flip .front {
+	z-index: 900;
+
+	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+	
+}
+
+.tile .back {
+	float: none;
+	position: relative;
+	min-height: 145px;
+	min-width: 145px;
+	background-color: #FFD;
+	border-radius: 10px;
+	float: left;
+	position: absolute;
+	z-index: 800;
+	
+	-webkit-transform: rotateY(-180deg);
+	-webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility: hidden;
+
+	-moz-transform: rotateY(-180deg);
+	-moz-transform-style: preserve-3d;
+	-moz-backface-visibility: hidden;
+
+	-moz-box-shadow: 3px 3px 3px rgba(122, 122, 122, 0.9);
+	-webkit-box-shadow: 3px 3px 3px rgba(122, 122, 122, 0.9);
+	box-shadow: 3px 3px 3px rgba(122, 122, 122, 0.9);
+	/* -- transition is the magic sauce for animation -- */
+	-o-transition: all .4s ease-in-out;
+	-ms-transition: all .4s ease-in-out;
+	-moz-transition: all .4s ease-in-out;
+	-webkit-transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;
+}
+
+.tile.flip .back {
+	z-index: 1000;
+	-webkit-transform: rotateX(0deg) rotateY(0deg);
+	-moz-transform: rotateX(0deg) rotateY(0deg);
+}
+
+.tile .front .tile_title { 
+	font-size: 1.2em; 
+	background: none; 
+	border: none; 
+	box-shadow: none;
+	margin: 0px;
+}
+.tile .amount { font-size: 1.75em; line-height: 1.75em; margin: 0px; }
+.tile .due { font-size: 0.75em; }
+.tile div.actions {font-size: 1.2em; text-align: right; position: absolute; bottom: 5px; right: 10px;}
+.tile div.actions span{margin-right: 10px;}
+
+
+/************************
+Clickable Tile Styles 
+************************/
+div.clickable {
+	cursor: pointer; position: relative;
+	background-color: #F3F3F3;
+	-moz-box-shadow: 3px 3px 3px rgba(122, 122, 122, 0.9);
+	-webkit-box-shadow: 3px 3px 3px rgba(122, 122, 122, 0.9);
+	box-shadow: 3px 3px 3px rgba(122, 122, 122, 0.9);
+}
+div.clickable i {position: absolute; left: 40%; top: 40%; font-size: 2em}
+
+
+
+
+		/* -- make sure to declare a default for every property that you want animated -- */
+		/* -- general styles, including Y axis rotation -- */
+		
