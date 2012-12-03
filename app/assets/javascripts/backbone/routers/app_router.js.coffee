@@ -11,14 +11,18 @@ class Moneyger.Routers.AppRouter extends Backbone.Router
 
 	routes:
     	"": "index"
-    	"incomes/new": "new_income"
+    	"incomes/:id/edit": "edit_income"
+    	"expenses/:id/edit": "edit_expense"
 
 	
   	index: ->
   		@income_collection.fetch()
   		@expense_collection.fetch()
 
-  	new_income: ->
-  		@income_view.renderNewIncome()
-  		location.href = ''
+  	edit_income: (id) ->
+  		@income_view.renderEditIncome(id)
+
+  	edit_expense: (id) ->
+  		@expense_view.renderEditExpense(id)
+  		
 	    

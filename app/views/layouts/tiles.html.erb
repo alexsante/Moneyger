@@ -142,13 +142,16 @@
           <h2 class="tile_title">{{title}}</h2>
           <h3 class="amount">${{amount}}</h3>
           <div class="actions">
-            <span class="icon-edit icon-large"></span>
-            <span class="icon-trash icon-large"></span>
+            <a href="#incomes/{{id}}/edit"><i class="icon-edit icon-large"></i></a>
           </div>
         </div>
       </div>
       <div class="back">
-        <div class="content"><p>back of the tile</p></div>
+        <div class="content">
+          <p>back of the tile</p>
+          <div class="actions">
+          </div>
+        </div>
       </div>
 
     </div>
@@ -164,10 +167,9 @@
         
           <h2 class="tile_title">{{title}}</h2>
           <h3 class="amount">${{amount}}</h3>
-          <p>Due in XX days</p>
+          <p style="position: absolute; top: 80px;">Due in XX days</p>
           <div class="actions">
-            <span class="icon-edit icon-large"></span>
-            <span class="icon-trash icon-large"></span>
+            <a href="#expenses/{{id}}/edit"><i class="icon-edit icon-large"></i></a>
           </div>
 
         </div>
@@ -183,9 +185,10 @@
   </div>
 
   <div id="incomeModal" class="modal fade hide">
-    income modal
   </div>
-  
+
+  <div id="expenseModal" class="modal fade hide">
+  </div>  
 
   <script type="text/javascript">
     $(window).load(function() {

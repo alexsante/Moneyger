@@ -51,7 +51,7 @@ Base Tile Styles
 	position: relative;
 	min-height: 145px;
 	min-width: 145px;
-	background-color: #FFD;
+	background-color: #FAF5BB;
 	border-radius: 10px;
 	float: left;
 	position: absolute;
@@ -89,7 +89,18 @@ Base Tile Styles
 	box-shadow: none;
 	margin: 0px;
 }
-.tile .amount { font-size: 1.75em; line-height: 1.75em; margin: 0px; }
+.tile .amount { 
+	font-size: 1.75em; 
+	line-height: 1.75em; 
+	margin: 0px; 
+	border-top: solid 1px #C5C5C5;
+	border-bottom: solid 1px #C5C5C5;
+	position: absolute;
+	left: 0px;
+	padding-left: 15px;
+	width: 100%;
+	background-color: #FAF5BB;
+}
 .tile .due { font-size: 0.75em; }
 .tile div.actions {font-size: 1.2em; text-align: right; position: absolute; bottom: 5px; right: 10px;}
 .tile div.actions span{margin-right: 10px;}

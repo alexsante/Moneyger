@@ -34,14 +34,20 @@ class Moneyger.Views.ExpenseView extends Backbone.View
         # Renders the income total for the period
         $("#expense_period_total").html formatCurrency(period_total)
 
-        
+    renderNewExpense: ->
+        $("#expenseModal").load '/expenses/new', -> 
+            $("#expenseModal").modal()
+
+    renderEditExpense: (id) ->
+        $("#expenseModal").load '/expenses/'+id+'/edit', ->
+            $("#expenseModal").modal()        
 
 class Moneyger.Views.ExpenseTileView extends Backbone.View
     
     template: _.template($("#expense_tile_template").html())
     
     events:
-        "click": "flip"
+        "dblclick": "flip"
 
     render: (eventName) ->
         $(@el).html @template(@model.toJSON())

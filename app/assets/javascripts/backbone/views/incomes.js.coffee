@@ -39,6 +39,8 @@ class Moneyger.Views.IncomeView extends Backbone.View
             $("#incomeModal").modal()
 
     renderEditIncome: (id) ->
+        $("#incomeModal").load '/incomes/'+id+'/edit', ->
+            $("#incomeModal").modal()
 
 
 
@@ -47,7 +49,8 @@ class Moneyger.Views.IncomeTileView extends Backbone.View
     template: _.template($("#income_tile_template").html())
 
     events:
-        "click": "flip"
+        "dblclick": "flip"
+        "click .icon-trash": "remove"
 
     render: (event) ->
         $(@el).html @template(@model.toJSON())
@@ -55,3 +58,6 @@ class Moneyger.Views.IncomeTileView extends Backbone.View
 
     flip: (event) ->
         $(@el).children(".tile").toggleClass("flip")
+
+    remove: (event) ->
+        alert("remove ....")
