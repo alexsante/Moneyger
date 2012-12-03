@@ -4,6 +4,7 @@ Base Tile Styles
 .tile{ 
 	float: left;
 	margin-right: 15px;
+	margin-bottom: 15px;
 	position: relative;
 	min-height: 145px;
 	min-width: 145px;
