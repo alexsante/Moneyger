@@ -2,11 +2,11 @@ class Moneyger.Views.ExpenseView extends Backbone.View
 
     initialize: ->
 
-        @model.bind "reset", @renderAll, this
+        @collection.bind "reset", @renderAll, this
 
     renderAll: (eventName) ->
 
-        _.each @model.models, ((expense) ->
+        _.each @collection.models, ((expense) ->
           $(@el).prepend new Moneyger.Views.ExpenseTileView(model: expense).render().el
         ), this
         
@@ -27,7 +27,7 @@ class Moneyger.Views.ExpenseView extends Backbone.View
         period_total = 0
 
         # Loops over the collection while adding to the period total
-        _.each @model.models, ((expense) ->
+        _.each @collection.models, ((expense) ->
           period_total += Number(expense.toJSON().amount)  if expense.toJSON().amount > 0
         ), this
 

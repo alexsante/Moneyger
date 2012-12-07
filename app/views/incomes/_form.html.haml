@@ -14,20 +14,19 @@
           .input-prepend
             %span{:class => "add-on"} $
             %input{:type => "text",
-                   :class => "span1",
-                   :name => "budget[beginning_balance]",
+                   :name => "beginning_balance",
                    :placeholder => "0.00",
                    :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')"}
       .control-group
         =f.label :title, :class => 'control-label'
         .controls
-          =f.text_field :title, :class => 'text_field required', :onkeypress => 'javascript: if(event.keyCode == 13) return false'
+          =f.text_field :title, :name => "title", :class => 'text_field required', :onkeypress => 'javascript: if(event.keyCode == 13) return false'
 
       - if @income.persisted? == false
         .control-group
           = f.label "Next Occurence", :class => 'control-label'
           .controls
-            = f.text_field :income_date, :class => 'text_field, datepicker required', :onchange => "$('#income').validate().element(this)"
+            = f.text_field :income_date, :name => "income_date", :class => 'text_field, datepicker required', :onchange => "$('#income').validate().element(this)"
             %span{:class => "help-block"} Example: 2012/06/25
 
       .control-group
@@ -35,21 +34,26 @@
         .controls
           .input-prepend
             %span{:class => "add-on"}$
-            = f.text_field :amount, :class => 'text_field span1 required', :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')"
+            = f.text_field :amount, :name => "amount", :class => 'text_field required', :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')"
             %span{:class => "help-block"} Example: 1000.00
 
       .control-group
         = f.label :frequency, :class => 'control-label'
         .controls
-          = f.select :frequency, ["Weekly","Bi-Weekly","Bi-Monthly","Monthly","Quarterly","Yearly"],
-                     :class => 'text_field required',
-                     :onchange => "$('#income').validate().element(this)"
+          %select{:class => 'text_field required', :onchange => "$('#income').validate().element(this)", :name => "frequency"}
+            %option Weekly
+            %option Bi-Weekly
+            %option Bi-Monthly
+            %option Monthly
+            %option Quarterly
+            %option Yearly
+                     
 
 .modal-footer
   - if @income.persisted?
-    %a{:href => "#", :class => "btn btn-primary", :id => "btn_update_income", :income_id => @income.id, :onclick => "$('#income').submit()"}Update
+    %a{:href => "#", :name => "btnUpdate", :class => "btn btn-primary", :id => "btn_update_income", :income_id => @income.id, :onclick => "$('#income').submit()"}Update
   - else
-    %a{:class => "btn btn-primary", :id => "btn_save_income", :onclick => "$('#income').submit()"} Create
+    %a{:class => "btn btn-primary", :name => "btnCreate", :id => "btn_save_income", :onclick => "$('#income').submit()"} Create
     %a{:href => "#", :class => "btn", "data-dismiss" => "modal"} Close
 
 :javascript
@@ -58,11 +62,11 @@
   $(document).ready(function(){
       $("#income").validate({
           rules: {
-              "income[amount]": {
+              "amount": {
                   required: true,
                   min: 1
               },
-              "income[frequency]": {
+              "frequency": {
                   required: true
               }
           },
@@ -73,7 +77,7 @@
           submitHandler: function(form){
               handler = $("#incomeModal").children(".modal-footer").children(".btn-primary")
               handler.attr("disabled",true)
-              Moneyger.mainRouter.save_income(handler)
+              App.income_view.createIncome(handler)
           }
       })
       $("#income_title").focus();

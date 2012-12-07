@@ -50,8 +50,8 @@ Base Tile Styles
 .tile .back {
 	float: none;
 	position: relative;
-	min-height: 145px;
-	min-width: 145px;
+	min-height: 290px;
+	min-width: 290px;
 	background-color: #FAF5BB;
 	border-radius: 10px;
 	float: left;

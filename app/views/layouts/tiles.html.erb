@@ -63,16 +63,14 @@
 
             <div class="row-fluid">
               
-              <div class="span6">
+              <div class="span8">
                 <h4>
                   <span>Income</span>
                 </h4>
               </div>
               
-              <div class="span6" align="right">
-                <h5>
+              <div class="span4 period_total_container" align="right">
                   <span>Period Total: <strong id="income_period_total">$0.00</strong></span>
-                </h5>
               </div>
 
             </div>
@@ -100,16 +98,14 @@
 
             <div class="row-fluid">
 
-              <div class="span6">
+              <div class="span8">
                 <h4>
                   <span>Expenses</span>
                 </h4>
               </div>
 
-              <div class="span6" align="right">
-                <h5>
-                  <span>Period Total: $0.00</span>
-                </h5>
+              <div class="span4 period_total_container" align="right">
+                  <span>Period Total: <strong id="expense_period_total">$0.00</strong></span>
               </div>
 
             </div>
@@ -117,10 +113,13 @@
           </div>
           
           <div class="content" id="expense_tiles_container">
-            <div class="tile clickable" id="new_income_tile" onClick="    App.income_view.renderNewIncome()">
+            <div class="tile clickable" id="new_expense_tile" onClick="App.expense_view.renderNewExpense()">
               <i class="icon-plus icon-large"></i>
             </div> 
             <div style='clear: both'></div>
+          </div>
+
+          <div class="content" id="variable_expense_container">
           </div>
           
         </div>
@@ -136,11 +135,11 @@
 
   <div id="income_tile_template" style="display: none;">
     
-    <div class="tile">
+    <div class="tile" id="income_{{id}}">
       <div class="front">
         <div class="content">
           <h2 class="tile_title">{{title}}</h2>
-          <h3 class="amount">${{amount}}</h3>
+          <h3 class="amount">{{amount}}</h3>
           <div class="actions">
             <a href="#incomes/{{id}}/edit"><i class="icon-edit icon-large"></i></a>
           </div>
@@ -150,6 +149,7 @@
         <div class="content">
           <p>back of the tile</p>
           <div class="actions">
+            <i class="icon-trash btn btn-danger btn-small" income_id="{{id}}"> Delete</i>
           </div>
         </div>
       </div>
@@ -160,13 +160,13 @@
 
   <div id="expense_tile_template" style="display: none;">
     
-    <div class="tile">
+    <div class="tile" id="expense_{{id}}">
       <div class="front">
         
         <div class="content">  
         
           <h2 class="tile_title">{{title}}</h2>
-          <h3 class="amount">${{amount}}</h3>
+          <h3 class="amount">{{amount}}</h3>
           <p style="position: absolute; top: 80px;">Due in XX days</p>
           <div class="actions">
             <a href="#expenses/{{id}}/edit"><i class="icon-edit icon-large"></i></a>
@@ -177,7 +177,9 @@
       </div>
       <div class="back">
         <div class="content">
-          <p>back of the tile</p>
+          <div class="actions">
+            <a href="#expenses/{{id}}/remove" class="btn btn-danger btn-small"><i class="icon-trash"></i> Delete</a>
+          </div>
         </div>
       </div>
     </div>

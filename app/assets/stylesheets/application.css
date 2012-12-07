@@ -13,5 +13,19 @@
  *= require base
  *= require /twitter/responsive
  *= require jquery-ui-1.8.23.custom
+ *= require jquery.alerts
  *= require tiles
 */	
+
+.modal label {margin-right: 1em;}
+
+.period_total_container {
+	background-color: #333;
+	color: white;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+	line-height: 2.2em;
+	font-size: 1.4em;
+}
+
+.period_total_container span { padding: 1em;}

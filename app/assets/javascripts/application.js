@@ -15,6 +15,8 @@
 //= require jquery-ui
 //= require jquery.validate.min
 //= require jquery.editinplace
+//= require jquery.blockUI
+//= require jquery.alerts
 //= require bootstrap
 //= require bootstrap-tooltip
 //= require bootstrap-popover
@@ -24,6 +26,7 @@
 //= require underscore
 //= require backbone
 //= require accounting.min
+//= require jquery.ba-serializeobject.min
 
 $(".datepicker").datepicker({dateFormat: "yy/mm/dd"})
 
