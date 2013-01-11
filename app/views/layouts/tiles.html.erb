@@ -40,9 +40,17 @@
       
       <p align="center">Period Start Date - End Date</p>
       
+      <% prev_balance = 0 %>
       <% @periods.each do |period| %>
         <li class="accordion-group <% if period.start_date <= Date.today && period.end_date > Date.today %>active<% end %>" id="period_<%= period.id %>">
-          <a class="period_tab" href="#"><%= period.start_date.strftime('%m/%d/%y') + " - " + period.end_date.strftime('%m/%d/%y') %></a>
+          <a class="period_tab" href="#period/<%= period.id %>">
+            <%= period.start_date.strftime('%m/%d/%y') + " - " + period.end_date.strftime('%m/%d/%y') %>
+            <% if period.beginning_balance > prev_balance %>
+              <i class="icon-arrow-up" style="color: green"></i>
+            <% else %>
+              <i class="icon-arrow-down" style="color: red"></i>
+            <% end %>
+          </a>
         </li>
       <% end %>
 
@@ -139,7 +147,7 @@
       <div class="front">
         <div class="content">
           <h2 class="tile_title">{{title}}</h2>
-          <h3 class="amount">{{amount}}</h3>
+          <h3 class="amount">{{formattedAmount}}</h3>
           <div class="actions">
             <a href="#incomes/{{id}}/edit"><i class="icon-edit icon-large"></i></a>
           </div>
@@ -166,8 +174,7 @@
         <div class="content">  
         
           <h2 class="tile_title">{{title}}</h2>
-          <h3 class="amount">{{amount}}</h3>
-          <p style="position: absolute; top: 80px;">Due in XX days</p>
+          <h3 class="amount">{{formattedAmount}}</h3>
           <div class="actions">
             <a href="#expenses/{{id}}/edit"><i class="icon-edit icon-large"></i></a>
           </div>
@@ -178,13 +185,13 @@
       <div class="back">
         <div class="content">
           <div class="actions">
-            <a href="#expenses/{{id}}/remove" class="btn btn-danger btn-small"><i class="icon-trash"></i> Delete</a>
+            <i class="icon-trash btn btn-danger btn-small" expense_id="{{id}}"> Delete</i>
           </div>
         </div>
       </div>
     </div>
 
-  </div>
+   </div>
 
   <div id="incomeModal" class="modal fade hide">
   </div>

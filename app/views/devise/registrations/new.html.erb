@@ -39,10 +39,9 @@
 						    <div class="message row-fluid ">
 						     <h4>Register and Have Fun!</h4>              
 						    </div>
-						    
 						    <%= form_for(resource, 
 						  				:as => resource_name, 
-						  				:url => session_path(resource_name), 
+						  				:url => "/users", 
 						  				:html => {:class => "form-horizontal row-fluid"}) do |f| %>   
 						    	<div class="control-group row-fluid">
 						        	<label class="row-fluid " for="inputEmail">Enter your Email</label>
@@ -52,14 +51,14 @@
 						      		</div>
 						    	</div>
 						    	<div class="control-group row-fluid">
-						      		<label class="row-fluid " for="inputEmail">Pick a username</label>
+						      		<label class="row-fluid " for="inputEmail">Enter a password</label>
 						      		<div class="controls row-fluid input-append">
 						        		<%= f.password_field :password, :style => "width: 100%" %> <span class="add-on"><i class="icon-user"></i></span>
 						      		</div>
 						    	</div>
 						      
 						      	<div class="control-group row-fluid">
-						      		<label class="row-fluid " for="inputPassword">And a password </label>
+						      		<label class="row-fluid " for="inputPassword">Enter the password again </label>
 						      		<div class="controls row-fluid input-append">
 						        		<%= f.password_field :password_confirmation, :style => "width: 100%" %> <span class="add-on"><i class="icon-lock"></i></span>
 						      		</div>

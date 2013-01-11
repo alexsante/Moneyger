@@ -25,6 +25,7 @@
 //= require modernizr.custom.32549
 //= require underscore
 //= require backbone
+//= require backbone.mutators.min
 //= require accounting.min
 //= require jquery.ba-serializeobject.min
 

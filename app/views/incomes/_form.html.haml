@@ -8,15 +8,15 @@
       %div{:id => "notice"}
       - if params.key? "welcome"
         %div{:class => "alert alert-info"} Your budget is ready for setup! Moneyger now needs to know when you get paid, how often, and of course, how much?
-      .control-group
-        =f.label "Starting Balance", :class => 'control-label'
-        .controls
-          .input-prepend
-            %span{:class => "add-on"} $
-            %input{:type => "text",
-                   :name => "beginning_balance",
-                   :placeholder => "0.00",
-                   :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')"}
+        .control-group
+          =f.label "Starting Balance", :class => 'control-label'
+          .controls
+            .input-prepend
+              %span{:class => "add-on"} $
+              %input{:type => "text",
+                     :name => "beginning_balance",
+                     :placeholder => "0.00",
+                     :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')"}
       .control-group
         =f.label :title, :class => 'control-label'
         .controls

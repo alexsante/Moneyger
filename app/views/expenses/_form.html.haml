@@ -5,14 +5,15 @@
 .modal-body
   %div{:id => "notice"}
   =semantic_form_for @expense, :html => {:class => "form-horizontal well", :id => "expense"} do |f|
-    = f.input :isfixed, :as => :hidden
-    = f.input :auto_withdrawal, :as => :hidden
+    %input{:name => "isfixed", :type => :hidden, :value => @expense.isfixed}
+    %input{:name => "auto_withdrawal", :type => :hidden, :value => @expense.auto_withdrawal}
     %fieldset
       .control-group
         = f.label :title, :class => 'control-label'
         .controls
           = f.text_field :title,
                          :class => 'text_field required',
+                         :name => 'title',
                          :placeholder => "ex: Groceries, Student Loan, Gas"
 
       .control-group
@@ -21,23 +22,25 @@
           %div{:class => "input-prepend"}
             %span.add-on $
             = f.text_field :amount,
-                           :class => 'text_field span1 required',
+                           :name => 'amount',
+                           :class => 'text_field required',
                            :onkeyup => "this.value = this.value.replace(/[\$,]/g,'')"
 
       .control-group
         = f.label :expense_date, :class => "control-label"
         .controls
-          = f.text_field :expense_date, :class => 'text_field datepicker span2 required', :onchange => "$('#expense').validate().element(this)"
+          = f.text_field :expense_date, :class => 'text_field datepicker span2 required', :onchange => "$('#expense').validate().element(this)", :name => 'expense_date'
 
       .control-group
         = f.label :frequency, :class => 'control-label'
         .controls
-          = f.input :frequency,
-                    :as => :select,
-                    :collection => ["One Time","Weekly","Bi-Weekly", "Bi-Monthly", "Monthly","Annually"],
-                    :label => false,
-                    :class => "required",
-                    :onchange => "$('#expense').validate().element(this)"
+          %select{:class => 'text_field required', :onchange => "$('#income').validate().element(this)", :name => "frequency"}
+            %option Weekly
+            %option Bi-Weekly
+            %option Bi-Monthly
+            %option Monthly
+            %option Quarterly
+            %option Yearly
           %p.help-block How often do you have this expense?
 
 .modal-footer
@@ -52,14 +55,14 @@
   $(document).ready(function(){
     $("#expense").validate({
       rules: {
-        "expense[title]": {
+        "title": {
           required: true
         },
-        "expense[amount]": {
+        "amount": {
           required: true,
           min: 1
         },
-        "expense[frequency]": {
+        "frequency": {
           required: true
         }
       },
@@ -70,7 +73,7 @@
       submitHandler: function(form){
           handler = $("#expenseModal").children(".modal-footer").children(".btn-primary")
           handler.attr("disabled",true)
-          Moneyger.mainRouter.save_expense(handler)
+          App.expense_view.createExpense(handler)
         }
      })
   })

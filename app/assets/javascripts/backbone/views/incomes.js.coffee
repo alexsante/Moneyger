@@ -2,10 +2,9 @@ class Moneyger.Views.IncomeView extends Backbone.View
 
     period_total_el: $("#income_period_total")
 
-    initialize: ->
-
+    initialize: (options) ->
+        @collection = options.collection
         @collection.bind "reset", @renderAll, this
-        @collection.bind "add", @renderAll, this
         @collection.bind "remove", @renderTotal, this
 
     renderAll: (event) ->
@@ -53,11 +52,12 @@ class Moneyger.Views.IncomeView extends Backbone.View
         view = this
 
         formPayload = $("#income").serializeObject()
+        console.log(formPayload)
         income = new Moneyger.Models.Income 
-        income.save formPayload, 
+        income.save formPayload,
             success: (model, response, options) ->
                 view.renderOne(model)
-                @models.add(model)
+                view.collection.add(model)
                 $("#incomeModal").modal("hide")
 
     removeIncome: (id, event) ->

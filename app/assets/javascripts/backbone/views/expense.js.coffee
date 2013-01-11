@@ -1,8 +1,10 @@
 class Moneyger.Views.ExpenseView extends Backbone.View
 
-    initialize: ->
+    initialize: (options) ->
 
+        @collection = options.collection
         @collection.bind "reset", @renderAll, this
+        @collection.bind "remove", @renderTotal, this
 
     renderAll: (eventName) ->
 
@@ -17,7 +19,10 @@ class Moneyger.Views.ExpenseView extends Backbone.View
 
     renderOne: (model) ->
 
-        new Moneyger.Views.ExpenseTileView(model: expense).render().el
+        $(@el).prepend new Moneyger.Views.ExpenseTileView(model: model).render().el
+        
+        $("#expense_tiles_container").prepend @el
+
         # Render the period total
         @renderTotal()
 
@@ -40,7 +45,46 @@ class Moneyger.Views.ExpenseView extends Backbone.View
 
     renderEditExpense: (id) ->
         $("#expenseModal").load '/expenses/'+id+'/edit', ->
-            $("#expenseModal").modal()        
+            $("#expenseModal").modal() 
+
+    createExpense: ->
+        view = this
+
+        formPayload = $("#expense").serializeObject()
+        expense = new Moneyger.Models.Expense
+        expense.save formPayload,
+            success: (model, response, options) ->
+                view.renderOne(model)
+                view.collection.add(model)
+                $("#expenseModal").modal("hide")
+
+    removeExpense: (id, event) ->
+      # Load income model
+      expense = @collection.get(id)
+      # Localize the collection variable for use later
+      collection = @collection
+      # Block the UI
+      $(@el).block
+        message: null
+
+      # Render confirmation message
+      jConfirm "Are you sure you want to remove this expense?","Confirm", (decision) ->
+        if decision == true
+          expense.destroy
+            url: '/expenses/'+id
+            success: (response) ->
+              $("body").unblock()
+              $("#expense_#{id}").fadeOut().remove()
+              collection.remove(expense)
+              return true
+            error: (response) ->
+              alert("An error occured while attempting to delete this expense record.  Please try again.")
+              $("body").unblock()
+              return false
+        else
+          $("body").unblock()
+          return false                
+
 
 class Moneyger.Views.ExpenseTileView extends Backbone.View
     
@@ -48,10 +92,15 @@ class Moneyger.Views.ExpenseTileView extends Backbone.View
     
     events:
         "dblclick": "flip"
+        "click .icon-trash": "remove"
 
     render: (eventName) ->
         $(@el).html @template(@model.toJSON())
         this  
 
     flip: (event) ->
-        $(@el).children(".tile").toggleClass("flip")          
+        $(@el).children(".tile").toggleClass("flip")
+ 
+    remove: (event) ->
+        if App.expense_view.removeExpense($(event.currentTarget).attr("expense_id"), event) == true
+            $(@el).remove()        
